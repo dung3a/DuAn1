@@ -9,7 +9,7 @@ import duan.Bean.DanhMucBean;
 import duan.Controller.ChuyenManHinhController;
 import java.util.ArrayList;
 import java.util.List;
-
+ 
 /**
  *
  * @author anhdu
@@ -329,6 +329,7 @@ public class mainJFrame extends javax.swing.JFrame {
         thongTinAcc.setVisible(true);
     }//GEN-LAST:event_jpn_ThongTinMouseClicked
 
+    /*********
     /**
      * @param args the command line arguments
      */
