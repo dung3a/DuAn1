@@ -7,10 +7,13 @@ package duan.UI;
 
 import com.sun.java.swing.plaf.windows.WindowsScrollBarUI;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER;
+import javax.swing.SwingConstants;
 
 /**
  *
@@ -23,20 +26,7 @@ public class CanHoJPanel extends javax.swing.JPanel {
      */
     public CanHoJPanel() {
         initComponents();
-        
-        for (int i = 0; i < 50; i++) {
-            JButton canho = new JButton();
-            canho.setPreferredSize(new Dimension(245,200));
-            canho.setBackground(new Color(121,196,71));
-            pnlCanHo.add(canho);
-            pnlCanHo.setPreferredSize(new Dimension(1000,155*50/5)); 
-        jScrollPane2.setPreferredSize(new Dimension(1014, 500));
-        jScrollPane2.getVerticalScrollBar().setUnitIncrement(20);
-        jScrollPane2.setViewportView(pnlCanHo);
-        }
-        /* Neu so luong le thi lay so luong / 4. roi cong 1*/
-        
-     
+        test();
     }
 
     /**
@@ -95,9 +85,7 @@ public class CanHoJPanel extends javax.swing.JPanel {
         pnlCanHo.setBackground(new java.awt.Color(255, 255, 255));
         pnlCanHo.setMaximumSize(new java.awt.Dimension(1014, 541));
         pnlCanHo.setMinimumSize(new java.awt.Dimension(1014, 541));
-        java.awt.FlowLayout flowLayout1 = new java.awt.FlowLayout();
-        flowLayout1.setAlignOnBaseline(true);
-        pnlCanHo.setLayout(flowLayout1);
+        pnlCanHo.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 6, 6));
         jScrollPane2.setViewportView(pnlCanHo);
 
         add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 1040, 540));
@@ -114,4 +102,37 @@ public class CanHoJPanel extends javax.swing.JPanel {
     private java.awt.Choice jcTang;
     private javax.swing.JPanel pnlCanHo;
     // End of variables declaration//GEN-END:variables
+
+    private void test() {
+        int a = 25;
+
+        for (int i = 0; i < a; i++) {
+            JButton canho = new JButton();
+            canho.setPreferredSize(new Dimension(245, 200));
+            canho.setBackground(new Color(121, 196, 71));
+            while (a % 3 != 0) {
+                a++;
+            }
+
+            canho.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            canho.setPreferredSize(new Dimension(245, 195));
+            canho.setIcon(new ImageIcon(this.getClass().getResource("/duan/Logo/LogoMain.png")));
+            String noidung = "<html> <style>body{\n"
+                    + "    text-align: center;\n"
+                    + "    font-family: 'Tahoma';\n"
+                    + "    color: white;\n"
+                    + "}</style>";
+            noidung += "<b><font size=5> 101 </b></font>";
+            canho.setText(noidung);
+            canho.setHorizontalAlignment(SwingConstants.CENTER);
+
+            pnlCanHo.add(canho);
+            pnlCanHo.setPreferredSize(new Dimension(1000, 155 * (a / 3)));
+            jScrollPane2.setPreferredSize(new Dimension(1014, 500));
+            jScrollPane2.getVerticalScrollBar().setUnitIncrement(20);
+            jScrollPane2.setViewportView(pnlCanHo);
+        }
+
+        /* Neu so luong le thi lay so luong / 4. roi cong 1*/
+    }
 }
