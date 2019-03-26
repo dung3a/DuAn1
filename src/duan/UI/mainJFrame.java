@@ -175,7 +175,7 @@ public class mainJFrame extends javax.swing.JFrame {
         jpn_CanHo.setLayout(jpn_CanHoLayout);
         jpn_CanHoLayout.setHorizontalGroup(
             jpn_CanHoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jlbCanHo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jlbCanHo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jpn_CanHoLayout.setVerticalGroup(
             jpn_CanHoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

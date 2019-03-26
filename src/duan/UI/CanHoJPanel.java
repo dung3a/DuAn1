@@ -5,16 +5,14 @@ package duan.UI;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-
-import com.sun.java.swing.plaf.windows.WindowsScrollBarUI;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 
 /**
@@ -42,11 +40,11 @@ public class CanHoJPanel extends javax.swing.JPanel {
 
         choice1 = new java.awt.Choice();
         jPanel1 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jcTang = new java.awt.Choice();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        txt_TimKiem = new javax.swing.JTextField();
+        lblTimKiem = new javax.swing.JLabel();
+        lblTang = new javax.swing.JLabel();
+        cbo_Tang = new javax.swing.JComboBox<>();
+        sclCanHo = new javax.swing.JScrollPane();
         pnlCanHo = new javax.swing.JPanel();
 
         setBackground(new java.awt.Color(255, 255, 255));
@@ -61,26 +59,28 @@ public class CanHoJPanel extends javax.swing.JPanel {
         jPanel1.setPreferredSize(new java.awt.Dimension(1040, 127));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTextField1.setBackground(new java.awt.Color(0, 153, 153));
-        jTextField1.setFont(new java.awt.Font("Tahoma", 3, 16)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField1.setToolTipText("Tìm Phòng");
-        jTextField1.setBorder(null);
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 40, 270, 40));
+        txt_TimKiem.setBackground(new java.awt.Color(0, 153, 153));
+        txt_TimKiem.setFont(new java.awt.Font("Tahoma", 3, 16)); // NOI18N
+        txt_TimKiem.setForeground(new java.awt.Color(255, 255, 255));
+        txt_TimKiem.setToolTipText("Tìm Phòng");
+        txt_TimKiem.setBorder(null);
+        jPanel1.add(txt_TimKiem, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 40, 270, 40));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/duan/Logo/Search.png"))); // NOI18N
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 40, -1, -1));
+        lblTimKiem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/duan/Logo/Search.png"))); // NOI18N
+        jPanel1.add(lblTimKiem, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 40, -1, -1));
 
-        jLabel2.setFont(new java.awt.Font("Arial", 1, 20)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("TẦNG");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 50, -1, 30));
+        lblTang.setFont(new java.awt.Font("Arial", 1, 20)); // NOI18N
+        lblTang.setForeground(new java.awt.Color(255, 255, 255));
+        lblTang.setText("TẦNG");
+        jPanel1.add(lblTang, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 50, -1, 30));
 
-        jcTang.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jcTang.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
-        jcTang.setMaximumSize(new java.awt.Dimension(28, 25));
-        jcTang.setName(""); // NOI18N
-        jPanel1.add(jcTang, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 50, 180, -1));
+        cbo_Tang.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        cbo_Tang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tầng 1", "Tầng 2", "Tầng 3", "Tầng 4", "Tầng 5", "Tầng 6" }));
+        cbo_Tang.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        cbo_Tang.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        cbo_Tang.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
+        cbo_Tang.setMaximumSize(new java.awt.Dimension(87, 26));
+        jPanel1.add(cbo_Tang, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 50, 240, -1));
 
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 120));
 
@@ -88,53 +88,68 @@ public class CanHoJPanel extends javax.swing.JPanel {
         pnlCanHo.setMaximumSize(new java.awt.Dimension(1014, 541));
         pnlCanHo.setMinimumSize(new java.awt.Dimension(1014, 541));
         pnlCanHo.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 6, 6));
-        jScrollPane2.setViewportView(pnlCanHo);
+        sclCanHo.setViewportView(pnlCanHo);
 
-        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 1040, 540));
+        add(sclCanHo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 1040, 540));
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cbo_Tang;
     private java.awt.Choice choice1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField1;
-    private java.awt.Choice jcTang;
+    private javax.swing.JLabel lblTang;
+    private javax.swing.JLabel lblTimKiem;
     private javax.swing.JPanel pnlCanHo;
+    private javax.swing.JScrollPane sclCanHo;
+    private javax.swing.JTextField txt_TimKiem;
     // End of variables declaration//GEN-END:variables
 
+    
     private void test() {
-        int a = 25;
-
+        int a = 52;
+        
         for (int i = 0; i < a; i++) {
-            JButton canho = new JButton();
+            ThongTinCanHo ttch = new ThongTinCanHo((i+1));
+            JLabel canho = new JLabel();
             canho.setPreferredSize(new Dimension(245, 200));
-            canho.setBackground(new Color(121, 196, 71));
-            while (a % 3 != 0) {
-                a++;
-            }
+            //o.setBackground(new Color(121, 196, 71));
 
+            canho.setForeground(new Color(121, 196, 71));
             canho.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            canho.setBackground(new Color(121, 196, 71));
             canho.setPreferredSize(new Dimension(245, 195));
+            canho.setHorizontalAlignment((int) LEFT_ALIGNMENT);
             canho.setIcon(new ImageIcon(this.getClass().getResource("/duan/Logo/LogoMain.png")));
             String noidung = "<html> <style>body{\n"
                     + "    text-align: center;\n"
                     + "    font-family: 'Tahoma';\n"
                     + "    color: white;\n"
                     + "}</style>";
-            noidung += "<b><font size=5> 101 </b></font>";
+            noidung += "<b><font size=5> Phòng " + (i + 1) + " </b></font>";
             canho.setText(noidung);
             canho.setHorizontalAlignment(SwingConstants.CENTER);
-
+            canho.setOpaque(true);
+            canho.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    ttch.setVisible(true);
+                }
+                
+            });
             pnlCanHo.add(canho);
-            pnlCanHo.setPreferredSize(new Dimension(1000, 155 * (a / 3)));
-            jScrollPane2.setPreferredSize(new Dimension(1014, 500));
-            jScrollPane2.getVerticalScrollBar().setUnitIncrement(20);
-            jScrollPane2.setViewportView(pnlCanHo);
+            if (a % 4 != 0) {
+                pnlCanHo.setPreferredSize(new Dimension(1000, 200 * (a / 4 + 1)));
+                
+            } else {
+                pnlCanHo.setPreferredSize(new Dimension(1000, 200 * (a / 4)));
+                
+            }
+            
         }
-
-        /* Neu so luong le thi lay so luong / 4. roi cong 1*/
+        sclCanHo.setPreferredSize(new Dimension(1014, 500));
+        sclCanHo.getVerticalScrollBar().setUnitIncrement(20);
+        sclCanHo.setViewportView(pnlCanHo);
+        
     }
 }
