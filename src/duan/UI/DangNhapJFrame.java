@@ -1,5 +1,9 @@
-
 package duan.UI;
+
+import duan.JDBC.JDBC;
+import java.awt.event.KeyEvent;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -207,31 +211,23 @@ public class DangNhapJFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txt_PasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_PasswordKeyPressed
-        /*
+
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             try {
 
                 if (check()) {
 
-                    ResultSet rs = JDBCHelper.executeQuery("SELECT * FROM USERS WHERE TenDangNhap = ? ", txt_User.getText());
+                    ResultSet rs = JDBC.executeQuery("SELECT * FROM USERS WHERE TenDangNhap = ? ", txt_User.getText());
 
                     if (rs.next()) {
                         String pass = rs.getString(3);// Lấy Pass
-                        String role = rs.getString(4); //Lấy Quyền
-                        maNV = rs.getString(1); //Lấy mã nv
 
                         if (txt_Password.getText().equals(pass)) {//So sánh Pass
 
-                            if (role.equals("QL")) {
-                                JOptionPane.showMessageDialog(rootPane, "Đăng nhập thành công");
-                                this.dispose();
-                                new QuanLy().setVisible(true);
-                            } else if (role.equals("NV")) {
-                                JOptionPane.showMessageDialog(rootPane, "Đăng nhập thành công");
-                                new BanHang(maNV).setVisible(true);
-                                System.out.println(maNV);
-                                this.dispose();
-                            }
+                            JOptionPane.showMessageDialog(rootPane, "Đăng nhập thành công");
+
+                            new mainJFrame().setVisible(true);
+                            this.dispose();
 
                             //Thông báo nếu Pass không trùng khớp
                         } else {
@@ -248,7 +244,7 @@ public class DangNhapJFrame extends javax.swing.JFrame {
                 System.out.println(e);
             }
 
-        }*/
+        }
     }//GEN-LAST:event_txt_PasswordKeyPressed
 
     private void jbl_HideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbl_HideMouseClicked
@@ -265,30 +261,21 @@ public class DangNhapJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jbl_HideMouseClicked
 
     private void jpn_DangNhapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpn_DangNhapMouseClicked
-        /*
         try {
 
             if (check()) {
-                //Truy xuất tên user theo ng đung đã nhập và so sánh
-                ResultSet rs = JDBCHelper.executeQuery("SELECT * FROM USERS WHERE TenDangNhap = ? ", txt_User.getText());
+
+                ResultSet rs = JDBC.executeQuery("SELECT * FROM USERS WHERE TenDangNhap = ? ", txt_User.getText());
 
                 if (rs.next()) {
                     String pass = rs.getString(3);// Lấy Pass
-                    String role = rs.getString(4); //Lấy Quyền
-                    maNV = rs.getString(1); //Lấy mã nv
 
                     if (txt_Password.getText().equals(pass)) {//So sánh Pass
-                        //Nếu dúng với Database thì thông báo thành công và mở form theo quyền của user đó
-                        if (role.equals("QL")) {
-                            JOptionPane.showMessageDialog(rootPane, "Đăng nhập thành công");
-                            this.dispose();
-                            new QuanLy().setVisible(true);
-                        } else if (role.equals("NV")) {
-                            JOptionPane.showMessageDialog(rootPane, "Đăng nhập thành công");
-                            new BanHang(maNV).setVisible(true);
 
-                            this.dispose();
-                        }
+                        JOptionPane.showMessageDialog(rootPane, "Đăng nhập thành công");
+
+                        new mainJFrame().setVisible(true);
+                        this.dispose();
 
                         //Thông báo nếu Pass không trùng khớp
                     } else {
@@ -304,9 +291,6 @@ public class DangNhapJFrame extends javax.swing.JFrame {
         } catch (Exception e) {
             System.out.println(e);
         }
-         */
-        new mainJFrame().setVisible(true);
-        this.dispose();
     }//GEN-LAST:event_jpn_DangNhapMouseClicked
 
     private void jpn_HuyMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpn_HuyMouseClicked
@@ -319,7 +303,7 @@ public class DangNhapJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_CloseMouseClicked
 
     private void lbl_TitlebarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_TitlebarMousePressed
-         xMouse = evt.getX();
+        xMouse = evt.getX();
         yMouse = evt.getY();
     }//GEN-LAST:event_lbl_TitlebarMousePressed
 
@@ -328,7 +312,7 @@ public class DangNhapJFrame extends javax.swing.JFrame {
         int y = evt.getYOnScreen();
 
         this.setLocation(x - xMouse, y - yMouse);
-        
+
     }//GEN-LAST:event_lbl_TitlebarMouseDragged
 
     private void btn_QuenMKMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_QuenMKMouseClicked
@@ -392,4 +376,16 @@ public class DangNhapJFrame extends javax.swing.JFrame {
     private javax.swing.JPasswordField txt_Password;
     private javax.swing.JTextField txt_User;
     // End of variables declaration//GEN-END:variables
+
+    private boolean check() {
+        if (txt_User.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(this, "Không để trống Users !");
+            return false;
+        } else if (txt_Password.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(this, "Không để trống Password !");
+            return false;
+        }
+        return true;
+    }
+
 }
