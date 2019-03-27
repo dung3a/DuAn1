@@ -17,7 +17,7 @@ import javax.swing.SwingConstants;
 
 /**
  *
- * @author anhdu
+ * @author Nhom 6
  */
 public class CanHoJPanel extends javax.swing.JPanel {
 
