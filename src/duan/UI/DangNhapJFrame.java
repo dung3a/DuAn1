@@ -213,36 +213,35 @@ public class DangNhapJFrame extends javax.swing.JFrame {
     private void txt_PasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_PasswordKeyPressed
 
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            try {
+             try {
 
-                if (check()) {
+            if (check()) {
 
-                    ResultSet rs = JDBC.executeQuery("SELECT * FROM USERS WHERE TenDangNhap = ? ", txt_User.getText());
+                ResultSet rs = JDBC.executeQuery("SELECT * FROM USERS WHERE UserId = ? ", txt_User.getText());
 
-                    if (rs.next()) {
-                        String pass = rs.getString(3);// Lấy Pass
+                if (rs.next()) {
+                    String pass = rs.getString(2);// Lấy Pass
+                    if (txt_Password.getText().equals(pass)) {//So sánh Pass
 
-                        if (txt_Password.getText().equals(pass)) {//So sánh Pass
+                        JOptionPane.showMessageDialog(rootPane, "Đăng nhập thành công");
 
-                            JOptionPane.showMessageDialog(rootPane, "Đăng nhập thành công");
+                        new mainJFrame().setVisible(true);
+                        this.dispose();
 
-                            new mainJFrame().setVisible(true);
-                            this.dispose();
-
-                            //Thông báo nếu Pass không trùng khớp
-                        } else {
-                            JOptionPane.showMessageDialog(this, "Sai mật khẩu !", "Thông Báo", JOptionPane.WARNING_MESSAGE);
-                        }
-                        //Thông báo nếu Tài khoản không tồn tại
+                        //Thông báo nếu Pass không trùng khớp
                     } else {
-                        JOptionPane.showMessageDialog(this, "Tài khoản không tồn tại !", "Thông Báo", JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.showMessageDialog(this, "Sai mật khẩu !", "Thông Báo", JOptionPane.WARNING_MESSAGE);
                     }
-
+                    //Thông báo nếu Tài khoản không tồn tại
+                } else {
+                    JOptionPane.showMessageDialog(this, "Tài khoản không tồn tại !", "Thông Báo", JOptionPane.WARNING_MESSAGE);
                 }
 
-            } catch (Exception e) {
-                System.out.println(e);
             }
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
 
         }
     }//GEN-LAST:event_txt_PasswordKeyPressed
@@ -265,11 +264,10 @@ public class DangNhapJFrame extends javax.swing.JFrame {
 
             if (check()) {
 
-                ResultSet rs = JDBC.executeQuery("SELECT * FROM USERS WHERE TenDangNhap = ? ", txt_User.getText());
+                ResultSet rs = JDBC.executeQuery("SELECT * FROM USERS WHERE UserId = ? ", txt_User.getText());
 
                 if (rs.next()) {
-                    String pass = rs.getString(3);// Lấy Pass
-
+                    String pass = rs.getString(2);// Lấy Pass
                     if (txt_Password.getText().equals(pass)) {//So sánh Pass
 
                         JOptionPane.showMessageDialog(rootPane, "Đăng nhập thành công");
@@ -330,7 +328,7 @@ public class DangNhapJFrame extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }

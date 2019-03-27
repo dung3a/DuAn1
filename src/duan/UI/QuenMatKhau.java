@@ -1,7 +1,9 @@
 package duan.UI;
 
+import duan.JDBC.JDBC;
 import java.awt.Color;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Properties;
 import javax.mail.Message;
 import javax.mail.PasswordAuthentication;
@@ -175,7 +177,52 @@ public class QuenMatKhau extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblNhanMKMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNhanMKMouseClicked
+        try {
+            //Truy vẫn thông tin trong bảng nhanvien và bảng USers
+            if (check()) {
+                ResultSet rs = JDBC.executeQuery("SELECT Pass,Email FROM dbo.Users WHERE UserId = ?", txt_Users.getText());
 
+                if (rs.next()) {
+                    String pass = rs.getString(1) + "";
+                    String email = rs.getString(2);
+
+                    //Gửi mail
+                    Properties p = new Properties();
+                    p.put("mail.smtp.auth", "true");
+                    p.put("mail.smtp.starttls.enable", "true");
+                    p.put("mail.smtp.host", "smtp.gmail.com");
+                    p.put("mail.smtp.port", 587);
+
+                    String accountName = "dungnaps08148@fpt.edu.vn";
+                    String accountPassword = "@ANHDUNG3A#";
+                    Session s = Session.getInstance(p,
+                            new javax.mail.Authenticator() {
+                        protected PasswordAuthentication getPasswordAuthentication() {
+                            return new PasswordAuthentication(accountName, accountPassword);
+                        }
+                    });
+                    //Nhận lại mật khẩu từ email trong bảng user
+                    String from = accountName;
+                    String to = email;
+                    String subject = "Email lấy lại mật khẩu";
+                    String body = "Mật khẩu của bạn là: \r\n " + pass;
+
+                    Message msg = new MimeMessage(s);
+                    msg.setFrom(new InternetAddress(from));
+                    msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
+                    msg.setSubject(subject);
+                    msg.setText(body);
+                    Transport.send(msg);
+                    JOptionPane.showMessageDialog(null, "Đã gửi mail chứa mật khẩu của bạn.", "Message", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+
+                    dispose();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Username không tồn tại !!");
+                }
+            }
+        } catch (Exception e) {
+            System.err.println(e);
+        }
     }//GEN-LAST:event_lblNhanMKMouseClicked
 
     private void lbl_TitlebarMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_TitlebarMouseDragged
@@ -242,4 +289,14 @@ public class QuenMatKhau extends javax.swing.JFrame {
     private javax.swing.JPanel pnlNhanMK;
     private javax.swing.JTextField txt_Users;
     // End of variables declaration//GEN-END:variables
+
+    public boolean check() {
+        if (txt_Users.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(this, "Không để trống User name !");
+            txt_Users.setText("");
+            return false;
+        }
+        return true;
+    }
+
 }
