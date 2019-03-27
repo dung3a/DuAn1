@@ -62,10 +62,8 @@ public class ThongTinCanHo extends javax.swing.JFrame {
         lblXoa = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(800, 530));
         setMinimumSize(new java.awt.Dimension(800, 530));
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(800, 530));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jpn_Close.setIcon(new javax.swing.ImageIcon(getClass().getResource("/duan/Logo/Close.png"))); // NOI18N

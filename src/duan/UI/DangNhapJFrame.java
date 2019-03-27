@@ -148,9 +148,9 @@ public class DangNhapJFrame extends javax.swing.JFrame {
         btn_QuenMK.setContentAreaFilled(false);
         btn_QuenMK.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn_QuenMK.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btn_QuenMK.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_QuenMKActionPerformed(evt);
+        btn_QuenMK.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_QuenMKMouseClicked(evt);
             }
         });
         jpn_TongDangNhap.add(btn_QuenMK, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 330, -1, -1));
@@ -305,16 +305,14 @@ public class DangNhapJFrame extends javax.swing.JFrame {
             System.out.println(e);
         }
          */
+        new mainJFrame().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jpn_DangNhapMouseClicked
 
     private void jpn_HuyMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpn_HuyMouseClicked
         txt_User.setText("");
         txt_Password.setText("");
     }//GEN-LAST:event_jpn_HuyMouseClicked
-
-    private void btn_QuenMKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_QuenMKActionPerformed
-        /* new QuenMatKhau().setVisible(true);*/
-    }//GEN-LAST:event_btn_QuenMKActionPerformed
 
     private void btn_CloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_CloseMouseClicked
         System.exit(0);
@@ -332,6 +330,10 @@ public class DangNhapJFrame extends javax.swing.JFrame {
         this.setLocation(x - xMouse, y - yMouse);
         
     }//GEN-LAST:event_lbl_TitlebarMouseDragged
+
+    private void btn_QuenMKMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_QuenMKMouseClicked
+        new QuenMatKhau().setVisible(true);
+    }//GEN-LAST:event_btn_QuenMKMouseClicked
 
     /**
      * @param args the command line arguments

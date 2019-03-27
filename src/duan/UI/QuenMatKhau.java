@@ -192,7 +192,7 @@ public class QuenMatKhau extends javax.swing.JFrame {
     }//GEN-LAST:event_lbl_TitlebarMousePressed
 
     private void btn_CloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_CloseMouseClicked
-        System.exit(0);
+        this.dispose();
     }//GEN-LAST:event_btn_CloseMouseClicked
 
     //Thông tin gửi mail
