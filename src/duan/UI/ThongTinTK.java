@@ -5,7 +5,16 @@
  */
 package duan.UI;
 
+import duan.DAO.UserDAO;
+import duan.JDBC.JDBC;
+import duan.model.Users;
 import java.awt.Color;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -22,6 +31,8 @@ public class ThongTinTK extends javax.swing.JFrame {
         this.getContentPane().setBackground(Color.white);
         this.setLocationRelativeTo(null);
         this.setTitle("Thông Tin Tài Khoản");
+        this.load_user();
+
     }
     int yMouse, xMouse;
     int Dem = 0;
@@ -49,6 +60,7 @@ public class ThongTinTK extends javax.swing.JFrame {
         txt_SoDT = new javax.swing.JTextField();
         jpn_CapNhat = new javax.swing.JPanel();
         lbl_CapNhat = new javax.swing.JLabel();
+        lbl_ThongBaoTk = new javax.swing.JLabel();
         jpn_DoiMK = new javax.swing.JPanel();
         lbl_MkCu = new javax.swing.JLabel();
         lbl_MkMoi = new javax.swing.JLabel();
@@ -61,10 +73,10 @@ public class ThongTinTK extends javax.swing.JFrame {
         lbl_ShowMkCu = new javax.swing.JLabel();
         lbl_ShowMkMoi = new javax.swing.JLabel();
         lbl_ShowMkNLMK = new javax.swing.JLabel();
+        lbl_ThongBaoPass = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Thông Tin Tài Khoản");
-        setMaximumSize(new java.awt.Dimension(470, 365));
         setMinimumSize(new java.awt.Dimension(470, 365));
         setUndecorated(true);
         setResizable(false);
@@ -138,12 +150,17 @@ public class ThongTinTK extends javax.swing.JFrame {
         jpn_CapNhat.setLayout(jpn_CapNhatLayout);
         jpn_CapNhatLayout.setHorizontalGroup(
             jpn_CapNhatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lbl_CapNhat, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
+            .addComponent(lbl_CapNhat, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
         );
         jpn_CapNhatLayout.setVerticalGroup(
             jpn_CapNhatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(lbl_CapNhat, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
         );
+
+        lbl_ThongBaoTk.setBackground(new java.awt.Color(255, 255, 255));
+        lbl_ThongBaoTk.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
+        lbl_ThongBaoTk.setForeground(new java.awt.Color(255, 0, 0));
+        lbl_ThongBaoTk.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout jpn_ThongTinLayout = new javax.swing.GroupLayout(jpn_ThongTin);
         jpn_ThongTin.setLayout(jpn_ThongTinLayout);
@@ -166,6 +183,10 @@ public class ThongTinTK extends javax.swing.JFrame {
                             .addComponent(txt_Email)
                             .addComponent(txt_SoDT, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(38, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpn_ThongTinLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(lbl_ThongBaoTk, javax.swing.GroupLayout.PREFERRED_SIZE, 394, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28))
         );
         jpn_ThongTinLayout.setVerticalGroup(
             jpn_ThongTinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -182,9 +203,11 @@ public class ThongTinTK extends javax.swing.JFrame {
                 .addGroup(jpn_ThongTinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_SoDT)
                     .addComponent(txt_SoDT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(lbl_ThongBaoTk, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jpn_CapNhat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(22, 22, 22))
+                .addContainerGap())
         );
 
         jtl_Main.addTab("Thông Tin Tài Khoản", jpn_ThongTin);
@@ -222,7 +245,7 @@ public class ThongTinTK extends javax.swing.JFrame {
         jpn_DoiMatKhau.setLayout(jpn_DoiMatKhauLayout);
         jpn_DoiMatKhauLayout.setHorizontalGroup(
             jpn_DoiMatKhauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jlbDoiMatKhau, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
+            .addComponent(jlbDoiMatKhau, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
         );
         jpn_DoiMatKhauLayout.setVerticalGroup(
             jpn_DoiMatKhauLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -250,44 +273,50 @@ public class ThongTinTK extends javax.swing.JFrame {
             }
         });
 
+        lbl_ThongBaoPass.setBackground(new java.awt.Color(255, 255, 255));
+        lbl_ThongBaoPass.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
+        lbl_ThongBaoPass.setForeground(new java.awt.Color(255, 0, 51));
+        lbl_ThongBaoPass.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout jpn_DoiMKLayout = new javax.swing.GroupLayout(jpn_DoiMK);
         jpn_DoiMK.setLayout(jpn_DoiMKLayout);
         jpn_DoiMKLayout.setHorizontalGroup(
             jpn_DoiMKLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpn_DoiMKLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lbl_ThongBaoPass, javax.swing.GroupLayout.PREFERRED_SIZE, 394, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34))
             .addGroup(jpn_DoiMKLayout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addGroup(jpn_DoiMKLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lbl_MkCu)
-                    .addComponent(lbl_MkMoi)
-                    .addComponent(lbl_NhapLaiMk))
-                .addGap(18, 18, 18)
                 .addGroup(jpn_DoiMKLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpn_DoiMKLayout.createSequentialGroup()
-                        .addComponent(jpn_DoiMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(174, 174, 174)
+                        .addComponent(jpn_DoiMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jpn_DoiMKLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jpn_DoiMKLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lbl_MkCu)
+                            .addComponent(lbl_MkMoi)
+                            .addComponent(lbl_NhapLaiMk))
+                        .addGap(18, 18, 18)
                         .addGroup(jpn_DoiMKLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jpn_DoiMKLayout.createSequentialGroup()
                                 .addComponent(txt_NhapLaiMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
                                 .addComponent(lbl_ShowMkNLMK))
                             .addGroup(jpn_DoiMKLayout.createSequentialGroup()
-                                .addGroup(jpn_DoiMKLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jpn_DoiMKLayout.createSequentialGroup()
-                                        .addComponent(txt_MatKhauCu, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(lbl_ShowMkCu))
-                                    .addGroup(jpn_DoiMKLayout.createSequentialGroup()
-                                        .addComponent(txt_MatKhauMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(lbl_ShowMkMoi)))
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addContainerGap(13, Short.MAX_VALUE))))
+                                .addComponent(txt_MatKhauCu, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(lbl_ShowMkCu))
+                            .addGroup(jpn_DoiMKLayout.createSequentialGroup()
+                                .addComponent(txt_MatKhauMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(lbl_ShowMkMoi)))))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         jpn_DoiMKLayout.setVerticalGroup(
             jpn_DoiMKLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpn_DoiMKLayout.createSequentialGroup()
-                .addGap(43, 43, 43)
+                .addGap(25, 25, 25)
                 .addGroup(jpn_DoiMKLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_MkCu)
                     .addComponent(txt_MatKhauCu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -302,9 +331,11 @@ public class ThongTinTK extends javax.swing.JFrame {
                     .addComponent(lbl_NhapLaiMk)
                     .addComponent(txt_NhapLaiMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbl_ShowMkNLMK))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addGap(25, 25, 25)
+                .addComponent(lbl_ThongBaoPass, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jpn_DoiMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(22, 22, 22))
+                .addContainerGap())
         );
 
         jtl_Main.addTab("Đổi Mật Khẩu", jpn_DoiMK);
@@ -361,11 +392,16 @@ public class ThongTinTK extends javax.swing.JFrame {
     }//GEN-LAST:event_lbl_TitlebarMousePressed
 
     private void jpn_CapNhatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpn_CapNhatMouseClicked
-
+        if (checktt()) {
+            this.update_User();
+        }
     }//GEN-LAST:event_jpn_CapNhatMouseClicked
 
     private void jpn_DoiMatKhauMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpn_DoiMatKhauMouseClicked
-        // TODO add your handling code here:
+        try {
+            this.updatePass();
+        } catch (SQLException ex) {
+        }
     }//GEN-LAST:event_jpn_DoiMatKhauMouseClicked
 
     private void lbl_ShowMkCuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_ShowMkCuMouseClicked
@@ -458,6 +494,8 @@ public class ThongTinTK extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_ShowMkMoi;
     private javax.swing.JLabel lbl_ShowMkNLMK;
     private javax.swing.JLabel lbl_SoDT;
+    private javax.swing.JLabel lbl_ThongBaoPass;
+    private javax.swing.JLabel lbl_ThongBaoTk;
     private javax.swing.JLabel lbl_Tile;
     private javax.swing.JLabel lbl_Titlebar;
     private javax.swing.JTextField txt_Email;
@@ -467,4 +505,149 @@ public class ThongTinTK extends javax.swing.JFrame {
     private javax.swing.JPasswordField txt_NhapLaiMatKhau;
     private javax.swing.JTextField txt_SoDT;
     // End of variables declaration//GEN-END:variables
+
+    UserDAO userDAO = new UserDAO();
+    String UserID;
+
+    /*----------------Thông tin TK--------------------*/
+    void load_user() {
+        try {
+            Users model = userDAO.select();
+            if (model != null) {
+                this.setModel(model);
+                UserID = model.getUserid();
+            }
+        } catch (Exception e) {
+            lbl_ThongBaoTk.setText("Không thể load User lên !");
+            System.err.println(e);
+        }
+    }
+
+    void setModel(Users model) {
+        txt_HovaTen.setText(model.getTen());
+        txt_Email.setText(model.getEmail());
+        txt_SoDT.setText(model.getSdt());
+    }
+
+    Users getModel() {
+        Users model = new Users();
+        model.setTen(txt_HovaTen.getText());
+        model.setEmail(txt_Email.getText());
+        model.setSdt(txt_SoDT.getText());
+        model.setUserid(UserID);
+        return model;
+    }
+
+    //Update thông tin User
+    void update_User() {
+        Users model = getModel();
+        try {
+            userDAO.updateUser(model);
+            this.load_user();
+            lbl_ThongBaoTk.setForeground(new Color(0, 102, 255));
+            lbl_ThongBaoTk.setText("Cập nhật thông tin thành công");
+        } catch (Exception e) {
+            System.err.println(e);
+            lbl_ThongBaoTk.setForeground(new Color(255, 0, 51));
+            lbl_ThongBaoTk.setText("Cập nhật thông tin thất bại");
+        }
+    }
+
+    boolean checktt() {
+        if (txt_HovaTen.getText().trim().equals("")) {
+            lbl_ThongBaoTk.setForeground(new Color(255, 0, 51));
+            lbl_ThongBaoTk.setText("Không để trống họ tên !");
+            return false;
+        } else if (txt_Email.getText().trim().equals("")) {
+            lbl_ThongBaoTk.setForeground(new Color(255, 0, 51));
+            lbl_ThongBaoTk.setText("Không để trống Email !");
+            return false;
+        } else if (txt_SoDT.getText().trim().equals("")) {
+            lbl_ThongBaoTk.setForeground(new Color(255, 0, 51));
+            lbl_ThongBaoTk.setText("Không để trống Số điện thoại !");
+            return false;
+        } else if (!txt_HovaTen.getText().matches("[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ\\s]{1,}")) {
+            lbl_ThongBaoTk.setForeground(new Color(255, 0, 51));
+            lbl_ThongBaoTk.setText("Tên chứa ký tự không hợp lệ !");
+            return false;
+        } else if (!txt_Email.getText().matches("^[\\w-_\\.]+\\@[\\w&&[^0-9]]+\\.[\\w&&[^0-9]]+$")) {
+            lbl_ThongBaoTk.setForeground(new Color(255, 0, 51));
+            lbl_ThongBaoTk.setText("Sai định dạng email !");
+            return false;
+        } else if (!txt_SoDT.getText().trim().matches("\\d+")) {
+            lbl_ThongBaoTk.setForeground(new Color(255, 0, 51));
+            lbl_ThongBaoTk.setText("Số điện thoại chỉ nhập số !");
+            return false;
+        } else if (txt_SoDT.getText().length() > 10) {
+            lbl_ThongBaoTk.setForeground(new Color(255, 0, 51));
+            lbl_ThongBaoTk.setText("Số điện thoại không quá 10 số!");
+            return false;
+        }
+        return true;
+    }
+
+    /*----------------Pass--------------------*/
+    public void newpass() {
+        txt_MatKhauCu.setText("");
+        txt_MatKhauMoi.setText("");
+        txt_NhapLaiMatKhau.setText("");
+    }
+
+    Users getModelPass() {
+        Users model = new Users();
+        model.setPass(txt_MatKhauMoi.getText());
+        model.setUserid(UserID);
+        return model;
+    }
+
+    boolean checkOldPass() throws SQLException {
+        ResultSet rs = JDBC.executeQuery("SELECT Pass FROM USERS WHERE UserId = ? ", UserID);
+        if (rs.next()) {
+            String Oldpass = rs.getString(1);
+            if (!txt_MatKhauCu.getText().trim().equals(Oldpass)) {
+                lbl_ThongBaoPass.setForeground(new Color(255, 0, 51));
+                lbl_ThongBaoPass.setText("Mật khẩu cũ không chính xác !");
+                this.newpass();
+                return false;
+            }
+        }
+        return true;
+    }
+
+    boolean checkMatch() {
+        if (!txt_MatKhauMoi.getText().trim().equals(txt_NhapLaiMatKhau.getText().trim())) {
+            lbl_ThongBaoPass.setForeground(new Color(255, 0, 51));
+            lbl_ThongBaoPass.setText("Mật khẩu mới không trùng khớp !");
+            txt_NhapLaiMatKhau.setText("");
+            return false;
+        }
+        return true;
+    }
+
+    boolean checkpass() {
+        if (txt_MatKhauCu.getText().trim().equals("")) {
+            lbl_ThongBaoPass.setForeground(new Color(255, 0, 51));
+            lbl_ThongBaoPass.setText("Không để trống mật khẩu cũ !");
+            return false;
+        } else if (txt_MatKhauMoi.getText().trim().equals("")) {
+            lbl_ThongBaoPass.setForeground(new Color(255, 0, 51));
+            lbl_ThongBaoPass.setText("Không để trống mật khẩu mói !");
+            return false;
+        } else if (txt_NhapLaiMatKhau.getText().trim().equals("")) {
+            lbl_ThongBaoPass.setForeground(new Color(255, 0, 51));
+            lbl_ThongBaoPass.setText("Không để trống mật khẩu xác nhận !");
+            return false;
+        }
+        return true;
+    }
+
+    void updatePass() throws SQLException {
+        Users model = getModelPass();
+        if (checkpass() && checkOldPass() && checkMatch()) {
+            userDAO.updatePass(model);
+            lbl_ThongBaoPass.setForeground(new Color(0, 102, 255));
+            lbl_ThongBaoPass.setText("Cập nhật mật khẩu thành công");
+            this.newpass();
+        }
+    }
 }
