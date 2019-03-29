@@ -16,6 +16,7 @@ public class TrangChuJPanel extends javax.swing.JPanel {
      */
     public TrangChuJPanel() {
         initComponents();
+        jpn_menu.hide();
     }
 
     /**
@@ -35,11 +36,18 @@ public class TrangChuJPanel extends javax.swing.JPanel {
         lbl_IconBike = new javax.swing.JLabel();
         lbl_IconPhuongTien = new javax.swing.JLabel();
         lbl_TongSoPhuongTien = new javax.swing.JLabel();
+        jpn_menu = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jpn_tacvu = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMaximumSize(new java.awt.Dimension(1040, 660));
         setMinimumSize(new java.awt.Dimension(1040, 660));
         setPreferredSize(new java.awt.Dimension(1040, 660));
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         pnl_SoPhongDangQuanLy.setBackground(new java.awt.Color(255, 85, 85));
         pnl_SoPhongDangQuanLy.setMaximumSize(new java.awt.Dimension(330, 230));
@@ -85,6 +93,8 @@ public class TrangChuJPanel extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        add(pnl_SoPhongDangQuanLy, new org.netbeans.lib.awtextra.AbsoluteConstraints(111, 212, -1, -1));
+
         pnl_SoNhanKhau.setBackground(new java.awt.Color(121, 196, 71));
         pnl_SoNhanKhau.setMaximumSize(new java.awt.Dimension(330, 230));
         pnl_SoNhanKhau.setMinimumSize(new java.awt.Dimension(330, 230));
@@ -129,30 +139,110 @@ public class TrangChuJPanel extends javax.swing.JPanel {
                 .addContainerGap(67, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(111, 111, 111)
-                .addComponent(pnl_SoPhongDangQuanLy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 147, Short.MAX_VALUE)
-                .addComponent(pnl_SoNhanKhau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(108, 108, 108))
+        add(pnl_SoNhanKhau, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 212, -1, -1));
+
+        jpn_menu.setBackground(new java.awt.Color(255, 255, 51));
+        jpn_menu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jpn_menuMouseExited(evt);
+            }
+        });
+        jpn_menu.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentHidden(java.awt.event.ComponentEvent evt) {
+                jpn_menuComponentHidden(evt);
+            }
+        });
+
+        jLabel2.setText("Chức Năng 1");
+
+        jLabel3.setText("Chức Năng 2");
+
+        jLabel4.setText("Chức Năng 3");
+
+        javax.swing.GroupLayout jpn_menuLayout = new javax.swing.GroupLayout(jpn_menu);
+        jpn_menu.setLayout(jpn_menuLayout);
+        jpn_menuLayout.setHorizontalGroup(
+            jpn_menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpn_menuLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(jpn_menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(212, 212, 212)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnl_SoNhanKhau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pnl_SoPhongDangQuanLy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(218, Short.MAX_VALUE))
+        jpn_menuLayout.setVerticalGroup(
+            jpn_menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpn_menuLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21))
         );
+
+        add(jpn_menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 490, 150, 150));
+
+        jpn_tacvu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jpn_tacvuMouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jpn_tacvuMouseExited(evt);
+            }
+        });
+
+        jLabel1.setText("Thanh Tác Vụ");
+
+        javax.swing.GroupLayout jpn_tacvuLayout = new javax.swing.GroupLayout(jpn_tacvu);
+        jpn_tacvu.setLayout(jpn_tacvuLayout);
+        jpn_tacvuLayout.setHorizontalGroup(
+            jpn_tacvuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpn_tacvuLayout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(39, Short.MAX_VALUE))
+        );
+        jpn_tacvuLayout.setVerticalGroup(
+            jpn_tacvuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpn_tacvuLayout.createSequentialGroup()
+                .addContainerGap(12, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        add(jpn_tacvu, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 590, 150, 60));
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jpn_tacvuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpn_tacvuMouseClicked
+        jpn_menu.show();
+       
+    }//GEN-LAST:event_jpn_tacvuMouseClicked
+
+    private void jpn_menuMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpn_menuMouseExited
+        jpn_menu.hide();
+                // TODO add your handling code here:
+    }//GEN-LAST:event_jpn_menuMouseExited
+
+    private void jpn_tacvuMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpn_tacvuMouseExited
+        jpn_menu.hide();
+        
+    }//GEN-LAST:event_jpn_tacvuMouseExited
+
+    private void jpn_menuComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jpn_menuComponentHidden
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jpn_menuComponentHidden
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jpn_menu;
+    private javax.swing.JPanel jpn_tacvu;
     private javax.swing.JLabel lbl_IconBike;
     private javax.swing.JLabel lbl_IconCanHo;
     private javax.swing.JLabel lbl_IconHome;
