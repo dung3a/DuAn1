@@ -177,11 +177,15 @@ public class DichVuPhongJPanel extends javax.swing.JPanel {
                 .addGap(0, 0, 0))
         );
 
-        cbo_Thang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbo_Thang.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        cbo_Thang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
+        cbo_Thang.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        cbo_Thang.setInheritsPopupMenu(true);
 
         lbl_Thang.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lbl_Thang.setText("Tháng");
 
+        cbo_Nam.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         cbo_Nam.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         lbl_Nam.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -213,7 +217,7 @@ public class DichVuPhongJPanel extends javax.swing.JPanel {
                 .addGroup(jpn_TruyVanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_Thang)
                     .addComponent(cbo_Thang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addGroup(jpn_TruyVanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbo_Nam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbl_Nam))

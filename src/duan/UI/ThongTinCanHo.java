@@ -158,7 +158,7 @@ public class ThongTinCanHo extends javax.swing.JFrame {
 
         lblChuHo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblChuHo.setText("Chủ Hộ ");
-        jPanel1.add(lblChuHo, new org.netbeans.lib.awtextra.AbsoluteConstraints(429, 156, -1, -1));
+        jPanel1.add(lblChuHo, new org.netbeans.lib.awtextra.AbsoluteConstraints(429, 153, -1, 20));
 
         txtTenKH.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jPanel1.add(txtTenKH, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 40, 252, -1));
@@ -174,6 +174,7 @@ public class ThongTinCanHo extends javax.swing.JFrame {
 
         rdoNam.setBackground(new java.awt.Color(255, 255, 255));
         btgGioiTinh.add(rdoNam);
+        rdoNam.setSelected(true);
         rdoNam.setText("Nam");
         jPanel1.add(rdoNam, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 150, -1, -1));
 
@@ -183,8 +184,8 @@ public class ThongTinCanHo extends javax.swing.JFrame {
         jPanel1.add(rdoNu, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 150, -1, -1));
 
         cboCo.setBackground(new java.awt.Color(255, 255, 255));
-        cboCo.setText("Có");
-        jPanel1.add(cboCo, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 150, -1, -1));
+        cboCo.setText(" ");
+        jPanel1.add(cboCo, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 155, -1, 20));
 
         btnSua.setBackground(new java.awt.Color(255, 102, 102));
         btnSua.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
