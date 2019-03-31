@@ -14,8 +14,8 @@ public class ThongTinCanHo extends javax.swing.JFrame {
     /**
      * Creates new form ThongTInCanHo
      */
-    int canho;
-    public ThongTinCanHo( int canho) {
+    String canho;
+    public ThongTinCanHo( String canho) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.canho = canho;
@@ -208,7 +208,7 @@ public class ThongTinCanHo extends javax.swing.JFrame {
             .addComponent(lblSua, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
         );
 
-        jPanel1.add(btnSua, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 220, -1, -1));
+        jPanel1.add(btnSua, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 220, -1, -1));
 
         btnThem.setBackground(new java.awt.Color(255, 102, 102));
         btnThem.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -231,7 +231,7 @@ public class ThongTinCanHo extends javax.swing.JFrame {
             .addComponent(lblThem, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
         );
 
-        jPanel1.add(btnThem, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 220, -1, -1));
+        jPanel1.add(btnThem, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 220, -1, -1));
 
         btnXoa.setBackground(new java.awt.Color(255, 102, 102));
         btnXoa.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -254,7 +254,7 @@ public class ThongTinCanHo extends javax.swing.JFrame {
             .addComponent(lblXoa, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
         );
 
-        jPanel1.add(btnXoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 220, -1, -1));
+        jPanel1.add(btnXoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 220, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 800, -1));
 
@@ -312,7 +312,7 @@ public class ThongTinCanHo extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ThongTinCanHo(0).setVisible(true);
+                new ThongTinCanHo("").setVisible(true);
             }
         });
     }

@@ -5,11 +5,17 @@ package duan.UI;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import duan.DAO.CanHoDAO;
+import duan.JDBC.JDBC;
+import duan.model.CanHo;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -21,12 +27,20 @@ import javax.swing.SwingConstants;
  */
 public class CanHoJPanel extends javax.swing.JPanel {
 
+    ResultSet rs = null;
+    String macanho = "";
+    String a = "";
+
     /**
      * Creates new form CanHoJPanel
      */
     public CanHoJPanel() {
         initComponents();
-        test();
+        this.loadPhong(macanho);
+        this.loadTang();
+
+        
+  
     }
 
     /**
@@ -38,12 +52,12 @@ public class CanHoJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        choice1 = new java.awt.Choice();
         jPanel1 = new javax.swing.JPanel();
         txt_TimKiem = new javax.swing.JTextField();
         lblTimKiem = new javax.swing.JLabel();
         lblTang = new javax.swing.JLabel();
         cbo_Tang = new javax.swing.JComboBox<>();
+        lblThongBaoCanHo = new javax.swing.JLabel();
         sclCanHo = new javax.swing.JScrollPane();
         pnlCanHo = new javax.swing.JPanel();
 
@@ -67,6 +81,11 @@ public class CanHoJPanel extends javax.swing.JPanel {
         jPanel1.add(txt_TimKiem, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 40, 270, 40));
 
         lblTimKiem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/duan/Logo/Search.png"))); // NOI18N
+        lblTimKiem.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblTimKiemMouseClicked(evt);
+            }
+        });
         jPanel1.add(lblTimKiem, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 40, -1, -1));
 
         lblTang.setFont(new java.awt.Font("Arial", 1, 20)); // NOI18N
@@ -75,12 +94,20 @@ public class CanHoJPanel extends javax.swing.JPanel {
         jPanel1.add(lblTang, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 50, -1, 30));
 
         cbo_Tang.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        cbo_Tang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tầng 1", "Tầng 2", "Tầng 3", "Tầng 4", "Tầng 5", "Tầng 6" }));
         cbo_Tang.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         cbo_Tang.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         cbo_Tang.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
         cbo_Tang.setMaximumSize(new java.awt.Dimension(87, 26));
+        cbo_Tang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbo_TangActionPerformed(evt);
+            }
+        });
         jPanel1.add(cbo_Tang, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 50, 240, -1));
+
+        lblThongBaoCanHo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblThongBaoCanHo.setForeground(new java.awt.Color(255, 153, 153));
+        jPanel1.add(lblThongBaoCanHo, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 80, 400, 40));
 
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 120));
 
@@ -93,63 +120,139 @@ public class CanHoJPanel extends javax.swing.JPanel {
         add(sclCanHo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 1040, 540));
     }// </editor-fold>//GEN-END:initComponents
 
+    private void lblTimKiemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblTimKiemMouseClicked
+        macanho = txt_TimKiem.getText();
+        loadPhong(macanho);
+        txt_TimKiem.setText("");
+    }//GEN-LAST:event_lblTimKiemMouseClicked
+
+    private void cbo_TangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbo_TangActionPerformed
+        a = (String) cbo_Tang.getSelectedItem();  
+        loadPhongbyTang(Integer.parseInt(a));
+    }//GEN-LAST:event_cbo_TangActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cbo_Tang;
-    private java.awt.Choice choice1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblTang;
+    private javax.swing.JLabel lblThongBaoCanHo;
     private javax.swing.JLabel lblTimKiem;
     private javax.swing.JPanel pnlCanHo;
     private javax.swing.JScrollPane sclCanHo;
     private javax.swing.JTextField txt_TimKiem;
     // End of variables declaration//GEN-END:variables
 
-    
-    private void test() {
-        int a = 52;
-        
-        for (int i = 0; i < a; i++) {
-            ThongTinCanHo ttch = new ThongTinCanHo((i+1));
-            JLabel canho = new JLabel();
-            canho.setPreferredSize(new Dimension(245, 200));
-            //o.setBackground(new Color(121, 196, 71));
+    private void loadTang() {
+        rs = JDBC.executeQuery("SELECT DISTINCT  Tang FROM dbo.CanHo ");
+        try {
+            while (rs.next()) {                
+                cbo_Tang.addItem(rs.getString("Tang"));
 
-            canho.setForeground(new Color(121, 196, 71));
-            canho.setCursor(new Cursor(Cursor.HAND_CURSOR));
-            canho.setBackground(new Color(121, 196, 71));
-            canho.setPreferredSize(new Dimension(245, 195));
-            canho.setHorizontalAlignment((int) LEFT_ALIGNMENT);
-            canho.setIcon(new ImageIcon(this.getClass().getResource("/duan/Logo/LogoMain.png")));
+            }
+            cbo_Tang.setSelectedItem(1);
+            
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void loadPhong(String masocanho) {
+        pnlCanHo.removeAll();
+        CanHoDAO canho = new CanHoDAO();
+        List<CanHo> listCanHo = canho.select(masocanho);
+        int soluongcanho = listCanHo.size();
+
+        for (CanHo canHo : listCanHo) {
             String noidung = "<html> <style>body{\n"
                     + "    text-align: center;\n"
                     + "    font-family: 'Tahoma';\n"
                     + "    color: white;\n"
                     + "}</style>";
-            noidung += "<b><font size=5> Phòng " + (i + 1) + " </b></font>";
-            canho.setText(noidung);
-            canho.setHorizontalAlignment(SwingConstants.CENTER);
-            canho.setOpaque(true);
-            canho.addMouseListener(new MouseAdapter() {
+            noidung += "<b><font size=5> Căn Hộ  " + (canHo.getMaSoCanHo()) + " </b></font>";
+            ThongTinCanHo ttch = new ThongTinCanHo((canHo.getMaSoCanHo()));
+            JLabel canholb = new JLabel();
+            canholb.setPreferredSize(new Dimension(245, 200));
+            canholb.setForeground(new Color(121, 196, 71));
+            canholb.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            canholb.setBackground(new Color(121, 196, 71));
+            canholb.setPreferredSize(new Dimension(245, 195));
+            canholb.setHorizontalAlignment((int) LEFT_ALIGNMENT);
+            canholb.setIcon(new ImageIcon(this.getClass().getResource("/duan/Logo/LogoMain.png")));
+
+            canholb.setText(noidung);
+            canholb.setToolTipText("Click vào để xem thông tin căn hộ " + (canHo.getMaSoCanHo()));
+            canholb.setHorizontalAlignment(SwingConstants.CENTER);
+            canholb.setOpaque(true);
+            canholb.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     ttch.setVisible(true);
                 }
-                
+
             });
-            pnlCanHo.add(canho);
-            if (a % 4 != 0) {
-                pnlCanHo.setPreferredSize(new Dimension(1000, 200 * (a / 4 + 1)));
-                
-            } else {
-                pnlCanHo.setPreferredSize(new Dimension(1000, 200 * (a / 4)));
-                
-            }
-            
+            pnlCanHo.add(canholb);
+        }
+
+        if (soluongcanho % 4 != 0) {
+            pnlCanHo.setPreferredSize(new Dimension(1000, 200 * (soluongcanho / 4 + 1)));
+
+        } else {
+            pnlCanHo.setPreferredSize(new Dimension(1000, 200 * (soluongcanho / 4)));
+
         }
         sclCanHo.setPreferredSize(new Dimension(1014, 500));
         sclCanHo.getVerticalScrollBar().setUnitIncrement(20);
         sclCanHo.setViewportView(pnlCanHo);
-        
     }
+
+    private void loadPhongbyTang(int tang) {
+        pnlCanHo.removeAll();
+        CanHoDAO canho = new CanHoDAO();
+        List<CanHo> listCanHo = canho.selectbyTang(tang);
+        int soluongcanho = listCanHo.size();
+
+        for (CanHo canHo : listCanHo) {
+            String noidung = "<html> <style>body{\n"
+                    + "    text-align: center;\n"
+                    + "    font-family: 'Tahoma';\n"
+                    + "    color: white;\n"
+                    + "}</style>";
+            noidung += "<b><font size=5> Căn Hộ  " + (canHo.getMaSoCanHo()) + " </b></font>";
+            ThongTinCanHo ttch = new ThongTinCanHo((canHo.getMaSoCanHo()));
+            JLabel canholb = new JLabel();
+            canholb.setPreferredSize(new Dimension(245, 200));
+            canholb.setForeground(new Color(121, 196, 71));
+            canholb.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            canholb.setBackground(new Color(121, 196, 71));
+            canholb.setPreferredSize(new Dimension(245, 195));
+            canholb.setHorizontalAlignment((int) LEFT_ALIGNMENT);
+            canholb.setIcon(new ImageIcon(this.getClass().getResource("/duan/Logo/LogoMain.png")));
+
+            canholb.setText(noidung);
+            canholb.setToolTipText("Click vào để xem thông tin căn hộ " + (canHo.getMaSoCanHo()));
+            canholb.setHorizontalAlignment(SwingConstants.CENTER);
+            canholb.setOpaque(true);
+            canholb.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    ttch.setVisible(true);
+                }
+
+            });
+            pnlCanHo.add(canholb);
+        }
+
+        if (soluongcanho % 4 != 0) {
+            pnlCanHo.setPreferredSize(new Dimension(1000, 200 * (soluongcanho / 4 + 1)));
+
+        } else {
+            pnlCanHo.setPreferredSize(new Dimension(1000, 200 * (soluongcanho / 4)));
+
+        }
+        sclCanHo.setPreferredSize(new Dimension(1014, 500));
+        sclCanHo.getVerticalScrollBar().setUnitIncrement(20);
+        sclCanHo.setViewportView(pnlCanHo);
+    }
+
 }

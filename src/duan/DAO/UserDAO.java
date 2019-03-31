@@ -36,10 +36,7 @@ public class UserDAO {
 
     }
 
-   /* public List<Users> select() {
-        String sql = "SELECT * FROM dbo.Users";
-        return select(sql);
-    }*/
+  
     
       public Users select(){
         String sql = "SELECT * FROM dbo.Users ";
