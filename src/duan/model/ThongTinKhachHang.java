@@ -68,7 +68,7 @@ public class ThongTinKhachHang {
         this.CMND = CMND;
     }
 
-    public boolean isGioiTinh() {
+    public boolean getGioiTinh() {
         return GioiTinh;
     }
 
