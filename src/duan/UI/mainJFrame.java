@@ -37,7 +37,7 @@ public class mainJFrame extends javax.swing.JFrame {
         controller.setEvent(listItem);
     }
     int xMouse, yMouse;
-    ThongTinTK thongTinAcc = new ThongTinTK();
+    ThongTinTKJFrame thongTinAcc = new ThongTinTKJFrame();
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -117,7 +117,7 @@ public class mainJFrame extends javax.swing.JFrame {
         pnl_Menu.setBackground(new java.awt.Color(0, 51, 51));
         pnl_Menu.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 1, 1, 0, new java.awt.Color(102, 102, 102)));
 
-        jpn_QLCC.setBackground(new java.awt.Color(255, 102, 0));
+        jpn_QLCC.setBackground(new java.awt.Color(255, 204, 51));
 
         jLabel2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -156,7 +156,9 @@ public class mainJFrame extends javax.swing.JFrame {
         jpn_TrangChu.setLayout(jpn_TrangChuLayout);
         jpn_TrangChuLayout.setHorizontalGroup(
             jpn_TrangChuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jlbTrangChu, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
+            .addGroup(jpn_TrangChuLayout.createSequentialGroup()
+                .addComponent(jlbTrangChu, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 21, Short.MAX_VALUE))
         );
         jpn_TrangChuLayout.setVerticalGroup(
             jpn_TrangChuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

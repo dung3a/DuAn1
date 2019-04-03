@@ -314,7 +314,7 @@ public class DangNhapJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_lbl_TitlebarMouseDragged
 
     private void btn_QuenMKMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_QuenMKMouseClicked
-        new QuenMatKhau().setVisible(true);
+        new QuenMatKhauJFrame().setVisible(true);
     }//GEN-LAST:event_btn_QuenMKMouseClicked
 
     /**
