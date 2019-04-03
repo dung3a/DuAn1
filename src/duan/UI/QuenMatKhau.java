@@ -23,12 +23,12 @@ import javax.swing.JOptionPane;
  *
  * @author anhdu
  */
-public class QuenMatKhauJFrame extends javax.swing.JFrame {
+public class QuenMatKhau extends javax.swing.JFrame {
 
     /**
      * Creates new form QuenMatKhau
      */
-    public QuenMatKhauJFrame() {
+    public QuenMatKhau() {
         initComponents();
         setResizable(false);
         setLocationRelativeTo(null);
@@ -57,6 +57,7 @@ public class QuenMatKhauJFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
+        setMaximumSize(new java.awt.Dimension(520, 190));
         setUndecorated(true);
 
         lblQuenMK.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
@@ -259,23 +260,21 @@ public class QuenMatKhauJFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(QuenMatKhauJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(QuenMatKhau.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(QuenMatKhauJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(QuenMatKhau.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(QuenMatKhauJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(QuenMatKhau.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(QuenMatKhauJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(QuenMatKhau.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new QuenMatKhauJFrame().setVisible(true);
+                new QuenMatKhau().setVisible(true);
             }
         });
     }

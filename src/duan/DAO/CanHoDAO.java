@@ -18,16 +18,20 @@ import java.util.List;
  */
 public class CanHoDAO {
 
-
+  /*  public CanHo select() {
+        String sql = "SELECT * FROM dbo.CanHo";
+        List<CanHo> list = select(sql);
+        return list.size() > 0 ? list.get(0) : null; //Độ dài của list > 0 thì lấy dòng đầu tiên ngược lại null
+    }
+*/
     public List<CanHo> select(String masocanho ){ 
         String sql = "SELECT * FROM dbo.CanHo WHERE MaSoCanHo LIKE  ? ";
         return select(sql , "%"+masocanho+"%");
     }
-     public List<CanHo> selectbyTang(String Tang ){ 
+     public List<CanHo> selectbyTang(int Tang ){ 
         String sql = "SELECT * FROM dbo.CanHo WHERE Tang =  ? ";
         return select(sql , Tang);
     }
-
     
     private List<CanHo> select(String sql, Object... args) {
         List<CanHo> list = new ArrayList<>();

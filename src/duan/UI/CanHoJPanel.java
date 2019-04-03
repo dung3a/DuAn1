@@ -39,6 +39,8 @@ public class CanHoJPanel extends javax.swing.JPanel {
         this.loadPhong(macanho);
         this.loadTang();
 
+        
+  
     }
 
     /**
@@ -92,7 +94,6 @@ public class CanHoJPanel extends javax.swing.JPanel {
         jPanel1.add(lblTang, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 50, -1, 30));
 
         cbo_Tang.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        cbo_Tang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả" }));
         cbo_Tang.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         cbo_Tang.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         cbo_Tang.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
@@ -121,18 +122,13 @@ public class CanHoJPanel extends javax.swing.JPanel {
 
     private void lblTimKiemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblTimKiemMouseClicked
         macanho = txt_TimKiem.getText();
-        if (checkTim()) {
-            loadPhong(macanho);
-            txt_TimKiem.setText("");
-        }
+        loadPhong(macanho);
+        txt_TimKiem.setText("");
     }//GEN-LAST:event_lblTimKiemMouseClicked
 
     private void cbo_TangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbo_TangActionPerformed
-        a = (String) cbo_Tang.getSelectedItem();
-
-        this.loadPhongbyTang(a);
-
-
+        a = (String) cbo_Tang.getSelectedItem();  
+        loadPhongbyTang(Integer.parseInt(a));
     }//GEN-LAST:event_cbo_TangActionPerformed
 
 
@@ -147,19 +143,15 @@ public class CanHoJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txt_TimKiem;
     // End of variables declaration//GEN-END:variables
 
-     private void clickSlect(String masocanho,String canhoID) {
-        new ThongTinCanHoJFrame(masocanho, canhoID ).setVisible(true);
-    }
-    
     private void loadTang() {
         rs = JDBC.executeQuery("SELECT DISTINCT  Tang FROM dbo.CanHo ");
         try {
-            while (rs.next()) {
+            while (rs.next()) {                
                 cbo_Tang.addItem(rs.getString("Tang"));
 
             }
             cbo_Tang.setSelectedItem(1);
-
+            
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -178,6 +170,7 @@ public class CanHoJPanel extends javax.swing.JPanel {
                     + "    color: white;\n"
                     + "}</style>";
             noidung += "<b><font size=5> Căn Hộ  " + (canHo.getMaSoCanHo()) + " </b></font>";
+            ThongTinCanHo ttch = new ThongTinCanHo((canHo.getMaSoCanHo()));
             JLabel canholb = new JLabel();
             canholb.setPreferredSize(new Dimension(245, 200));
             canholb.setForeground(new Color(121, 196, 71));
@@ -194,7 +187,7 @@ public class CanHoJPanel extends javax.swing.JPanel {
             canholb.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    clickSlect(canHo.getMaSoCanHo(),canHo.getCanHoid());
+                    ttch.setVisible(true);
                 }
 
             });
@@ -213,16 +206,10 @@ public class CanHoJPanel extends javax.swing.JPanel {
         sclCanHo.setViewportView(pnlCanHo);
     }
 
-    private void loadPhongbyTang(String tang) {
+    private void loadPhongbyTang(int tang) {
         pnlCanHo.removeAll();
         CanHoDAO canho = new CanHoDAO();
-        List<CanHo> listCanHo = null;
-        if (tang.equals("Tất cả")) {
-            listCanHo = canho.select("");
-        } else {
-            listCanHo = canho.selectbyTang(tang);
-        }
-
+        List<CanHo> listCanHo = canho.selectbyTang(tang);
         int soluongcanho = listCanHo.size();
 
         for (CanHo canHo : listCanHo) {
@@ -232,6 +219,7 @@ public class CanHoJPanel extends javax.swing.JPanel {
                     + "    color: white;\n"
                     + "}</style>";
             noidung += "<b><font size=5> Căn Hộ  " + (canHo.getMaSoCanHo()) + " </b></font>";
+            ThongTinCanHo ttch = new ThongTinCanHo((canHo.getMaSoCanHo()));
             JLabel canholb = new JLabel();
             canholb.setPreferredSize(new Dimension(245, 200));
             canholb.setForeground(new Color(121, 196, 71));
@@ -248,7 +236,7 @@ public class CanHoJPanel extends javax.swing.JPanel {
             canholb.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    clickSlect(canHo.getMaSoCanHo(),canHo.getCanHoid());
+                    ttch.setVisible(true);
                 }
 
             });
@@ -267,15 +255,4 @@ public class CanHoJPanel extends javax.swing.JPanel {
         sclCanHo.setViewportView(pnlCanHo);
     }
 
-    private boolean checkTim() {
-        if (txt_TimKiem.getText().trim().equals("")) {
-            lblThongBaoCanHo.setText("Không để trống ô tìm kiếm");
-            return false;
-        } else if (!txt_TimKiem.getText().trim().matches("\\d+")) {
-            lblThongBaoCanHo.setText("Mã số căn hộ chỉ nhập số và không có khoảng trắng");
-            return false;
-        }
-        lblThongBaoCanHo.setText("");
-        return true;
-    }
 }
