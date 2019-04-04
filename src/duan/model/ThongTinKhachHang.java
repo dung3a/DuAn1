@@ -17,15 +17,17 @@ public class ThongTinKhachHang {
     private boolean GioiTinh ;
     private String Sodt ;
     private String Email ;
+    private String TrangThai ;
     private boolean ChuHo  ;
     
     public ThongTinKhachHang(){
     }
+
     
     public ThongTinKhachHang(String KhachHangid , String CanHoid ,
                              String TenKhachHang , String CMND , 
                              boolean GioiTinh , String Sodt , 
-                             String Email , boolean ChuHo ){
+                             String Email , String TrangThai, boolean ChuHo ){
       this.KhachHangid = KhachHangid;
       this.CanHoid = CanHoid;
       this.TenKhachHang = TenKhachHang;
@@ -33,6 +35,7 @@ public class ThongTinKhachHang {
       this.GioiTinh = GioiTinh;
       this.Sodt = Sodt;
       this.Email = Email;
+      this.TrangThai = TrangThai;
       this.ChuHo = ChuHo;
     }
 
@@ -92,6 +95,14 @@ public class ThongTinKhachHang {
         this.Email = Email;
     }
 
+    public String getTrangThai() {
+        return TrangThai;
+    }
+
+    public void setTrangThai(String TrangThai) {
+        this.TrangThai = TrangThai;
+    }
+    
     public boolean isChuHo() {
         return ChuHo;
     }

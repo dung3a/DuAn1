@@ -396,7 +396,7 @@ public class ThongTinCanHoJFrame extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) tblKhachhang.getModel();
         model.setRowCount(0);
         try {
-            List<ThongTinKhachHang> list_SP = khachHangDAO.select(canhoID);
+            List<ThongTinKhachHang> list_SP = khachHangDAO.selectByIdCH(canhoID);
             for (ThongTinKhachHang KhachHang : list_SP) {   //Tạo vong lặp for 
 
                 Object[] row = {
@@ -416,7 +416,7 @@ public class ThongTinCanHoJFrame extends javax.swing.JFrame {
     }
 
     void setModel_KH(ThongTinKhachHang model) {
-        txtmaKhachhang.setText(String.valueOf(model.getKhachHangid()));
+        txtmaKhachhang.setText(model.getKhachHangid());
         txtTenKH.setText(model.getTenKhachHang());
         txtCMND.setText(model.getCMND());
         txtSoDT.setText(model.getSodt());
@@ -436,7 +436,7 @@ public class ThongTinCanHoJFrame extends javax.swing.JFrame {
     void edit_KH() {
         try {
             String makh =  (String) tblKhachhang.getValueAt(index, 0);
-            ThongTinKhachHang model = khachHangDAO.selectById(makh);
+            ThongTinKhachHang model = khachHangDAO.selectByIdKH(makh);
             if (model != null) {
                 this.setModel_KH(model);
             }
