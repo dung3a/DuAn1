@@ -18,6 +18,7 @@ import java.util.List;
  */
 public class ThongTinKhachHangDAO {
 
+    /*Thông Tin Căn Hộ*/
     public List<ThongTinKhachHang> selectByIdCH(String canhoID) {
         String sql = "SELECT TT.KhachHangId, TT.CanHoId , TT.TenKhachHang, TT.CMND ,TT.GioiTinh ,TT.SoDT ,TT.Email ,TT.TrangThai ,TT.ChuHo "
                 + "FROM dbo.ThongTinKhachHang AS TT JOIN dbo.CanHo AS CH "
@@ -32,21 +33,44 @@ public class ThongTinKhachHangDAO {
         return list.size() > 0 ? list.get(0) : null;
     }
 
+    /*Quản Lý nhân Khẩu*/
     public List<ThongTinKhachHang> selectQuanLy(String MaKH) {
-        String sql = "SELECT TT.KhachHangId,CH.MaSoCanHo,TT.TenKhachHang,"
-                + "TT.CMND,TT.GioiTinh,TT.SoDT,TT.Email,TT.TrangThai,TT.ChuHo  "
-                + "FROM dbo.ThongTinKhachHang AS TT JOIN dbo.CanHo AS CH"
-                + " ON  CH.CanHoId = TT.CanHoId OR CH.KhachHangId = TT.KhachHangId";
+        String sql = "SELECT *FROM dbo.ThongTinKhachHang ";
         return select(sql);
     }
 
+    public List<ThongTinKhachHang> selectByKeyword(String keyword) {
+        String sql = "  SELECT * FROM dbo.ThongTinKhachHang WHERE KhachHangId LIKE ? OR TenKhachHang LIKE ?";
+        return select(sql, "%" + keyword + "%","%" + keyword + "%");
+    }
+
     public ThongTinKhachHang selectQuanLyByIdKH(String MaKH) {
-        String sql = "SELECT TT.KhachHangId,CH.MaSoCanHo,TT.TenKhachHang,TT.CMND"
-                + ",TT.GioiTinh,TT.SoDT,TT.Email,TT.TrangThai,TT.ChuHo "
-                + "FROM dbo.ThongTinKhachHang AS TT JOIN dbo.CanHo AS CH "
-                + "ON  CH.CanHoId = TT.CanHoId WHERE TT.KhachHangId = ?";
+        String sql = "SELECT * FROM dbo.ThongTinKhachHang WHERE KhachHangId = ?";
         List<ThongTinKhachHang> list = select(sql, MaKH);
         return list.size() > 0 ? list.get(0) : null;
+    }
+
+    public void insertQuanLy(ThongTinKhachHang model) {
+        String sql = "  INSERT dbo.ThongTinKhachHang (  TenKhachHang ,CMND ,GioiTinh ,SoDT ,Email ,TrangThai )VALUES  (?,?,?,?,?,?)";
+        JDBC.executeUpdate(sql,
+                model.getTenKhachHang(),
+                model.getCMND(),
+                model.getGioiTinh(),
+                model.getSodt(),
+                model.getEmail(),
+                model.getTrangThai());
+    }
+
+    public void updateQuanLy(ThongTinKhachHang model) {
+        String sql = "  UPDATE dbo.ThongTinKhachHang SET TenKhachHang = ?, CMND = ?, GioiTinh = ?, SoDT = ?, Email = ?, TrangThai = ? WHERE KhachHangId = ?";
+        JDBC.executeUpdate(sql,
+                model.getTenKhachHang(),
+                model.getCMND(),
+                model.getGioiTinh(),
+                model.getSodt(),
+                model.getEmail(),
+                model.getTrangThai(),
+                model.getKhachHangid());
     }
 
     private List<ThongTinKhachHang> select(String sql, Object... args) {
