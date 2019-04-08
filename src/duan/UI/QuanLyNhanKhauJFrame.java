@@ -5,7 +5,6 @@
  */
 package duan.UI;
 
-
 import duan.DAO.ThongTinKhachHangDAO2;
 import duan.model.ThongTinKhachHang;
 import java.sql.SQLException;
@@ -28,10 +27,11 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
         this.setTitle("Quản Lý Nhân Khẩu");
         this.load_KhachHang();
         this.newModel();
+        this.loadcboTrangThai();
     }
     int xMouse, yMouse;
     int check = 1;
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -393,7 +393,7 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
     private void lbl_TitlebarMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_TitlebarMouseDragged
         int x = evt.getXOnScreen();
         int y = evt.getYOnScreen();
-        
+
         this.setLocation(x - xMouse, y - yMouse);
     }//GEN-LAST:event_lbl_TitlebarMouseDragged
 
@@ -414,6 +414,7 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
         index = tblQuanLyNhanKhau.getSelectedRow();
         check = 2;
         this.edit_KH();
+        this.loadcboTrangThai();
     }//GEN-LAST:event_tblQuanLyNhanKhauMouseClicked
 
     private void pnlNhapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlNhapMouseClicked
@@ -421,6 +422,10 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
             this.insert_KH();
             this.load_KhachHang();
             this.newModel();
+        } else {
+            this.newModel();
+            check = 1;
+            this.loadcboTrangThai();
         }
     }//GEN-LAST:event_pnlNhapMouseClicked
 
@@ -431,13 +436,15 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
             this.load_KhachHang();
             this.newModel();
         }
-
+        this.loadcboTrangThai();
     }//GEN-LAST:event_pnlSuaMouseClicked
 
     private void lblTimMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblTimMouseClicked
-        this.newModel();     
+        this.newModel();
         this.load_KhachHangByID();
         txtTimKiem.setText("");
+        check = 1;
+        this.loadcboTrangThai();
     }//GEN-LAST:event_lblTimMouseClicked
 
     /**
@@ -512,6 +519,20 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
 
     ThongTinKhachHangDAO2 khachHangDAO = new ThongTinKhachHangDAO2();
     int index = 0;
+
+    void loadcboTrangThai() {
+        if (check == 1) {
+            cboTrangThai.removeAllItems();
+            cboTrangThai.addItem("Đang Ở");
+        } else {
+            cboTrangThai.removeAllItems();
+            cboTrangThai.addItem("Đang Ở");
+            cboTrangThai.addItem("Tạm Vắng");
+            cboTrangThai.addItem("Đã Rời Đi");
+        }
+
+    }
+
     
     void load_KhachHang() {
         DefaultTableModel model = (DefaultTableModel) tblQuanLyNhanKhau.getModel();
@@ -536,7 +557,7 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
             System.err.println(e);
         }
     }
-    
+
     void load_KhachHangByID() {
         DefaultTableModel model = (DefaultTableModel) tblQuanLyNhanKhau.getModel();
         model.setRowCount(0);
@@ -560,7 +581,7 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
             System.err.println(e);
         }
     }
-    
+
     void setModel_KH(ThongTinKhachHang model) {
         lblMaKhachHangShow.setText(model.getKhachHangid());
         lblMaCanHoShow.setText(model.getCanHoid());
@@ -574,9 +595,9 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
         } else {
             rdoNu.setSelected(true);
         }
-        
+
     }
-    
+
     void edit_KH() {
         try {
             String makh = (String) tblQuanLyNhanKhau.getValueAt(index, 0);
@@ -589,7 +610,7 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
             System.err.println(e);
         }
     }
-    
+
     ThongTinKhachHang getModel_KH() {
         ThongTinKhachHang model = new ThongTinKhachHang();
         model.setKhachHangid(lblMaKhachHangShow.getText());
@@ -603,14 +624,14 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
         model.setSodt(txtSoDienThoai.getText());
         model.setEmail(txtEmail.getText());
         model.setTrangThai(String.valueOf(cboTrangThai.getSelectedItem()));
-        
+
         return model;
     }
-    
+
     void insert_KH() {
         ThongTinKhachHang model = getModel_KH();
         try {
-            
+
             khachHangDAO.insertQuanLy(model);
             this.load_KhachHang();
             //Hiển thị thông báo
@@ -620,11 +641,11 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
             System.err.println(e);
         }
     }
-    
+
     void update_KH() {
         ThongTinKhachHang model = getModel_KH();
         try {
-            
+
             khachHangDAO.updateQuanLy(model);
             this.load_KhachHang();
             JOptionPane.showMessageDialog(this, "Cập nhật thông tin khách hàng thành thành công!");
@@ -633,7 +654,7 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Cập nhật thông tin khách hàng thành thất bại!");
         }
     }
-    
+
     void newModel() {
         txtCMND.setText("");
         txtEmail.setText("");
@@ -644,7 +665,7 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
         cboTrangThai.setSelectedItem("Đang ở");
         rdoNam.setSelected(true);
     }
-    
+
     private boolean checkTT() {
         if (txtHoTen.getText().trim().equals("")) {
             JOptionPane.showMessageDialog(this, "Không để trống tên của khách hàng!");
