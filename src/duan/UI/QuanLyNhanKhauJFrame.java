@@ -5,7 +5,8 @@
  */
 package duan.UI;
 
-import duan.DAO.ThongTinKhachHangDAO;
+
+import duan.DAO.ThongTinKhachHangDAO2;
 import duan.model.ThongTinKhachHang;
 import java.sql.SQLException;
 import java.util.List;
@@ -26,10 +27,11 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setTitle("Quản Lý Nhân Khẩu");
         this.load_KhachHang();
+        this.newModel();
     }
     int xMouse, yMouse;
     int check = 1;
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -158,7 +160,6 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
 
         lblMaKhachHangShow.setFont(new java.awt.Font("Tahoma", 3, 16)); // NOI18N
         lblMaKhachHangShow.setForeground(new java.awt.Color(255, 51, 0));
-        lblMaKhachHangShow.setText("Mã Khách");
 
         lblMaCanHoShow.setFont(new java.awt.Font("Tahoma", 3, 16)); // NOI18N
         lblMaCanHoShow.setForeground(new java.awt.Color(255, 51, 0));
@@ -312,9 +313,9 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
                         .addComponent(lblTim)))
                 .addGap(90, 90, 90))
             .addGroup(pnlMainLayout.createSequentialGroup()
-                .addGap(368, 368, 368)
+                .addGap(363, 363, 363)
                 .addComponent(pnlNhap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(55, 55, 55)
+                .addGap(72, 72, 72)
                 .addComponent(pnlSua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -332,18 +333,17 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
                 .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblTim))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addGap(34, 34, 34)
                 .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlMainLayout.createSequentialGroup()
-                        .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblMaKH)
-                            .addComponent(lblMaKhachHangShow))
-                        .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(pnlMainLayout.createSequentialGroup()
-                                .addGap(32, 32, 32)
+                                .addComponent(lblMaKH)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                                 .addComponent(lblCanHo))
                             .addGroup(pnlMainLayout.createSequentialGroup()
-                                .addGap(30, 30, 30)
+                                .addComponent(lblMaKhachHangShow, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(22, 22, 22)
                                 .addComponent(lblMaCanHoShow, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(29, 29, 29)
                         .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -393,7 +393,7 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
     private void lbl_TitlebarMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_TitlebarMouseDragged
         int x = evt.getXOnScreen();
         int y = evt.getYOnScreen();
-
+        
         this.setLocation(x - xMouse, y - yMouse);
     }//GEN-LAST:event_lbl_TitlebarMouseDragged
 
@@ -420,20 +420,24 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
         if (checkTT() && check == 1) {
             this.insert_KH();
             this.load_KhachHang();
+            this.newModel();
         }
     }//GEN-LAST:event_pnlNhapMouseClicked
 
     private void pnlSuaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlSuaMouseClicked
+        check = 1;
         if (checkTT()) {
             this.update_KH();
             this.load_KhachHang();
+            this.newModel();
         }
 
     }//GEN-LAST:event_pnlSuaMouseClicked
 
     private void lblTimMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblTimMouseClicked
-
+        this.newModel();     
         this.load_KhachHangByID();
+        txtTimKiem.setText("");
     }//GEN-LAST:event_lblTimMouseClicked
 
     /**
@@ -506,9 +510,9 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
     private javax.swing.JTextField txtTimKiem;
     // End of variables declaration//GEN-END:variables
 
-    ThongTinKhachHangDAO khachHangDAO = new ThongTinKhachHangDAO();
+    ThongTinKhachHangDAO2 khachHangDAO = new ThongTinKhachHangDAO2();
     int index = 0;
-
+    
     void load_KhachHang() {
         DefaultTableModel model = (DefaultTableModel) tblQuanLyNhanKhau.getModel();
         model.setRowCount(0);
@@ -532,7 +536,7 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
             System.err.println(e);
         }
     }
-
+    
     void load_KhachHangByID() {
         DefaultTableModel model = (DefaultTableModel) tblQuanLyNhanKhau.getModel();
         model.setRowCount(0);
@@ -556,7 +560,7 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
             System.err.println(e);
         }
     }
-
+    
     void setModel_KH(ThongTinKhachHang model) {
         lblMaKhachHangShow.setText(model.getKhachHangid());
         lblMaCanHoShow.setText(model.getCanHoid());
@@ -570,9 +574,9 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
         } else {
             rdoNu.setSelected(true);
         }
-
+        
     }
-
+    
     void edit_KH() {
         try {
             String makh = (String) tblQuanLyNhanKhau.getValueAt(index, 0);
@@ -585,7 +589,7 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
             System.err.println(e);
         }
     }
-
+    
     ThongTinKhachHang getModel_KH() {
         ThongTinKhachHang model = new ThongTinKhachHang();
         model.setKhachHangid(lblMaKhachHangShow.getText());
@@ -599,14 +603,14 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
         model.setSodt(txtSoDienThoai.getText());
         model.setEmail(txtEmail.getText());
         model.setTrangThai(String.valueOf(cboTrangThai.getSelectedItem()));
-
+        
         return model;
     }
-
+    
     void insert_KH() {
         ThongTinKhachHang model = getModel_KH();
         try {
-
+            
             khachHangDAO.insertQuanLy(model);
             this.load_KhachHang();
             //Hiển thị thông báo
@@ -616,11 +620,11 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
             System.err.println(e);
         }
     }
-
+    
     void update_KH() {
         ThongTinKhachHang model = getModel_KH();
         try {
-
+            
             khachHangDAO.updateQuanLy(model);
             this.load_KhachHang();
             JOptionPane.showMessageDialog(this, "Cập nhật thông tin khách hàng thành thành công!");
@@ -629,7 +633,18 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Cập nhật thông tin khách hàng thành thất bại!");
         }
     }
-
+    
+    void newModel() {
+        txtCMND.setText("");
+        txtEmail.setText("");
+        txtHoTen.setText("");
+        txtSoDienThoai.setText("");
+        lblMaCanHoShow.setText("");
+        lblMaKhachHangShow.setText("");
+        cboTrangThai.setSelectedItem("Đang ở");
+        rdoNam.setSelected(true);
+    }
+    
     private boolean checkTT() {
         if (txtHoTen.getText().trim().equals("")) {
             JOptionPane.showMessageDialog(this, "Không để trống tên của khách hàng!");

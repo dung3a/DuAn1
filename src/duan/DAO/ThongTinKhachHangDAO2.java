@@ -16,43 +16,47 @@ import java.util.List;
  *
  * @author anhdu
  */
-public class ThongTinKhachHangDAO {
-
-    /*Thông Tin Căn Hộ*/
-    public List<ThongTinKhachHang> selectByIdCH(String canhoID) {
-        String sql = "  SELECT TT.*,dbo.CHECK_CHUHO(ch.CanHoId,TT.KhachHangId) "
-                + "FROM dbo.ThongTinKhachHang AS TT JOIN dbo.CanHo AS CH "
-                + "ON CH.KhachHangId = TT.KhachHangId OR CH.CanHoId = TT.CanHoId WHERE CH.CanHoId = ?";
-        return select(sql, canhoID);
+public class ThongTinKhachHangDAO2 {
+    /*Quản Lý nhân Khẩu*/
+    public List<ThongTinKhachHang> selectQuanLy(String MaKH) {
+        String sql = "SELECT * FROM dbo.ThongTinKhachHang ";
+        return select(sql);
     }
 
-    public ThongTinKhachHang selectByIdKH(String MaKH) {
-        String sql = "SELECT TT.*,dbo.CHECK_CHUHO(CH.CanHoId,TT.KhachHangId) "
-                + "FROM dbo.ThongTinKhachHang AS TT JOIN dbo.CanHo AS CH "
-                + "ON  CH.CanHoId = TT.CanHoId OR CH.KhachHangId = TT.KhachHangId "
-                + "WHERE TT.KhachHangId = ?";
+    public List<ThongTinKhachHang> selectByKeyword(String keyword) {
+        String sql = "  SELECT * FROM dbo.ThongTinKhachHang WHERE KhachHangId LIKE ? OR TenKhachHang LIKE ? OR CMND LIKE ?";
+        return select(sql, "%" + keyword + "%", "%" + keyword + "%", keyword);
+    }
+
+    public ThongTinKhachHang selectQuanLyByIdKH(String MaKH) {
+        String sql = "SELECT * FROM dbo.ThongTinKhachHang WHERE KhachHangId = ?";
         List<ThongTinKhachHang> list = select(sql, MaKH);
         return list.size() > 0 ? list.get(0) : null;
     }
 
-    public void updateCanHo(ThongTinKhachHang model) {
-        String sql = "  UPDATE dbo.ThongTinKhachHang SET CanHoId = ? WHERE KhachHangId = ?";
+    public void insertQuanLy(ThongTinKhachHang model) {
+        String sql = "  INSERT dbo.ThongTinKhachHang (  TenKhachHang ,CMND ,GioiTinh ,SoDT ,Email ,TrangThai )VALUES  (?,?,?,?,?,?)";
         JDBC.executeUpdate(sql,
-                model.getCanHoid(),
+                model.getTenKhachHang(),
+                model.getCMND(),
+                model.getGioiTinh(),
+                model.getSodt(),
+                model.getEmail(),
+                model.getTrangThai());
+    }
+
+    public void updateQuanLy(ThongTinKhachHang model) {
+        String sql = "  UPDATE dbo.ThongTinKhachHang SET TenKhachHang = ?, CMND = ?, GioiTinh = ?, SoDT = ?, Email = ?, TrangThai = ? WHERE KhachHangId = ?";
+        JDBC.executeUpdate(sql,
+                model.getTenKhachHang(),
+                model.getCMND(),
+                model.getGioiTinh(),
+                model.getSodt(),
+                model.getEmail(),
+                model.getTrangThai(),
                 model.getKhachHangid());
     }
 
-    public void updateChuHo(String Ten, String CanhoId) {
-        String sql = "UPDATE dbo.CanHo SET KhachHangId = (SELECT KhachHangId FROM dbo.ThongTinKhachHang WHERE TenKhachHang LIKE ?),"
-                + " CMNDChuHo = (SELECT CMND FROM dbo.ThongTinKhachHang WHERE TenKhachHang LIKE ?)"
-                + " WHERE CanHo.CanHoId = ?";
-        JDBC.executeUpdate(sql, "%" + Ten + "%", "%" + Ten + "%", CanhoId);
-    }
-
-    public void  updateLoaiBo(String MaKH){
-        String sql="UPDATE dbo.ThongTinKhachHang SET CanHoId = NULL, TrangThai = N'Đã Rời Đi' WHERE KhachHangId = ?";
-        JDBC.executeUpdate(sql, MaKH);
-    }
     private List<ThongTinKhachHang> select(String sql, Object... args) {
         List<ThongTinKhachHang> list = new ArrayList<>();
         try {
@@ -82,7 +86,6 @@ public class ThongTinKhachHangDAO {
         model.setSodt(rs.getString(6));
         model.setEmail(rs.getString(7));
         model.setTrangThai(rs.getString(8));
-        model.setChuHo(rs.getBoolean(9));
         return model;
     }
 }
