@@ -25,7 +25,7 @@ public class ThongTinKhachHangDAO {
     }
 
     public List<ThongTinKhachHang> listTTKH() {
-        String sql = " SELECT * FROM dbo.ThongTinKhachHang ";
+        String sql = " SELECT TT.KhachHangId,CH.MaSoCanHo,TT.TenKhachHang,TT.CMND,TT.GioiTinh,TT.SoDT,TT.Email,TT.TrangThai,TT.ChuHo FROM dbo.ThongTinKhachHang TT JOIN dbo.CanHo CH ON CH.CanHoId = TT.CanHoId ";
         return select2(sql);
     }
 
@@ -42,7 +42,7 @@ public class ThongTinKhachHangDAO {
     }
 
     public void updateCanHo(ThongTinKhachHang model) {
-        String sql = "  UPDATE dbo.ThongTinKhachHang SET CanHoId = ? WHERE KhachHangId = ?";
+        String sql = "  UPDATE dbo.ThongTinKhachHang SET CanHoId = ? , Chuho = 0 WHERE KhachHangId = ?";
         JDBC.executeUpdate(sql,
                 model.getCanHoid(),
                 model.getKhachHangid());

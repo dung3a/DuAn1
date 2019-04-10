@@ -6,12 +6,21 @@
 package duan.UI;
 
 
+import duan.DAO.ThongTinKhachHangDAO;
 import duan.DAO.ThongTinKhachHangDAO2;
 import duan.model.ThongTinKhachHang;
 import java.sql.SQLException;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import java.io.File;
+import java.io.FileOutputStream;
+
 
 /**
  *
@@ -67,6 +76,8 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         pnlNhap = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
+        pnlNhap1 = new javax.swing.JPanel();
+        jLabel13 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1000, 700));
@@ -255,6 +266,32 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
             .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
         );
 
+        pnlNhap1.setBackground(new java.awt.Color(153, 204, 0));
+        pnlNhap1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        pnlNhap1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pnlNhap1MouseClicked(evt);
+            }
+        });
+
+        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/duan/Logo/Wite.png"))); // NOI18N
+        jLabel13.setText("Nhập ");
+
+        javax.swing.GroupLayout pnlNhap1Layout = new javax.swing.GroupLayout(pnlNhap1);
+        pnlNhap1.setLayout(pnlNhap1Layout);
+        pnlNhap1Layout.setHorizontalGroup(
+            pnlNhap1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlNhap1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE))
+        );
+        pnlNhap1Layout.setVerticalGroup(
+            pnlNhap1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout pnlMainLayout = new javax.swing.GroupLayout(pnlMain);
         pnlMain.setLayout(pnlMainLayout);
         pnlMainLayout.setHorizontalGroup(
@@ -313,7 +350,9 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
                         .addComponent(lblTim)))
                 .addGap(90, 90, 90))
             .addGroup(pnlMainLayout.createSequentialGroup()
-                .addGap(363, 363, 363)
+                .addGap(226, 226, 226)
+                .addComponent(pnlNhap1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38)
                 .addComponent(pnlNhap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(72, 72, 72)
                 .addComponent(pnlSua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -371,7 +410,8 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(pnlNhap, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlSua, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(pnlSua, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlNhap1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(9, 9, 9)
                 .addComponent(sclNhanKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -440,6 +480,10 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
         txtTimKiem.setText("");
     }//GEN-LAST:event_lblTimMouseClicked
 
+    private void pnlNhap1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlNhap1MouseClicked
+        ExportExcel();
+    }//GEN-LAST:event_pnlNhap1MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -480,6 +524,7 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cboTrangThai;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel lblCMND;
     private javax.swing.JLabel lblCanHo;
     private javax.swing.JLabel lblClose;
@@ -497,6 +542,7 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_Titlebar;
     private javax.swing.JPanel pnlMain;
     private javax.swing.JPanel pnlNhap;
+    private javax.swing.JPanel pnlNhap1;
     private javax.swing.JPanel pnlSua;
     private javax.swing.ButtonGroup rdoGioiTinh;
     private javax.swing.JRadioButton rdoNam;
@@ -714,5 +760,71 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
             return false;
         }
         return true;
+    }
+    
+    
+    
+    public void ExportExcel(){
+         try {
+            XSSFWorkbook workbook = new XSSFWorkbook();
+            XSSFSheet spreadsheet = workbook.createSheet("Danh Sách Khách Hàng");
+ 
+            XSSFRow row = null;
+            Cell cell = null;
+ 
+            row = spreadsheet.createRow((short) 2);
+            row.setHeight((short) 500);
+            cell = row.createCell(0, CellType.STRING);
+            cell.setCellValue("DANH SÁCH KHÁCH HÀNG");
+ 
+            row = spreadsheet.createRow((short) 3);
+            row.setHeight((short) 500);
+            cell = row.createCell(0, CellType.STRING);
+            cell.setCellValue("STT");
+            cell = row.createCell(1, CellType.STRING);
+            cell.setCellValue("Mã Khách Hàng");
+            cell = row.createCell(2, CellType.STRING);
+            cell.setCellValue("Họ Và Tên ");
+            cell = row.createCell(3, CellType.STRING);
+            cell.setCellValue("Căn Hộ ");
+            cell = row.createCell(4, CellType.STRING);
+            cell.setCellValue("CMND");
+            cell = row.createCell(5, CellType.STRING);
+            cell.setCellValue("Giới tính");
+            cell = row.createCell(6, CellType.STRING);
+            cell.setCellValue("Số điện thoại");
+            cell = row.createCell(7, CellType.STRING);
+            cell.setCellValue("Email");
+            cell = row.createCell(8, CellType.STRING);
+            cell.setCellValue("Trạng Thái");
+            cell = row.createCell(9, CellType.STRING);
+            cell.setCellValue("Chủ Hộ");
+            
+            ThongTinKhachHang TTKH = new ThongTinKhachHang();
+ 
+            List<ThongTinKhachHang> list = new ThongTinKhachHangDAO().listTTKH();
+ 
+            for (int i = 0; i < list.size(); i++) {
+                ThongTinKhachHang ttkh = list.get(i);
+                row = spreadsheet.createRow((short) 4 + i);
+                row.setHeight((short) 400);
+                row.createCell(0).setCellValue(i + 1);
+                row.createCell(1).setCellValue(ttkh.getKhachHangid());
+                row.createCell(2).setCellValue(ttkh.getTenKhachHang());
+                row.createCell(3).setCellValue(ttkh.getCanHoid());
+                row.createCell(4).setCellValue(ttkh.getCMND());
+                row.createCell(5).setCellValue(ttkh.getGioiTinh() ? "Nam" : "Nữ");
+                row.createCell(6).setCellValue(ttkh.getSodt());
+                row.createCell(7).setCellValue(ttkh.getEmail());
+                row.createCell(8).setCellValue(ttkh.getTrangThai());
+                row.createCell(9).setCellValue(ttkh.isChuHo() ? "X" : " ");
+            }
+ 
+            FileOutputStream out = new FileOutputStream(new File("D:/Khách Hàng.xlsx"));
+            workbook.write(out);
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
