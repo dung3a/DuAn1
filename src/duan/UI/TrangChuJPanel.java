@@ -172,11 +172,6 @@ public class TrangChuJPanel extends javax.swing.JPanel {
         });
 
         jLabel2.setText("Chức Năng 1");
-        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel2MouseClicked(evt);
-            }
-        });
 
         jLabel3.setText("Chức Năng 2");
 
@@ -308,11 +303,6 @@ public class TrangChuJPanel extends javax.swing.JPanel {
     private void pnl_SoNhanKhauMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_SoNhanKhauMouseClicked
         new QuanLyNhanKhauJFrame().setVisible(true);
     }//GEN-LAST:event_pnl_SoNhanKhauMouseClicked
-
-    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
-        // Xuất File Excel
-        
-    }//GEN-LAST:event_jLabel2MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
