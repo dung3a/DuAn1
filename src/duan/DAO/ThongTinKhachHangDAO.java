@@ -24,6 +24,11 @@ public class ThongTinKhachHangDAO {
         return select(sql, canhoID);
     }
 
+    public List<ThongTinKhachHang> listTTKH() {
+        String sql = " SELECT * FROM dbo.ThongTinKhachHang ";
+        return select2(sql);
+    }
+
     public ThongTinKhachHang select(String CanHoID) {
         String sql = "SELECT TT.* FROM dbo.ThongTinKhachHang TT JOIN dbo.CanHo CH ON CH.KhachHangId = TT.KhachHangId WHERE CH.CanHoId = ? ";
         List<ThongTinKhachHang> list = select(sql, CanHoID);
@@ -60,6 +65,25 @@ public class ThongTinKhachHangDAO {
     }
 
     private List<ThongTinKhachHang> select(String sql, Object... args) {
+        List<ThongTinKhachHang> list = new ArrayList<>();
+        try {
+            ResultSet rs = null;
+            try {
+                rs = JDBC.executeQuery(sql, args);
+                while (rs.next()) {
+                    ThongTinKhachHang model = readFromResultSet(rs);
+                    list.add(model);
+                }
+            } finally {
+                rs.getStatement().getConnection().close();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return list;
+    }
+
+    private List<ThongTinKhachHang> select2(String sql, Object... args) {
         List<ThongTinKhachHang> list = new ArrayList<>();
         try {
             ResultSet rs = null;

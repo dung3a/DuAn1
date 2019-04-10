@@ -56,6 +56,8 @@ public class DichVuPhongJPanel extends javax.swing.JPanel {
         lbl_NhapDVPhong = new javax.swing.JLabel();
         jpn_TaoHDThang = new javax.swing.JPanel();
         lbl_TaoHDThang = new javax.swing.JLabel();
+        jpn_NhapDVPhong1 = new javax.swing.JPanel();
+        lbl_NhapDVPhong1 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMaximumSize(new java.awt.Dimension(1040, 660));
@@ -236,22 +238,25 @@ public class DichVuPhongJPanel extends javax.swing.JPanel {
         lbl_NhapDVPhong.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lbl_NhapDVPhong.setForeground(new java.awt.Color(255, 255, 255));
         lbl_NhapDVPhong.setIcon(new javax.swing.ImageIcon(getClass().getResource("/duan/Logo/Wite.png"))); // NOI18N
-        lbl_NhapDVPhong.setText("Nhập ");
+        lbl_NhapDVPhong.setText("Xuất Excel");
 
         javax.swing.GroupLayout jpn_NhapDVPhongLayout = new javax.swing.GroupLayout(jpn_NhapDVPhong);
         jpn_NhapDVPhong.setLayout(jpn_NhapDVPhongLayout);
         jpn_NhapDVPhongLayout.setHorizontalGroup(
             jpn_NhapDVPhongLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpn_NhapDVPhongLayout.createSequentialGroup()
+            .addGroup(jpn_NhapDVPhongLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lbl_NhapDVPhong, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(lbl_NhapDVPhong)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jpn_NhapDVPhongLayout.setVerticalGroup(
             jpn_NhapDVPhongLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lbl_NhapDVPhong, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpn_NhapDVPhongLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(lbl_NhapDVPhong, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jpn_TongDichVu.add(jpn_NhapDVPhong, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 210, -1, -1));
+        jpn_TongDichVu.add(jpn_NhapDVPhong, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, -1, -1));
 
         jpn_TaoHDThang.setBackground(new java.awt.Color(153, 204, 0));
         jpn_TaoHDThang.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -276,6 +281,31 @@ public class DichVuPhongJPanel extends javax.swing.JPanel {
 
         jpn_TongDichVu.add(jpn_TaoHDThang, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 210, -1, -1));
 
+        jpn_NhapDVPhong1.setBackground(new java.awt.Color(153, 204, 0));
+        jpn_NhapDVPhong1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jpn_NhapDVPhong1.setMaximumSize(new java.awt.Dimension(99, 36));
+        jpn_NhapDVPhong1.setMinimumSize(new java.awt.Dimension(99, 36));
+
+        lbl_NhapDVPhong1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lbl_NhapDVPhong1.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_NhapDVPhong1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/duan/Logo/Wite.png"))); // NOI18N
+        lbl_NhapDVPhong1.setText("Nhập ");
+
+        javax.swing.GroupLayout jpn_NhapDVPhong1Layout = new javax.swing.GroupLayout(jpn_NhapDVPhong1);
+        jpn_NhapDVPhong1.setLayout(jpn_NhapDVPhong1Layout);
+        jpn_NhapDVPhong1Layout.setHorizontalGroup(
+            jpn_NhapDVPhong1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpn_NhapDVPhong1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lbl_NhapDVPhong1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jpn_NhapDVPhong1Layout.setVerticalGroup(
+            jpn_NhapDVPhong1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lbl_NhapDVPhong1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+        );
+
+        jpn_TongDichVu.add(jpn_NhapDVPhong1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 210, -1, -1));
+
         add(jpn_TongDichVu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1040, 260));
     }// </editor-fold>//GEN-END:initComponents
 
@@ -285,6 +315,7 @@ public class DichVuPhongJPanel extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> cbo_Thang;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel jpn_NhapDVPhong;
+    private javax.swing.JPanel jpn_NhapDVPhong1;
     private javax.swing.JPanel jpn_NhapSLXe;
     private javax.swing.JPanel jpn_NutTruyVan;
     private javax.swing.JPanel jpn_SoLuongXe;
@@ -296,6 +327,7 @@ public class DichVuPhongJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel lbl_Nam;
     private javax.swing.JLabel lbl_Nhap;
     private javax.swing.JLabel lbl_NhapDVPhong;
+    private javax.swing.JLabel lbl_NhapDVPhong1;
     private javax.swing.JLabel lbl_TaoHDThang;
     private javax.swing.JLabel lbl_Thang;
     private javax.swing.JLabel lbl_TienDVCoBan;
