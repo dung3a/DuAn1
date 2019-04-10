@@ -44,14 +44,14 @@ public class DichVuJPanel extends javax.swing.JPanel {
 
         dichVu_HoaDonJPanel1 = new duan.UI.HoaDonJPanel();
         jpn_Menu = new javax.swing.JPanel();
+        jpn_HoaDon = new javax.swing.JPanel();
+        lbl_HoaDon = new javax.swing.JLabel();
         jpn_SinhHoat = new javax.swing.JPanel();
         lbl_SinhHoat = new javax.swing.JLabel();
         jpn_Internet = new javax.swing.JPanel();
         lbl_Internet = new javax.swing.JLabel();
         jpn_DichVu = new javax.swing.JPanel();
         lbl_DichVu = new javax.swing.JLabel();
-        jpn_HoaDon = new javax.swing.JPanel();
-        lbl_HoaDon = new javax.swing.JLabel();
         jpn_ViewDichVu = new javax.swing.JPanel();
 
         setBackground(new java.awt.Color(255, 255, 255));
@@ -62,6 +62,29 @@ public class DichVuJPanel extends javax.swing.JPanel {
 
         jpn_Menu.setBackground(new java.awt.Color(0, 102, 102));
         jpn_Menu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jpn_HoaDon.setBackground(new java.awt.Color(121, 196, 71));
+
+        lbl_HoaDon.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        lbl_HoaDon.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_HoaDon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_HoaDon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/duan/Logo/Bill.png"))); // NOI18N
+        lbl_HoaDon.setText("    Hóa Đơn ");
+
+        javax.swing.GroupLayout jpn_HoaDonLayout = new javax.swing.GroupLayout(jpn_HoaDon);
+        jpn_HoaDon.setLayout(jpn_HoaDonLayout);
+        jpn_HoaDonLayout.setHorizontalGroup(
+            jpn_HoaDonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lbl_HoaDon, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
+        );
+        jpn_HoaDonLayout.setVerticalGroup(
+            jpn_HoaDonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpn_HoaDonLayout.createSequentialGroup()
+                .addComponent(lbl_HoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
+        jpn_Menu.add(jpn_HoaDon, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 40));
 
         jpn_SinhHoat.setBackground(new java.awt.Color(121, 196, 71));
         jpn_SinhHoat.setMaximumSize(new java.awt.Dimension(233, 43));
@@ -84,7 +107,7 @@ public class DichVuJPanel extends javax.swing.JPanel {
             .addComponent(lbl_SinhHoat, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
         );
 
-        jpn_Menu.add(jpn_SinhHoat, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 40));
+        jpn_Menu.add(jpn_SinhHoat, new org.netbeans.lib.awtextra.AbsoluteConstraints(275, 10, -1, 40));
 
         jpn_Internet.setBackground(new java.awt.Color(121, 196, 71));
         jpn_Internet.setMaximumSize(new java.awt.Dimension(233, 43));
@@ -108,7 +131,7 @@ public class DichVuJPanel extends javax.swing.JPanel {
             .addComponent(lbl_Internet, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
         );
 
-        jpn_Menu.add(jpn_Internet, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 10, -1, 40));
+        jpn_Menu.add(jpn_Internet, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 10, -1, 40));
 
         jpn_DichVu.setBackground(new java.awt.Color(121, 196, 71));
 
@@ -129,30 +152,7 @@ public class DichVuJPanel extends javax.swing.JPanel {
             .addComponent(lbl_DichVu, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
         );
 
-        jpn_Menu.add(jpn_DichVu, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 10, 240, 40));
-
-        jpn_HoaDon.setBackground(new java.awt.Color(121, 196, 71));
-
-        lbl_HoaDon.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
-        lbl_HoaDon.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_HoaDon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbl_HoaDon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/duan/Logo/Bill.png"))); // NOI18N
-        lbl_HoaDon.setText("    Tiền Dịch Vụ");
-
-        javax.swing.GroupLayout jpn_HoaDonLayout = new javax.swing.GroupLayout(jpn_HoaDon);
-        jpn_HoaDon.setLayout(jpn_HoaDonLayout);
-        jpn_HoaDonLayout.setHorizontalGroup(
-            jpn_HoaDonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lbl_HoaDon, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
-        );
-        jpn_HoaDonLayout.setVerticalGroup(
-            jpn_HoaDonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpn_HoaDonLayout.createSequentialGroup()
-                .addComponent(lbl_HoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-
-        jpn_Menu.add(jpn_HoaDon, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 10, -1, 40));
+        jpn_Menu.add(jpn_DichVu, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 10, 240, 40));
 
         add(jpn_Menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1040, 60));
 
@@ -169,7 +169,7 @@ public class DichVuJPanel extends javax.swing.JPanel {
         );
         jpn_ViewDichVuLayout.setVerticalGroup(
             jpn_ViewDichVuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 610, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         add(jpn_ViewDichVu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 1040, 610));
