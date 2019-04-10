@@ -513,6 +513,38 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
     ThongTinKhachHangDAO2 khachHangDAO = new ThongTinKhachHangDAO2();
     int index = 0;
     
+     public String chuanHoa(String str) {
+        str = str.trim();
+        str = str.replaceAll("\\s+", " ");
+        return str;
+    }
+
+    public String loaiboKhoangTrang(String str) {
+        str = chuanHoa(str);
+        String temp[] = str.split(" ");
+        str = "";
+        for (int i = 0; i < temp.length; i++) {
+            str += String.valueOf(temp[i].charAt(0)).toUpperCase() + temp[i].substring(1);
+            if (i < temp.length - 1) {
+                str += "";
+            }
+        }
+        return str;
+    }
+
+    void loadcboTrangThai() {
+        if (check == 1) {
+            cboTrangThai.removeAllItems();
+            cboTrangThai.addItem("Đang Ở");
+        } else {
+            cboTrangThai.removeAllItems();
+            cboTrangThai.addItem("Đang Ở");
+            cboTrangThai.addItem("Tạm Vắng");
+            cboTrangThai.addItem("Đã Rời Đi");
+        }
+
+    }
+
     void load_KhachHang() {
         DefaultTableModel model = (DefaultTableModel) tblQuanLyNhanKhau.getModel();
         model.setRowCount(0);
@@ -536,7 +568,7 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
             System.err.println(e);
         }
     }
-    
+
     void load_KhachHangByID() {
         DefaultTableModel model = (DefaultTableModel) tblQuanLyNhanKhau.getModel();
         model.setRowCount(0);
@@ -560,13 +592,13 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
             System.err.println(e);
         }
     }
-    
+
     void setModel_KH(ThongTinKhachHang model) {
         lblMaKhachHangShow.setText(model.getKhachHangid());
         lblMaCanHoShow.setText(model.getCanHoid());
         txtHoTen.setText(model.getTenKhachHang());
-        txtCMND.setText(model.getCMND());
-        txtSoDienThoai.setText(model.getSodt());
+        txtCMND.setText(loaiboKhoangTrang(model.getCMND()));
+        txtSoDienThoai.setText(loaiboKhoangTrang(model.getSodt()));
         txtEmail.setText(model.getEmail());
         cboTrangThai.setSelectedItem(model.getTrangThai());
         if (model.getGioiTinh()) {
@@ -574,9 +606,9 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
         } else {
             rdoNu.setSelected(true);
         }
-        
+
     }
-    
+
     void edit_KH() {
         try {
             String makh = (String) tblQuanLyNhanKhau.getValueAt(index, 0);
@@ -589,28 +621,28 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
             System.err.println(e);
         }
     }
-    
+
     ThongTinKhachHang getModel_KH() {
         ThongTinKhachHang model = new ThongTinKhachHang();
         model.setKhachHangid(lblMaKhachHangShow.getText());
         model.setTenKhachHang(txtHoTen.getText());
-        model.setCMND(txtCMND.getText());
+        model.setCMND(loaiboKhoangTrang(txtCMND.getText()));
         if (rdoNam.isSelected()) {
             model.setGioiTinh(true);
         } else {
             model.setGioiTinh(false);
         }
-        model.setSodt(txtSoDienThoai.getText());
+        model.setSodt(loaiboKhoangTrang(txtSoDienThoai.getText()));
         model.setEmail(txtEmail.getText());
         model.setTrangThai(String.valueOf(cboTrangThai.getSelectedItem()));
-        
+
         return model;
     }
-    
+
     void insert_KH() {
         ThongTinKhachHang model = getModel_KH();
         try {
-            
+
             khachHangDAO.insertQuanLy(model);
             this.load_KhachHang();
             //Hiển thị thông báo
@@ -620,20 +652,19 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
             System.err.println(e);
         }
     }
-    
+
     void update_KH() {
         ThongTinKhachHang model = getModel_KH();
         try {
-            
+
             khachHangDAO.updateQuanLy(model);
-            this.load_KhachHang();
             JOptionPane.showMessageDialog(this, "Cập nhật thông tin khách hàng thành thành công!");
         } catch (Exception e) {
             System.err.println(e);
             JOptionPane.showMessageDialog(this, "Cập nhật thông tin khách hàng thành thất bại!");
         }
     }
-    
+
     void newModel() {
         txtCMND.setText("");
         txtEmail.setText("");
@@ -644,7 +675,7 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
         cboTrangThai.setSelectedItem("Đang ở");
         rdoNam.setSelected(true);
     }
-    
+
     private boolean checkTT() {
         if (txtHoTen.getText().trim().equals("")) {
             JOptionPane.showMessageDialog(this, "Không để trống tên của khách hàng!");
@@ -655,17 +686,31 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
         } else if (txtCMND.getText().trim().equals("")) {
             JOptionPane.showMessageDialog(this, "Không để trống CMND của khách hàng!");
             return false;
+        } else if (!loaiboKhoangTrang(txtCMND.getText().trim()).matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "Số CMND không được chứa kí tự!");
+            return false;
         } else if (!txtHoTen.getText().matches("[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ\\s]{1,}")) {
             JOptionPane.showMessageDialog(this, "Tên khách hàng không được chứa kí tự đặc biệt!");
             return false;
         } else if (!txtEmail.getText().matches("^[\\w-_\\.]+\\@[\\w&&[^0-9]]+\\.[\\w&&[^0-9]]+$")) {
             JOptionPane.showMessageDialog(this, "Định dạng email của khách hàng không đúng!");
             return false;
-        } else if (!txtSoDienThoai.getText().trim().matches("\\d+")) {
+        } else if (!loaiboKhoangTrang(txtSoDienThoai.getText().trim()).matches("\\d+")) {
             JOptionPane.showMessageDialog(this, "Số điện thoại không được chứa kí tự!");
             return false;
-        } else if (txtSoDienThoai.getText().length() > 10) {
+
+        } else if (loaiboKhoangTrang(txtSoDienThoai.getText()).length() > 10) {
             JOptionPane.showMessageDialog(this, "Số điện thoại không quá 10 số!");
+            return false;
+        } else if (txtSoDienThoai.getText().length() < 8) {
+            JOptionPane.showMessageDialog(this, "Số điện thoại không dưới 8 số!");
+            return false;
+        } else if (!txtSoDienThoai.getText().substring(0,2).equals("09") 
+                || !txtSoDienThoai.getText().substring(0,2).equals("08")
+                || !txtSoDienThoai.getText().substring(0,2).equals("03")
+                || !txtSoDienThoai.getText().substring(0,2).equals("05")
+                || !txtSoDienThoai.getText().substring(0,2).equals("07") ){
+            JOptionPane.showMessageDialog(this, "Đầu Số Bắt Đầu Bằng 09 | 08 | 07 | 05 | 03 !");
             return false;
         }
         return true;

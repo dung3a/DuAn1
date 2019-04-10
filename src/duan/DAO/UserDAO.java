@@ -41,7 +41,7 @@ public class UserDAO {
       public Users select(){
         String sql = "SELECT * FROM dbo.Users ";
         List<Users> list = select(sql);
-        return list.size() > 0 ? list.get(0) : null; //Độ dài của list > 0 thì lấy dòng đầu tiên ngược lại null
+        return list.size() > 0 ? list.get(0) : null; 
     }
     
     private List<Users> select(String sql, Object... args) {

@@ -20,17 +20,23 @@ public class ThongTinKhachHangDAO {
 
     /*Thông Tin Căn Hộ*/
     public List<ThongTinKhachHang> selectByIdCH(String canhoID) {
-        String sql = "  SELECT TT.*,dbo.CHECK_CHUHO(ch.CanHoId,TT.KhachHangId) "
-                + "FROM dbo.ThongTinKhachHang AS TT JOIN dbo.CanHo AS CH "
-                + "ON CH.KhachHangId = TT.KhachHangId OR CH.CanHoId = TT.CanHoId WHERE CH.CanHoId = ?";
+        String sql = "  SELECT * FROM dbo.ThongTinKhachHang WHERE CanHoId = ?";
         return select(sql, canhoID);
     }
 
+    public List<ThongTinKhachHang> listTTKH() {
+        String sql = " SELECT * FROM dbo.ThongTinKhachHang ";
+        return select2(sql);
+    }
+
+    public ThongTinKhachHang selectChuHo(String CanHoID) {
+        String sql = "SELECT TT.* FROM dbo.ThongTinKhachHang TT JOIN dbo.CanHo CH ON CH.KhachHangId = TT.KhachHangId WHERE CH.CanHoId = ? ";
+        List<ThongTinKhachHang> list = select(sql, CanHoID);
+        return list.size() > 0 ? list.get(0) : null;
+    }
+
     public ThongTinKhachHang selectByIdKH(String MaKH) {
-        String sql = "SELECT TT.*,dbo.CHECK_CHUHO(CH.CanHoId,TT.KhachHangId) "
-                + "FROM dbo.ThongTinKhachHang AS TT JOIN dbo.CanHo AS CH "
-                + "ON  CH.CanHoId = TT.CanHoId OR CH.KhachHangId = TT.KhachHangId "
-                + "WHERE TT.KhachHangId = ?";
+        String sql = "SELECT * FROM dbo.ThongTinKhachHang WHERE KhachHangId = ?";
         List<ThongTinKhachHang> list = select(sql, MaKH);
         return list.size() > 0 ? list.get(0) : null;
     }
@@ -42,18 +48,42 @@ public class ThongTinKhachHangDAO {
                 model.getKhachHangid());
     }
 
-    public void updateChuHo(String Ten, String CanhoId) {
-        String sql = "UPDATE dbo.CanHo SET KhachHangId = (SELECT KhachHangId FROM dbo.ThongTinKhachHang WHERE TenKhachHang LIKE ?),"
-                + " CMNDChuHo = (SELECT CMND FROM dbo.ThongTinKhachHang WHERE TenKhachHang LIKE ?)"
-                + " WHERE CanHo.CanHoId = ?";
-        JDBC.executeUpdate(sql, "%" + Ten + "%", "%" + Ten + "%", CanhoId);
+    public void updateChuHo(String Ten, String Ten2, String CanhoId) {
+        String sql = "UPDATE dbo.ThongTinKhachHang SET ChuHo = 0 WHERE TenKhachHang LIKE ? AND CanHoId = ?\n"
+                + "UPDATE dbo.ThongTinKhachHang SET ChuHo = 1 WHERE TenKhachHang LIKE ? AND CanHoId = ?";
+        JDBC.executeUpdate(sql, "%" + Ten + "%", CanhoId, "%" + Ten2 + "%", CanhoId);
     }
 
-    public void  updateLoaiBo(String MaKH){
-        String sql="UPDATE dbo.ThongTinKhachHang SET CanHoId = NULL, TrangThai = N'Đã Rời Đi' WHERE KhachHangId = ?";
+    public void updateChuSoHuu(String MaKH, String MaCanHo) {
+        String sql = "UPDATE dbo.CanHo SET KhachHangId = ? WHERE CanHoId = ?";
+        JDBC.executeUpdate(sql, MaKH, MaCanHo);
+    }
+
+    public void updateLoaiBo(String MaKH) {
+        String sql = "UPDATE dbo.ThongTinKhachHang SET CanHoId = NULL , Chuho = 0 WHERE KhachHangId = ?";
         JDBC.executeUpdate(sql, MaKH);
     }
+
     private List<ThongTinKhachHang> select(String sql, Object... args) {
+        List<ThongTinKhachHang> list = new ArrayList<>();
+        try {
+            ResultSet rs = null;
+            try {
+                rs = JDBC.executeQuery(sql, args);
+                while (rs.next()) {
+                    ThongTinKhachHang model = readFromResultSet(rs);
+                    list.add(model);
+                }
+            } finally {
+                rs.getStatement().getConnection().close();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return list;
+    }
+
+    private List<ThongTinKhachHang> select2(String sql, Object... args) {
         List<ThongTinKhachHang> list = new ArrayList<>();
         try {
             ResultSet rs = null;

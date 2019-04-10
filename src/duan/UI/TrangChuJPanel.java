@@ -22,6 +22,7 @@ public class TrangChuJPanel extends javax.swing.JPanel {
         jpn_menu.hide();
         this.soNguoi();
         this.soCanHo();
+        this.soXe();
     }
 
     /**
@@ -341,6 +342,16 @@ private void soCanHo(){
         ResultSet rs = JDBC.executeQuery("SELECT COUNT(CanHoId) FROM dbo.CanHo");
     if (rs.next()) {
         lbl_TongSoCanHo.setText(rs.getString(1));
+    }
+    } catch (Exception e) {
+    }   
+}
+
+private void soXe(){
+    try {
+        ResultSet rs = JDBC.executeQuery("SELECT SUM(SoLuong) FROM dbo.GuiXe");
+    if (rs.next()) {
+        lbl_TongSoPhuongTien.setText(rs.getString(1));
     }
     } catch (Exception e) {
     }   

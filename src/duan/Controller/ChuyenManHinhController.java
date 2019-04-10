@@ -5,9 +5,10 @@ import duan.UI.TrangChuJPanel;
 import duan.UI.CanHoJPanel;
 import duan.UI.DichVuJPanel;
 import duan.UI.DichVuPhongJPanel;
-import duan.UI.HoaDonJPanel;
+import duan.UI.TienDichVuJPanel;
 import duan.UI.InternetJPanel;
 import duan.UI.SinhHoatJPanel;
+import duan.UI.TienDichVuJPanel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
@@ -50,7 +51,7 @@ public class ChuyenManHinhController {
 
         root.removeAll();
         root.setLayout(new BorderLayout());
-        root.add(new HoaDonJPanel());
+        root.add(new TienDichVuJPanel());
         root.validate();
         root.repaint();
     }
@@ -89,7 +90,7 @@ public class ChuyenManHinhController {
                     node = new DichVuJPanel();
                     break;
                 case "HoaDon":
-                    node = new HoaDonJPanel();
+                    node = new TienDichVuJPanel();
                     break;
                 case "SinhHoat":
                     node = new SinhHoatJPanel();
