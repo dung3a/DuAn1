@@ -8,6 +8,7 @@ package duan.UI;
 
 import duan.DAO.ThongTinKhachHangDAO;
 import duan.DAO.ThongTinKhachHangDAO2;
+import static duan.JDBC.XuLy.loaiboKhoangTrang;
 import duan.model.ThongTinKhachHang;
 import java.sql.SQLException;
 import java.util.List;
@@ -559,24 +560,6 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
     ThongTinKhachHangDAO2 khachHangDAO = new ThongTinKhachHangDAO2();
     int index = 0;
     
-     public String chuanHoa(String str) {
-        str = str.trim();
-        str = str.replaceAll("\\s+", " ");
-        return str;
-    }
-
-    public String loaiboKhoangTrang(String str) {
-        str = chuanHoa(str);
-        String temp[] = str.split(" ");
-        str = "";
-        for (int i = 0; i < temp.length; i++) {
-            str += String.valueOf(temp[i].charAt(0)).toUpperCase() + temp[i].substring(1);
-            if (i < temp.length - 1) {
-                str += "";
-            }
-        }
-        return str;
-    }
 
     void loadcboTrangThai() {
         if (check == 1) {
@@ -704,10 +687,10 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
         try {
 
             khachHangDAO.updateQuanLy(model);
-            JOptionPane.showMessageDialog(this, "Cập nhật thông tin khách hàng thành thành công!");
+            JOptionPane.showMessageDialog(this, "Cập nhật thông tin khách hàng thành công!");
         } catch (Exception e) {
             System.err.println(e);
-            JOptionPane.showMessageDialog(this, "Cập nhật thông tin khách hàng thành thất bại!");
+            JOptionPane.showMessageDialog(this, "Cập nhật thông tin khách hàng  thất bại!");
         }
     }
 

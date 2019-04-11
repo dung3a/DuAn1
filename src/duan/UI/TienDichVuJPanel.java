@@ -7,6 +7,7 @@ package duan.UI;
 
 import duan.DAO.LoaiXeDAO;
 import duan.JDBC.JDBC;
+import static duan.JDBC.XuLy.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
@@ -213,31 +214,7 @@ public class TienDichVuJPanel extends javax.swing.JPanel {
 
     LoaiXeDAO loaiXeDAO = new LoaiXeDAO();
 
-    public static String xulySo(String chuoi) {
-        double amount = Double.parseDouble(chuoi);
-        DecimalFormat formatter = new DecimalFormat("#,### đ");
-        return formatter.format(amount);
-    }
-
-
-    public String chuanHoa(String str) {
-        str = str.trim();
-        str = str.replaceAll("\\s+", " ");
-        return str;
-    }
-
-    public String loaiboKhoangTrang(String str) {
-        str = chuanHoa(str);
-        String temp[] = str.split(" ");
-        str = "";
-        for (int i = 0; i < temp.length; i++) {
-            str += String.valueOf(temp[i].charAt(0)).toUpperCase() + temp[i].substring(1);
-            if (i < temp.length - 1) {
-                str += "";
-            }
-        }
-        return str;
-    }
+    
 
     void loadTienTrongCoiHT() {
         ResultSet rs1 = JDBC.executeQuery("SELECT GiaTrongCoi FROM dbo.LoaiXe WHERE LoaixeId = 'XD'");
@@ -340,5 +317,7 @@ public class TienDichVuJPanel extends javax.swing.JPanel {
         }
         return true;
     }
+
+   
 
 }

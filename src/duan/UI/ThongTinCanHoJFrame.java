@@ -34,8 +34,6 @@ public class ThongTinCanHoJFrame extends javax.swing.JFrame {
         this.canhoID = canhoID;
         this.loadThanhVien();
         this.loadChuHo();
-        System.err.println(masocanho);
-        System.err.println(canhoID);
     }
     int xMouse, yMouse;
 

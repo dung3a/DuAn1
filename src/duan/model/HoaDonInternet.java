@@ -14,18 +14,16 @@ import java.util.Date;
 public class HoaDonInternet {
     
     private String HoaDonInternetid;
-    private String HoaDonid;
     private String CanHoid;
     private Date NgayThang;
-    private float Tien;
+    private int Tien;
     
     public HoaDonInternet(){
     }
     
-    public HoaDonInternet(String HoaDonInternetid , String HoaDonid , 
-                          String CanHoid ,Date NgayThang ,float Tien){
+    public HoaDonInternet(String HoaDonInternetid , 
+                          String CanHoid ,Date NgayThang ,int Tien){
         this.HoaDonInternetid = HoaDonInternetid;
-        this.HoaDonid = HoaDonid;
         this.CanHoid = CanHoid;
         this.NgayThang = NgayThang;
         this.Tien = Tien;
@@ -39,13 +37,6 @@ public class HoaDonInternet {
         this.HoaDonInternetid = HoaDonInternetid;
     }
 
-    public String getHoaDonid() {
-        return HoaDonid;
-    }
-
-    public void setHoaDonid(String HoaDonid) {
-        this.HoaDonid = HoaDonid;
-    }
 
     public String getCanHoid() {
         return CanHoid;
@@ -63,12 +54,14 @@ public class HoaDonInternet {
         this.NgayThang = NgayThang;
     }
 
-    public float getTien() {
+    public int getTien() {
         return Tien;
     }
 
-    public void setTien(float Tien) {
+    public void setTien(int Tien) {
         this.Tien = Tien;
     }
+
+   
     
 }

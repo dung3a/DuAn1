@@ -19,7 +19,6 @@ public class TrangChuJPanel extends javax.swing.JPanel {
      */
     public TrangChuJPanel() {
         initComponents();
-        jpn_menu.hide();
         this.soNguoi();
         this.soCanHo();
         this.soXe();
@@ -42,12 +41,6 @@ public class TrangChuJPanel extends javax.swing.JPanel {
         lbl_IconHuman = new javax.swing.JLabel();
         lbl_Nguoi = new javax.swing.JLabel();
         lbl_TongSoNguoi = new javax.swing.JLabel();
-        jpn_menu = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jpn_tacvu = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         pnl_SoNhanKhau1 = new javax.swing.JPanel();
         lbl_IconBike = new javax.swing.JLabel();
         lbl_PhuongTien = new javax.swing.JLabel();
@@ -160,83 +153,6 @@ public class TrangChuJPanel extends javax.swing.JPanel {
 
         add(pnl_SoNhanKhau, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 360, -1, -1));
 
-        jpn_menu.setBackground(new java.awt.Color(255, 255, 51));
-        jpn_menu.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jpn_menuMouseExited(evt);
-            }
-        });
-        jpn_menu.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentHidden(java.awt.event.ComponentEvent evt) {
-                jpn_menuComponentHidden(evt);
-            }
-        });
-
-        jLabel2.setText("Chức Năng 1");
-
-        jLabel3.setText("Chức Năng 2");
-
-        jLabel4.setText("Chức Năng 3");
-
-        javax.swing.GroupLayout jpn_menuLayout = new javax.swing.GroupLayout(jpn_menu);
-        jpn_menu.setLayout(jpn_menuLayout);
-        jpn_menuLayout.setHorizontalGroup(
-            jpn_menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpn_menuLayout.createSequentialGroup()
-                .addGroup(jpn_menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jpn_menuLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpn_menuLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(jpn_menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(27, Short.MAX_VALUE))
-        );
-        jpn_menuLayout.setVerticalGroup(
-            jpn_menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpn_menuLayout.createSequentialGroup()
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        add(jpn_menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 460, 140, 170));
-
-        jpn_tacvu.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jpn_tacvuMouseClicked(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jpn_tacvuMouseExited(evt);
-            }
-        });
-
-        jLabel1.setText("Thanh Tác Vụ");
-
-        javax.swing.GroupLayout jpn_tacvuLayout = new javax.swing.GroupLayout(jpn_tacvu);
-        jpn_tacvu.setLayout(jpn_tacvuLayout);
-        jpn_tacvuLayout.setHorizontalGroup(
-            jpn_tacvuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpn_tacvuLayout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(29, Short.MAX_VALUE))
-        );
-        jpn_tacvuLayout.setVerticalGroup(
-            jpn_tacvuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpn_tacvuLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        add(jpn_tacvu, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 590, 140, 60));
-
         pnl_SoNhanKhau1.setBackground(new java.awt.Color(121, 196, 71));
         pnl_SoNhanKhau1.setMaximumSize(new java.awt.Dimension(330, 230));
         pnl_SoNhanKhau1.setMinimumSize(new java.awt.Dimension(330, 230));
@@ -282,37 +198,12 @@ public class TrangChuJPanel extends javax.swing.JPanel {
         add(pnl_SoNhanKhau1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 60, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jpn_tacvuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpn_tacvuMouseClicked
-        jpn_menu.show();
-       
-    }//GEN-LAST:event_jpn_tacvuMouseClicked
-
-    private void jpn_menuMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpn_menuMouseExited
-        jpn_menu.hide();
-                // TODO add your handling code here:
-    }//GEN-LAST:event_jpn_menuMouseExited
-
-    private void jpn_tacvuMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpn_tacvuMouseExited
-       
-        
-    }//GEN-LAST:event_jpn_tacvuMouseExited
-
-    private void jpn_menuComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jpn_menuComponentHidden
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jpn_menuComponentHidden
-
     private void pnl_SoNhanKhauMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_SoNhanKhauMouseClicked
         new QuanLyNhanKhauJFrame().setVisible(true);
     }//GEN-LAST:event_pnl_SoNhanKhauMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JPanel jpn_menu;
-    private javax.swing.JPanel jpn_tacvu;
     private javax.swing.JLabel lbl_CanHo;
     private javax.swing.JLabel lbl_IconBike;
     private javax.swing.JLabel lbl_IconHome;

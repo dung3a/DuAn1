@@ -12,43 +12,63 @@ import java.util.Date;
  * @author Tam Fat
  */
 public class HoaDonSinhHoat {
-    private String HoaDonSinhHoatid ;
+    private int HoaDonSinhHoatid ;
     private String HoaDonid;
     private String CanHoid;
     private Date NgayThang ;
     
+    private String MaHDDien;
     private int ChiSoDienBanDau ;
     private int ChiSoDienCuoi ;
-    private float TienDien;
+    private int TienDien;
     
+    private String MaHDNuoc;
     private int ChiSoNuocBanDau ;
     private int ChiSoNuocCuoi ;
-    private float TienNuoc ;
+    private int TienNuoc ;
     
     public HoaDonSinhHoat(){
     }
     
-    public HoaDonSinhHoat(String HoaDonSinhHoatid , String HoaDonid ,String CanHoid , Date NgayThang ,
-            int ChiSoDienBanDau , int ChiSoDienCuoi , float TienDien ,
-            int ChiSoNuocBanDau , int ChiSoNuocCuoi , float TienNuoc ){
+    public HoaDonSinhHoat(int HoaDonSinhHoatid , String HoaDonid ,String CanHoid , Date NgayThang ,
+            String MaHDDien, int ChiSoDienBanDau , int ChiSoDienCuoi , int TienDien ,
+            String MaHDNuoc,int ChiSoNuocBanDau , int ChiSoNuocCuoi , int TienNuoc ){
         
         this.HoaDonSinhHoatid = HoaDonSinhHoatid;
         this.HoaDonid = HoaDonid;
         this.CanHoid = CanHoid;
         this.NgayThang = NgayThang ;
+        this.MaHDDien = MaHDDien;
         this.ChiSoDienBanDau = ChiSoDienBanDau ;
         this.ChiSoDienCuoi = ChiSoDienCuoi ;
         this.TienDien = TienDien;
+        this.MaHDNuoc = MaHDNuoc;
         this.ChiSoNuocBanDau = ChiSoNuocBanDau ;
         this.ChiSoNuocCuoi = ChiSoNuocCuoi;
         this.TienNuoc = TienNuoc;
     }
 
-    public String getHoaDonSinhHoatid() {
+    public String getMaHDDien() {
+        return MaHDDien;
+    }
+
+    public void setMaHDDien(String MaHDDien) {
+        this.MaHDDien = MaHDDien;
+    }
+
+    public String getMaHDNuoc() {
+        return MaHDNuoc;
+    }
+
+    public void setMaHDNuoc(String MaHDNuoc) {
+        this.MaHDNuoc = MaHDNuoc;
+    }
+
+    public int getHoaDonSinhHoatid() {
         return HoaDonSinhHoatid;
     }
 
-    public void setHoaDonSinhHoatid(String HoaDonSinhHoatid) {
+    public void setHoaDonSinhHoatid(int HoaDonSinhHoatid) {
         this.HoaDonSinhHoatid = HoaDonSinhHoatid;
     }
 
@@ -92,11 +112,11 @@ public class HoaDonSinhHoat {
         this.ChiSoDienCuoi = ChiSoDienCuoi;
     }
 
-    public float getTienDien() {
+    public int getTienDien() {
         return TienDien;
     }
 
-    public void setTienDien(float TienDien) {
+    public void setTienDien(int TienDien) {
         this.TienDien = TienDien;
     }
 
@@ -116,11 +136,11 @@ public class HoaDonSinhHoat {
         this.ChiSoNuocCuoi = ChiSoNuocCuoi;
     }
 
-    public float getTienNuoc() {
+    public int getTienNuoc() {
         return TienNuoc;
     }
 
-    public void setTienNuoc(float TienNuoc) {
+    public void setTienNuoc(int TienNuoc) {
         this.TienNuoc = TienNuoc;
     }
     
