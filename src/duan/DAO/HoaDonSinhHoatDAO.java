@@ -33,6 +33,20 @@ public class HoaDonSinhHoatDAO {
         return list.size() > 0 ? list.get(0) : null;
     }
     
+       public void insertHoaDon(HoaDonSinhHoat model) {
+        String sql = "INSERT dbo.HoaDonSinhHoat ( CanHoId ,NgayThang ,MaHDDien ,ChiSoDienBanDau ,ChiSoDienCuoi ,TienDien ,MaHDNuoc ,ChiSoNuocBanDau ,ChiSoNuocCuoi ,TienNuoc)"
+                + " VALUES  ( ?,GETDATE(), ?,?,?,? ,?, ?,?, ?)";
+        JDBC.executeUpdate(sql,
+                model.getCanHoid(),
+                model.getMaHDDien(),
+                model.getChiSoDienBanDau(),
+                model.getChiSoDienCuoi(),
+                model.getTienDien(),
+                model.getMaHDNuoc(),
+                model.getChiSoNuocBanDau(),
+                model.getChiSoNuocCuoi(),
+                model.getTienNuoc());
+    }
     private List<HoaDonSinhHoat> select(String sql, Object... args) {
         List<HoaDonSinhHoat> list = new ArrayList<>();
         try {

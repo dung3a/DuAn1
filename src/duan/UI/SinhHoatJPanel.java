@@ -183,6 +183,11 @@ public class SinhHoatJPanel extends javax.swing.JPanel {
         lblNhapHoaDon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/duan/Logo/New.png"))); // NOI18N
         lblNhapHoaDon.setText("Nhập Hóa Đơn Tháng");
         lblNhapHoaDon.setOpaque(true);
+        lblNhapHoaDon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                lblNhapHoaDonMousePressed(evt);
+            }
+        });
         jpn_ThanhCongCu.add(lblNhapHoaDon, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 30, 200, 40));
 
         lblSua.setBackground(new java.awt.Color(153, 204, 0));
@@ -270,6 +275,13 @@ public class SinhHoatJPanel extends javax.swing.JPanel {
             this.edit_HD(month, year);
         }
     }//GEN-LAST:event_tbl_ThongKeMouseClicked
+
+    private void lblNhapHoaDonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNhapHoaDonMousePressed
+         if (checkDaCo(month, year)) {
+                this.checkTonTaiCanHo();
+                check = 0;
+            }
+    }//GEN-LAST:event_lblNhapHoaDonMousePressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -384,4 +396,65 @@ public class SinhHoatJPanel extends javax.swing.JPanel {
         return CanHoID;
     }
 
+    HoaDonSinhHoat getModel_KH() {
+        HoaDonSinhHoat model = new HoaDonSinhHoat();
+        model.setCanHoid(CanhoId());
+        model.setMaHDDien(txt_MaHoaDonDien.getText());
+        model.setChiSoDienBanDau(Integer.parseInt(txt_ChiSoDienDau.getText()));
+        model.setChiSoDienCuoi(Integer.parseInt(txt_ChiSoDienDau.getText()));
+        model.setTienDien(Integer.parseInt(txt_TienDien.getText()));     
+        model.setMaHDNuoc(txt_maHoaDonNuoc.getText());
+        model.setChiSoNuocBanDau(Integer.parseInt(txt_ChiSoNuocDau.getText()));
+        model.setChiSoNuocCuoi(Integer.parseInt(txt_ChiSoNuocCuoi.getText()));
+        model.setTienNuoc(Integer.parseInt(txt_TienNuoc.getText()));
+        return model;
+    }
+    void insert_HD() {
+        HoaDonSinhHoat model = getModel_KH();
+        try {
+            hoaDonSinhHoatDAO.insertHoaDon(model);
+            this.load_HoaDon(month, year);
+            JOptionPane.showMessageDialog(this, "Thêm hóa đơn căn hộ " + txt_CanHo.getText() + " thành công!");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Thêm hóa đơn thất bại!");
+            System.err.println(e);
+        }
+    }
+
+       void checkTonTaiCanHo() {
+        rs = JDBC.executeQuery("SELECT MaSoCanHo FROM dbo.CanHo WHERE MaSoCanHo = ? ", txt_CanHo.getText());
+        try {
+            if (rs.next()) {
+                String CHID = rs.getString(1);
+                if (CHID != null) {
+                    insert_HD();
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Sai mã căn hộ hoặc không tồn tại căn hộ này");
+                txt_CanHo.setText("");
+            }
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+    }
+    
+       boolean checkDaCo(int Month, int Year) {
+        rs = JDBC.executeQuery("SELECT CanHoId FROM dbo.HoaDonSinhHoat"
+                + " WHERE CanHoId = ? AND MONTH(NgayThang) = ? AND YEAR(NgayThang) = ?",
+                CanhoId(), Month, Year);
+        try {
+            while (rs.next()) {
+                String CHID = rs.getString(1);
+                System.err.println(CHID);
+                if (CHID.equals(CanhoId())) {
+                    JOptionPane.showMessageDialog(this, "Căn hộ " + txt_CanHo.getText() + " đã có hóa đơn tháng này");
+                    return false;
+                }
+            }
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+        return true;
+    }
+       
 }
