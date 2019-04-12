@@ -24,6 +24,8 @@ public class QuanLyXe extends javax.swing.JFrame {
       //  this.load_Xe();
  
     }
+    
+    
     int check = 1;
     int index = 0 ;
     int xMouse, yMouse;
