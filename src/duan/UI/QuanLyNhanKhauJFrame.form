@@ -137,7 +137,7 @@
               </Group>
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="226" max="-2" attributes="0"/>
-                  <Component id="pnlNhap1" min="-2" max="-2" attributes="0"/>
+                  <Component id="pnlXuatExcel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                   <Component id="pnlNhap" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
@@ -213,7 +213,7 @@
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="pnlNhap" alignment="1" max="32767" attributes="0"/>
                       <Component id="pnlSua" alignment="1" max="32767" attributes="0"/>
-                      <Component id="pnlNhap1" alignment="0" max="32767" attributes="0"/>
+                      <Component id="pnlXuatExcel" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
                   <Component id="sclNhanKhau" min="-2" pref="341" max="-2" attributes="0"/>
@@ -644,7 +644,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JPanel" name="pnlNhap1">
+        <Container class="javax.swing.JPanel" name="pnlXuatExcel">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="cc" red="99" type="rgb"/>
@@ -656,7 +656,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="pnlNhap1MouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="pnlXuatExcelMouseClicked"/>
           </Events>
 
           <Layout>
@@ -664,18 +664,19 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabel13" pref="81" max="32767" attributes="0"/>
+                      <Component id="lblXuatExcel" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jLabel13" alignment="1" pref="36" max="32767" attributes="0"/>
+                  <Component id="lblXuatExcel" alignment="1" pref="36" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="jLabel13">
+            <Component class="javax.swing.JLabel" name="lblXuatExcel">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="1"/>
@@ -686,7 +687,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/duan/Logo/Wite.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Nh&#x1ead;p "/>
+                <Property name="text" type="java.lang.String" value="Xu&#x1ea5;t Excel"/>
               </Properties>
             </Component>
           </SubComponents>

@@ -27,8 +27,7 @@ public class CanHoDAO {
         String sql = "SELECT * FROM dbo.CanHo WHERE Tang =  ? ";
         return select(sql , Tang);
     }
-
-    
+  
     private List<CanHo> select(String sql, Object... args) {
         List<CanHo> list = new ArrayList<>();
         try {
