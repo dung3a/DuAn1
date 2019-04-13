@@ -181,23 +181,28 @@ public class SinhHoatJPanel extends javax.swing.JPanel {
         lblNhapHoaDon.setForeground(new java.awt.Color(255, 255, 255));
         lblNhapHoaDon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblNhapHoaDon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/duan/Logo/New.png"))); // NOI18N
-        lblNhapHoaDon.setText("Nhập Hóa Đơn Tháng");
+        lblNhapHoaDon.setText("Nhập Hóa Đơn ");
         lblNhapHoaDon.setOpaque(true);
         lblNhapHoaDon.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 lblNhapHoaDonMousePressed(evt);
             }
         });
-        jpn_ThanhCongCu.add(lblNhapHoaDon, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 30, 200, 40));
+        jpn_ThanhCongCu.add(lblNhapHoaDon, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 30, 160, 40));
 
-        lblSua.setBackground(new java.awt.Color(153, 204, 0));
+        lblSua.setBackground(new java.awt.Color(255, 153, 0));
         lblSua.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblSua.setForeground(new java.awt.Color(255, 255, 255));
         lblSua.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblSua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/duan/Logo/Maintenance.png"))); // NOI18N
-        lblSua.setText("Sửa");
+        lblSua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/duan/Logo/Updates_25px.png"))); // NOI18N
+        lblSua.setText("Cập Nhật");
         lblSua.setOpaque(true);
-        jpn_ThanhCongCu.add(lblSua, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 30, 100, 40));
+        lblSua.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                lblSuaMousePressed(evt);
+            }
+        });
+        jpn_ThanhCongCu.add(lblSua, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 30, 110, 40));
 
         txt_ChiSoDienDau.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jpn_ThanhCongCu.add(txt_ChiSoDienDau, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 140, 190, -1));
@@ -267,6 +272,7 @@ public class SinhHoatJPanel extends javax.swing.JPanel {
     private void tbl_ThongKeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_ThongKeMouseClicked
         index = tbl_ThongKe.getSelectedRow();
         txt_CanHo.disable();
+        moi = 1;
         if (check != 0) {
             int Month = Integer.parseInt((String) cbo_Thang.getSelectedItem());
             int Year = Integer.parseInt((String) cbo_Nam.getSelectedItem());
@@ -277,11 +283,31 @@ public class SinhHoatJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_tbl_ThongKeMouseClicked
 
     private void lblNhapHoaDonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNhapHoaDonMousePressed
-         if (checkDaCo(month, year)) {
-                this.checkTonTaiCanHo();
-                check = 0;
-            }
+        if (moi == 1) {
+            this.newmodel();
+            moi = 0;
+            check = 0;
+        } else if (checkDaCo(month, year)) {
+            this.checkTonTaiCanHo();
+            this.newmodel();
+            check = 0;
+        }
+
     }//GEN-LAST:event_lblNhapHoaDonMousePressed
+
+    private void lblSuaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSuaMousePressed
+        if (check != 0) {
+            int Month = Integer.parseInt((String) cbo_Thang.getSelectedItem());
+            int Year = Integer.parseInt((String) cbo_Nam.getSelectedItem());
+            this.update_HD(Month, Year);
+            this.newmodel();
+            moi = 0;
+        } else {
+            this.update_HD(month, year);
+            this.newmodel();
+            moi = 0;
+        }
+    }//GEN-LAST:event_lblSuaMousePressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -399,29 +425,74 @@ public class SinhHoatJPanel extends javax.swing.JPanel {
     HoaDonSinhHoat getModel_KH() {
         HoaDonSinhHoat model = new HoaDonSinhHoat();
         model.setCanHoid(CanhoId());
-        model.setMaHDDien(txt_MaHoaDonDien.getText());
-        model.setChiSoDienBanDau(Integer.parseInt(txt_ChiSoDienDau.getText()));
-        model.setChiSoDienCuoi(Integer.parseInt(txt_ChiSoDienDau.getText()));
-        model.setTienDien(Integer.parseInt(txt_TienDien.getText()));     
-        model.setMaHDNuoc(txt_maHoaDonNuoc.getText());
-        model.setChiSoNuocBanDau(Integer.parseInt(txt_ChiSoNuocDau.getText()));
-        model.setChiSoNuocCuoi(Integer.parseInt(txt_ChiSoNuocCuoi.getText()));
-        model.setTienNuoc(Integer.parseInt(txt_TienNuoc.getText()));
+        if (txt_MaHoaDonDien.getText().trim().equals("")) {
+            model.setMaHDDien("");
+        } else {
+            model.setMaHDDien(txt_MaHoaDonDien.getText());
+        }
+        if (txt_ChiSoDienDau.getText().trim().equals("")) {
+            model.setChiSoDienBanDau(0);
+        } else {
+            model.setChiSoDienBanDau(Integer.parseInt(txt_ChiSoDienDau.getText()));
+        }
+        if (txt_ChiSoDienCuoi.getText().trim().equals("")) {
+            model.setChiSoDienCuoi(0);
+        } else {
+            model.setChiSoDienCuoi(Integer.parseInt(txt_ChiSoDienCuoi.getText()));
+        }
+        if (txt_TienDien.getText().trim().equals("")) {
+            model.setTienDien(0);
+        } else {
+            model.setTienDien(Integer.parseInt(txt_TienDien.getText()));
+        }
+        if (txt_maHoaDonNuoc.getText().trim().equals("")) {
+            model.setMaHDNuoc("");
+        } else {
+            model.setMaHDNuoc(txt_maHoaDonNuoc.getText());
+        }
+        if (txt_ChiSoNuocDau.getText().trim().equals("")) {
+            model.setChiSoNuocBanDau(0);
+        } else {
+            model.setChiSoNuocBanDau(Integer.parseInt(txt_ChiSoNuocDau.getText()));
+        }
+        if (txt_ChiSoNuocCuoi.getText().trim().equals("")) {
+            model.setChiSoNuocCuoi(0);
+        } else {
+            model.setChiSoNuocCuoi(Integer.parseInt(txt_ChiSoNuocCuoi.getText()));
+        }
+        if (txt_TienNuoc.getText().trim().equals("")) {
+            model.setTienNuoc(0);
+        } else {
+            model.setTienNuoc(Integer.parseInt(txt_TienNuoc.getText()));
+        }
         return model;
     }
+
     void insert_HD() {
         HoaDonSinhHoat model = getModel_KH();
         try {
             hoaDonSinhHoatDAO.insertHoaDon(model);
             this.load_HoaDon(month, year);
             JOptionPane.showMessageDialog(this, "Thêm hóa đơn căn hộ " + txt_CanHo.getText() + " thành công!");
-        } catch (Exception e) {
+        } catch (ExceptionInInitializerError e) {
             JOptionPane.showMessageDialog(this, "Thêm hóa đơn thất bại!");
             System.err.println(e);
         }
     }
 
-       void checkTonTaiCanHo() {
+    void update_HD(int Month, int Year) {
+        HoaDonSinhHoat model = getModel_KH();
+        try {
+            hoaDonSinhHoatDAO.updateHoaDon(model, Month, Year);
+            this.load_HoaDon(month, year);
+            JOptionPane.showMessageDialog(this, "Cập nhật hóa đơn căn hộ " + txt_CanHo.getText() + " thành công!");
+        } catch (ExceptionInInitializerError e) {
+            JOptionPane.showMessageDialog(this, "Cập nhật hóa đơn thất bại!");
+            System.err.println(e);
+        }
+    }
+
+    void checkTonTaiCanHo() {
         rs = JDBC.executeQuery("SELECT MaSoCanHo FROM dbo.CanHo WHERE MaSoCanHo = ? ", txt_CanHo.getText());
         try {
             if (rs.next()) {
@@ -437,8 +508,8 @@ public class SinhHoatJPanel extends javax.swing.JPanel {
             System.err.println(e);
         }
     }
-    
-       boolean checkDaCo(int Month, int Year) {
+
+    boolean checkDaCo(int Month, int Year) {
         rs = JDBC.executeQuery("SELECT CanHoId FROM dbo.HoaDonSinhHoat"
                 + " WHERE CanHoId = ? AND MONTH(NgayThang) = ? AND YEAR(NgayThang) = ?",
                 CanhoId(), Month, Year);
@@ -456,5 +527,18 @@ public class SinhHoatJPanel extends javax.swing.JPanel {
         }
         return true;
     }
-       
+
+    void newmodel() {
+        txt_CanHo.enable();
+        txt_CanHo.setText("");
+        txt_ChiSoDienCuoi.setText("");
+        txt_ChiSoDienDau.setText("");
+        txt_ChiSoNuocCuoi.setText("");
+        txt_ChiSoNuocDau.setText("");
+        txt_MaHoaDonDien.setText("");
+        txt_TienDien.setText("");
+        txt_TienNuoc.setText("");
+        txt_maHoaDonNuoc.setText("");
+    }
+
 }

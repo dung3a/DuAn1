@@ -240,7 +240,7 @@ private void soCanHo(){
 
 private void soXe(){
     try {
-        ResultSet rs = JDBC.executeQuery("SELECT SUM(SoLuong) FROM dbo.GuiXe");
+        ResultSet rs = JDBC.executeQuery("SELECT SUM(SoLuongXeDap)+SUM(SoLuongXeMay)+SUM(SoLuongXeHoi) AS SoLuongXe FROM dbo.GuiXe");
     if (rs.next()) {
         lbl_TongSoPhuongTien.setText(rs.getString(1));
     }

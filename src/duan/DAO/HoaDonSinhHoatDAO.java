@@ -33,7 +33,7 @@ public class HoaDonSinhHoatDAO {
         return list.size() > 0 ? list.get(0) : null;
     }
     
-       public void insertHoaDon(HoaDonSinhHoat model) {
+     public void insertHoaDon(HoaDonSinhHoat model) {
         String sql = "INSERT dbo.HoaDonSinhHoat ( CanHoId ,NgayThang ,MaHDDien ,ChiSoDienBanDau ,ChiSoDienCuoi ,TienDien ,MaHDNuoc ,ChiSoNuocBanDau ,ChiSoNuocCuoi ,TienNuoc)"
                 + " VALUES  ( ?,GETDATE(), ?,?,?,? ,?, ?,?, ?)";
         JDBC.executeUpdate(sql,
@@ -46,6 +46,23 @@ public class HoaDonSinhHoatDAO {
                 model.getChiSoNuocBanDau(),
                 model.getChiSoNuocCuoi(),
                 model.getTienNuoc());
+    }
+     
+     public void updateHoaDon(HoaDonSinhHoat model, int Month,int Year) {
+        String sql = "  UPDATE dbo.HoaDonSinhHoat SET MaHDDien = ?, ChiSoDienBanDau = ?, ChiSoDienCuoi = ?, TienDien = ? , MaHDNuoc = ? , "
+                + "ChiSoNuocBanDau = ? , ChiSoNuocCuoi = ? , TienNuoc = ? WHERE CanHoId = ? AND MONTH(NgayThang) = ? AND YEAR(NgayThang) = ?";
+        JDBC.executeUpdate(sql,
+                model.getMaHDDien(),
+                model.getChiSoDienBanDau(),
+                model.getChiSoDienCuoi(),
+                model.getTienDien(),
+                model.getMaHDNuoc(),
+                model.getChiSoNuocBanDau(),
+                model.getChiSoNuocCuoi(),
+                model.getTienNuoc(),
+                model.getCanHoid(),
+                Month,
+                Year);
     }
     private List<HoaDonSinhHoat> select(String sql, Object... args) {
         List<HoaDonSinhHoat> list = new ArrayList<>();

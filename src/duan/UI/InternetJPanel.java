@@ -183,8 +183,8 @@ public class InternetJPanel extends javax.swing.JPanel {
         lbl_Sua.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lbl_Sua.setForeground(new java.awt.Color(255, 255, 255));
         lbl_Sua.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbl_Sua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/duan/Logo/Maintenance.png"))); // NOI18N
-        lbl_Sua.setText("  Sửa");
+        lbl_Sua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/duan/Logo/Updates_25px.png"))); // NOI18N
+        lbl_Sua.setText("Cập Nhật");
         lbl_Sua.setOpaque(true);
         lbl_Sua.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -224,8 +224,8 @@ public class InternetJPanel extends javax.swing.JPanel {
                                     .addGap(18, 18, 18)
                                     .addComponent(txt_TienInternet)))))
                     .addGroup(jpn_TacVuLayout.createSequentialGroup()
-                        .addGap(123, 123, 123)
-                        .addComponent(lbl_TaoHDThang, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(142, 142, 142)
+                        .addComponent(lbl_TaoHDThang, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(lbl_Sua, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 178, Short.MAX_VALUE)
@@ -284,12 +284,11 @@ public class InternetJPanel extends javax.swing.JPanel {
         if (moi == 0) {
             this.newModel();
             moi = 1;
-        } else {
-            if (checkDaCo(month, year) && checkTrong()) {
-                this.checkTonTaiCanHo();
-                check = 0;
-                this.newModel();
-            }
+        } else if (checkDaCo(month, year) && checkTrong()) {
+            this.checkTonTaiCanHo();
+            check = 0;
+            this.newModel();
+            this.load_HoaDonInternet(year, year);
         }
     }//GEN-LAST:event_lbl_TaoHDThangMousePressed
 

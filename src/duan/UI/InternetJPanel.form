@@ -130,8 +130,8 @@
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="123" max="-2" attributes="0"/>
-                          <Component id="lbl_TaoHDThang" min="-2" pref="181" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="142" max="-2" attributes="0"/>
+                          <Component id="lbl_TaoHDThang" min="-2" pref="162" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="lbl_Sua" min="-2" pref="100" max="-2" attributes="0"/>
                       </Group>
@@ -378,9 +378,9 @@
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/duan/Logo/Maintenance.png"/>
+              <Image iconType="3" name="/duan/Logo/Updates_25px.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="  S&#x1eed;a"/>
+            <Property name="text" type="java.lang.String" value="C&#x1ead;p Nh&#x1ead;t"/>
             <Property name="opaque" type="boolean" value="true"/>
           </Properties>
           <Events>
