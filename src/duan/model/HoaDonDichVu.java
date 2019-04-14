@@ -17,15 +17,16 @@ public class HoaDonDichVu {
     private String CanHoid;
     private float TienDichVuCoBan;
     private float TienGuiXe;
+    private int GuiXeID;
     private float TongTien;
     private Date Thang;
-    
+    private String UserID;
     public HoaDonDichVu(){
     }
     
     public HoaDonDichVu(String HoaDonDichVuid , String HoaDonid ,
             String CanHoid , float TienDichVuCoBan , float TienGuiXe ,
-            float TongTien , Date Thang){
+            float TongTien , Date Thang,String UserID){
        
         this.HoaDonDichVuid = HoaDonDichVuid;
         this.HoaDonid = HoaDonid;
@@ -34,6 +35,23 @@ public class HoaDonDichVu {
         this.TienGuiXe = TienGuiXe;
         this.TongTien = TongTien;
         this.Thang = Thang;
+        this.UserID = UserID;
+    }
+
+    public int getGuiXeID() {
+        return GuiXeID;
+    }
+
+    public void setGuiXeID(int GuiXeID) {
+        this.GuiXeID = GuiXeID;
+    }
+
+    public String getUserID() {
+        return UserID;
+    }
+
+    public void setUserID(String UserID) {
+        this.UserID = UserID;
     }
 
     public String getHoaDonDichVuid() {

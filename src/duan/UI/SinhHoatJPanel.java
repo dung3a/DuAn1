@@ -287,7 +287,7 @@ public class SinhHoatJPanel extends javax.swing.JPanel {
             this.newmodel();
             moi = 0;
             check = 0;
-        } else if (checkDaCo(month, year)) {
+        } else if (checkDaCo(month, year)&& checkNguoiO()) {
             this.checkTonTaiCanHo();
             this.newmodel();
             check = 0;
@@ -523,6 +523,23 @@ public class SinhHoatJPanel extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
+            System.err.println(e);
+        }
+        return true;
+    }
+     boolean checkNguoiO() {
+        rs = JDBC.executeQuery("SELECT COUNT(KH.KhachHangId) FROM dbo.ThongTinKhachHang KH JOIN dbo.CanHo "
+                + "CH ON CH.CanHoId = KH.CanHoId WHERE CH.MaSoCanHo = ? ", txt_CanHo.getText());
+        try {
+            if (rs.next()) {
+                int SL = rs.getInt(1);
+                if (SL == 0) {
+                    JOptionPane.showMessageDialog(this, "Căn hộ này không có người ở");
+                    txt_CanHo.setText("");
+                    return false;
+                }
+            }
+        } catch (SQLException e) {
             System.err.println(e);
         }
         return true;

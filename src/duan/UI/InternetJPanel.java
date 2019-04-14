@@ -284,7 +284,7 @@ public class InternetJPanel extends javax.swing.JPanel {
         if (moi == 0) {
             this.newModel();
             moi = 1;
-        } else if (checkDaCo(month, year) && checkTrong()) {
+        } else if (checkDaCo(month, year) && checkTrong() && checkNguoiO()) {
             this.checkTonTaiCanHo();
             check = 0;
             this.newModel();
@@ -469,6 +469,23 @@ public class InternetJPanel extends javax.swing.JPanel {
         return true;
     }
 
+     boolean checkNguoiO() {
+        rs = JDBC.executeQuery("SELECT COUNT(KH.KhachHangId) FROM dbo.ThongTinKhachHang KH JOIN dbo.CanHo "
+                + "CH ON CH.CanHoId = KH.CanHoId WHERE CH.MaSoCanHo = ? ", txt_MaCH.getText());
+        try {
+            if (rs.next()) {
+                int SL = rs.getInt(1);
+                if (SL == 0) {
+                    JOptionPane.showMessageDialog(this, "Căn hộ này không có người ở");
+                    txt_MaCH.setText("");
+                    return false;
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+        return true;
+    }
     boolean checkTrong() {
         if (txt_MaCH.getText().trim().equals("")) {
             JOptionPane.showMessageDialog(this, "Không để trống mã căn hộ ");

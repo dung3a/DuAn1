@@ -75,7 +75,7 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
         lblTim = new javax.swing.JLabel();
         lblXuatExcel = new javax.swing.JLabel();
         lbl_Nhap = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
+        lblCapNhat = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1000, 700));
@@ -265,19 +265,19 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
         });
         pnlMain.add(lbl_Nhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 310, 100, 36));
 
-        jLabel11.setBackground(new java.awt.Color(255, 153, 0));
-        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/duan/Logo/Updates_25px.png"))); // NOI18N
-        jLabel11.setText("Cập Nhật");
-        jLabel11.setOpaque(true);
-        jLabel11.addMouseListener(new java.awt.event.MouseAdapter() {
+        lblCapNhat.setBackground(new java.awt.Color(255, 153, 0));
+        lblCapNhat.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblCapNhat.setForeground(new java.awt.Color(255, 255, 255));
+        lblCapNhat.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblCapNhat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/duan/Logo/Updates_25px.png"))); // NOI18N
+        lblCapNhat.setText("Cập Nhật");
+        lblCapNhat.setOpaque(true);
+        lblCapNhat.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabel11MousePressed(evt);
+                lblCapNhatMousePressed(evt);
             }
         });
-        pnlMain.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 310, 110, 36));
+        pnlMain.add(lblCapNhat, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 310, 110, 36));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -329,14 +329,16 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
         ExportExcel();
     }//GEN-LAST:event_lblXuatExcelMousePressed
 
-    private void jLabel11MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MousePressed
+    private void lblCapNhatMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCapNhatMousePressed
          check = 1;
+         
+     
         if (checkTT()) {
             this.update_KH();
             this.load_KhachHang();
             this.newModel();
         }
-    }//GEN-LAST:event_jLabel11MousePressed
+    }//GEN-LAST:event_lblCapNhatMousePressed
 
     private void lbl_NhapMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_NhapMousePressed
          if (checkTT() && check == 1) {
@@ -384,9 +386,9 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cboTrangThai;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel lblCMND;
     private javax.swing.JLabel lblCanHo;
+    private javax.swing.JLabel lblCapNhat;
     private javax.swing.JLabel lblClose;
     private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblGioiTinh;
@@ -592,11 +594,11 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
         } else if (txtSoDienThoai.getText().length() < 8) {
             JOptionPane.showMessageDialog(this, "Số điện thoại không dưới 8 số!");
             return false;
-        } else if (!txtSoDienThoai.getText().substring(0,2).equals("09") 
-                || !txtSoDienThoai.getText().substring(0,2).equals("08")
-                || !txtSoDienThoai.getText().substring(0,2).equals("03")
-                || !txtSoDienThoai.getText().substring(0,2).equals("05")
-                || !txtSoDienThoai.getText().substring(0,2).equals("07") ){
+        } else if (!txtSoDienThoai.getText().trim().substring(0,2).equals("09") 
+                || !txtSoDienThoai.getText().trim().substring(0,2).equals("08")
+                || !txtSoDienThoai.getText().trim().substring(0,2).equals("03")
+                || !txtSoDienThoai.getText().trim().substring(0,2).equals("05")
+                || !txtSoDienThoai.getText().trim().substring(0,2).equals("07") ){
             JOptionPane.showMessageDialog(this, "Đầu Số Bắt Đầu Bằng 09 | 08 | 07 | 05 | 03 !");
             return false;
         }

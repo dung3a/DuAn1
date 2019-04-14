@@ -5,10 +5,16 @@
  */
 package duan.UI;
 
+import duan.DAO.HoaDonDichVuDAO;
 import duan.JDBC.JDBC;
 import duan.JDBC.XuLy;
+import duan.model.HoaDonDichVu;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -16,13 +22,15 @@ import java.sql.SQLException;
  */
 public class DichVuPhongJPanel extends javax.swing.JPanel {
 
-    /**
-     * Creates new form DichVu_HoaDonJPanel
-     */
+    LocalDate today = LocalDate.now();
+    int month = today.getMonthValue(), year = today.getYear();
+    int index, check = 1, moi = 1, TienDV;
+
     public DichVuPhongJPanel() {
         initComponents();
-        this.loadYear();
         this.loadTienDV();
+        this.loadYear();
+        this.load_HoaDon(month, year);
     }
 
     /**
@@ -34,7 +42,7 @@ public class DichVuPhongJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
+        sclBangDichVu = new javax.swing.JScrollPane();
         tbl_BangDichVu = new javax.swing.JTable();
         jpn_TongDichVu = new javax.swing.JPanel();
         lbl_CanHo = new javax.swing.JLabel();
@@ -45,13 +53,14 @@ public class DichVuPhongJPanel extends javax.swing.JPanel {
         jpn_TruyVan = new javax.swing.JPanel();
         cbo_Thang = new javax.swing.JComboBox<>();
         lbl_Thang = new javax.swing.JLabel();
-        cbo_Nam = new javax.swing.JComboBox<>();
+        cbo_Year = new javax.swing.JComboBox<>();
         lbl_Nam = new javax.swing.JLabel();
         lbl_Tim = new javax.swing.JLabel();
         lbl_TongTien = new javax.swing.JLabel();
         lbl_TaoHDThang = new javax.swing.JLabel();
         lbl_TienGuiXe = new javax.swing.JLabel();
         lbl_TienGX = new javax.swing.JLabel();
+        lbl_CapNhat = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMaximumSize(new java.awt.Dimension(1040, 660));
@@ -70,11 +79,24 @@ public class DichVuPhongJPanel extends javax.swing.JPanel {
             new String [] {
                 "Căn Hộ", "Tiền Dịch Vụ Cơ Bản", "Tiền Gửi Xe", "Tổng Tiền"
             }
-        ));
-        tbl_BangDichVu.setRowHeight(22);
-        jScrollPane1.setViewportView(tbl_BangDichVu);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 276, 1016, 310));
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tbl_BangDichVu.setRowHeight(22);
+        tbl_BangDichVu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_BangDichVuMouseClicked(evt);
+            }
+        });
+        sclBangDichVu.setViewportView(tbl_BangDichVu);
+
+        add(sclBangDichVu, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 276, 1016, 310));
 
         jpn_TongDichVu.setBackground(new java.awt.Color(255, 255, 255));
         jpn_TongDichVu.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 0, 0)));
@@ -97,8 +119,7 @@ public class DichVuPhongJPanel extends javax.swing.JPanel {
 
         lbl_TienDV.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         lbl_TienDV.setForeground(new java.awt.Color(255, 0, 0));
-        lbl_TienDV.setText("200,000");
-        jpn_TongDichVu.add(lbl_TienDV, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 50, -1, -1));
+        jpn_TongDichVu.add(lbl_TienDV, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 50, 120, 20));
 
         jpn_TruyVan.setBackground(new java.awt.Color(255, 255, 255));
         jpn_TruyVan.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Hóa Đơn Theo Tháng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(255, 0, 0))); // NOI18N
@@ -111,7 +132,7 @@ public class DichVuPhongJPanel extends javax.swing.JPanel {
         lbl_Thang.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lbl_Thang.setText("Tháng");
 
-        cbo_Nam.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        cbo_Year.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
 
         lbl_Nam.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lbl_Nam.setText("Năm");
@@ -123,6 +144,11 @@ public class DichVuPhongJPanel extends javax.swing.JPanel {
         lbl_Tim.setIcon(new javax.swing.ImageIcon(getClass().getResource("/duan/Logo/Search_25px.png"))); // NOI18N
         lbl_Tim.setText("Tim");
         lbl_Tim.setOpaque(true);
+        lbl_Tim.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                lbl_TimMousePressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jpn_TruyVanLayout = new javax.swing.GroupLayout(jpn_TruyVan);
         jpn_TruyVan.setLayout(jpn_TruyVanLayout);
@@ -138,7 +164,7 @@ public class DichVuPhongJPanel extends javax.swing.JPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpn_TruyVanLayout.createSequentialGroup()
                         .addComponent(lbl_Nam)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cbo_Nam, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cbo_Year, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpn_TruyVanLayout.createSequentialGroup()
                         .addComponent(lbl_Tim, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(23, 23, 23)))
@@ -153,7 +179,7 @@ public class DichVuPhongJPanel extends javax.swing.JPanel {
                     .addComponent(cbo_Thang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
                 .addGroup(jpn_TruyVanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbo_Nam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbo_Year, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbl_Nam))
                 .addGap(32, 32, 32)
                 .addComponent(lbl_Tim, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -164,8 +190,7 @@ public class DichVuPhongJPanel extends javax.swing.JPanel {
 
         lbl_TongTien.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         lbl_TongTien.setForeground(new java.awt.Color(255, 0, 0));
-        lbl_TongTien.setText("200,000");
-        jpn_TongDichVu.add(lbl_TongTien, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 100, -1, -1));
+        jpn_TongDichVu.add(lbl_TongTien, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 100, 120, 20));
 
         lbl_TaoHDThang.setBackground(new java.awt.Color(153, 204, 0));
         lbl_TaoHDThang.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -174,6 +199,11 @@ public class DichVuPhongJPanel extends javax.swing.JPanel {
         lbl_TaoHDThang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/duan/Logo/New.png"))); // NOI18N
         lbl_TaoHDThang.setText("Nhập Hóa Đơn");
         lbl_TaoHDThang.setOpaque(true);
+        lbl_TaoHDThang.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                lbl_TaoHDThangMousePressed(evt);
+            }
+        });
         jpn_TongDichVu.add(lbl_TaoHDThang, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 180, 170, 40));
 
         lbl_TienGuiXe.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -182,20 +212,71 @@ public class DichVuPhongJPanel extends javax.swing.JPanel {
 
         lbl_TienGX.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         lbl_TienGX.setForeground(new java.awt.Color(255, 0, 0));
-        lbl_TienGX.setText("200,000");
-        jpn_TongDichVu.add(lbl_TienGX, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 90, -1, -1));
+        jpn_TongDichVu.add(lbl_TienGX, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 90, 120, 20));
+
+        lbl_CapNhat.setBackground(new java.awt.Color(255, 153, 0));
+        lbl_CapNhat.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lbl_CapNhat.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_CapNhat.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_CapNhat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/duan/Logo/Updates_25px.png"))); // NOI18N
+        lbl_CapNhat.setText("Cập Nhật");
+        lbl_CapNhat.setOpaque(true);
+        lbl_CapNhat.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                lbl_CapNhatMousePressed(evt);
+            }
+        });
+        jpn_TongDichVu.add(lbl_CapNhat, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 180, 110, 40));
 
         add(jpn_TongDichVu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1040, 260));
     }// </editor-fold>//GEN-END:initComponents
 
+    private void lbl_TimMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_TimMousePressed
+        int Month = Integer.parseInt((String) cbo_Thang.getSelectedItem());
+        int Year = Integer.parseInt((String) cbo_Year.getSelectedItem());
+        this.load_HoaDon(Month, Year);
+        this.newModel();
+        check = 1;
+    }//GEN-LAST:event_lbl_TimMousePressed
+
+    private void tbl_BangDichVuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_BangDichVuMouseClicked
+        index = tbl_BangDichVu.getSelectedRow();
+        txt_CanHo.disable();
+        if (check == 1) {
+            this.edit_HD(month, year);
+        } else {
+            int Month = Integer.parseInt((String) cbo_Thang.getSelectedItem());
+            int Year = Integer.parseInt((String) cbo_Year.getSelectedItem());
+            this.edit_HD(Month, Year);
+        }
+        moi = 0;
+    }//GEN-LAST:event_tbl_BangDichVuMouseClicked
+
+    private void lbl_TaoHDThangMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_TaoHDThangMousePressed
+        if (moi == 0) {
+            this.newModel();
+            moi = 1;
+        } else if (checkDaCo(month, year) && checkTrong() && checkNguoiO()) {
+            this.checkTonTaiCanHo();
+            check = 0;
+            this.newModel();
+        }
+    }//GEN-LAST:event_lbl_TaoHDThangMousePressed
+
+    private void lbl_CapNhatMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_CapNhatMousePressed
+
+        this.update_HD(month, year);
+
+    }//GEN-LAST:event_lbl_CapNhatMousePressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> cbo_Nam;
     private javax.swing.JComboBox<String> cbo_Thang;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JComboBox<String> cbo_Year;
     private javax.swing.JPanel jpn_TongDichVu;
     private javax.swing.JPanel jpn_TruyVan;
     private javax.swing.JLabel lbl_CanHo;
+    private javax.swing.JLabel lbl_CapNhat;
     private javax.swing.JLabel lbl_Nam;
     private javax.swing.JLabel lbl_TaoHDThang;
     private javax.swing.JLabel lbl_Thang;
@@ -206,35 +287,236 @@ public class DichVuPhongJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel lbl_Tim;
     private javax.swing.JLabel lbl_TongTien;
     private javax.swing.JLabel lbl_Tongtien;
+    private javax.swing.JScrollPane sclBangDichVu;
     private javax.swing.JTable tbl_BangDichVu;
     private javax.swing.JTextField txt_CanHo;
     // End of variables declaration//GEN-END:variables
 
     ResultSet rs = null;
 
+    HoaDonDichVuDAO hoaDonDichVuDAO = new HoaDonDichVuDAO();
+
     private void loadYear() {
-        cbo_Nam.removeAllItems();
-        rs = JDBC.executeQuery("SELECT DISTINCT  YEAR(Thang) AS Nam FROM dbo.HoaDonDichVu");
+        cbo_Year.removeAllItems();
+        rs = JDBC.executeQuery("SELECT DISTINCT  YEAR(Thang) FROM dbo.HoaDonDichVu");
         try {
             while (rs.next()) {
-                cbo_Nam.addItem(rs.getString("Nam"));
+                cbo_Year.addItem(rs.getString(1));
             }
-            cbo_Nam.setSelectedItem(1);
+            cbo_Year.setSelectedItem(1);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
 
+    public String CanhoId() {
+        String CanHoID = "";
+        rs = JDBC.executeQuery("SELECT CanHoId FROM dbo.CanHo WHERE MaSoCanHo = ?", txt_CanHo.getText());
+        try {
+            while (rs.next()) {
+                CanHoID = rs.getString(1);
+            }
+        } catch (Exception e) {
+        }
+        return CanHoID;
+    }
+
+    public String UserId() {
+        String ID = "";
+        rs = JDBC.executeQuery("SELECT UserId FROM dbo.Users");
+        try {
+            while (rs.next()) {
+                ID = rs.getString(1);
+            }
+        } catch (Exception e) {
+        }
+        return ID;
+    }
+
+    public int GuiXEid() {
+        int ID = 0;
+        rs = JDBC.executeQuery("SELECT GuiXeId FROM dbo.GuiXe WHERE CanHoId = ?", CanhoId());
+        try {
+            while (rs.next()) {
+                ID = rs.getInt("GuiXeId");
+                System.err.println(ID);
+            }
+        } catch (Exception e) {
+        }
+        return ID;
+    }
+
+    public float TongTien() {
+        float TongTien = 0;
+        rs = JDBC.executeQuery("SELECT GX.TongTienGui + TDV.TienDichVuCoBan  FROM dbo.GuiXe GX JOIN dbo.TienDichVuCoBan TDV ON  GX.CanHoId =  ?", CanhoId());
+        try {
+            while (rs.next()) {
+                TongTien = rs.getFloat(1);
+            }
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+        return TongTien;
+    }
+
     private void loadTienDV() {
-        cbo_Nam.removeAllItems();
+        cbo_Year.removeAllItems();
         rs = JDBC.executeQuery("SELECT TienDichVuCoBan FROM dbo.TienDichVuCoBan");
         try {
             while (rs.next()) {
                 lbl_TienDV.setText(XuLy.xulySo((rs.getString(1))));
+                TienDV = rs.getInt(1);
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+    }
+
+    void load_HoaDon(int Thang, int Nam) {
+        DefaultTableModel model = (DefaultTableModel) tbl_BangDichVu.getModel();
+        model.setRowCount(0);
+        try {
+            List<HoaDonDichVu> list_SP = hoaDonDichVuDAO.selectHoaDon(Thang, Nam);
+            for (HoaDonDichVu HD : list_SP) {   //Tạo vong lặp for 
+
+                Object[] row = {
+                    HD.getCanHoid(),
+                    XuLy.xulySo(String.valueOf(HD.getTienDichVuCoBan())),
+                    XuLy.xulySo(String.valueOf(HD.getTienGuiXe())),
+                    XuLy.xulySo(String.valueOf(HD.getTongTien()))
+                };
+                model.addRow(row);
+            }
+        } catch (ExceptionInInitializerError e) {
+            JOptionPane.showMessageDialog(this, "Lỗi truy vấn dữ liệu !");
+            System.err.println(e);
+        }
+    }
+
+    void setModel_HD(HoaDonDichVu model) {
+        txt_CanHo.setText(model.getCanHoid());
+        lbl_TienDV.setText(XuLy.xulySo(String.valueOf(model.getTienDichVuCoBan())));
+        lbl_TienGX.setText(XuLy.xulySo(String.valueOf(model.getTienGuiXe())));
+        lbl_TongTien.setText(XuLy.xulySo(String.valueOf(model.getTongTien())));
+    }
+
+    void edit_HD(int Month, int Year) {
+        try {
+            String maCh = (String) tbl_BangDichVu.getValueAt(index, 0);
+            HoaDonDichVu model = hoaDonDichVuDAO.selectHoaDonIdCH(maCh, Month, Year);
+            if (model != null) {
+                this.setModel_HD(model);
+            }
+        } catch (ExceptionInInitializerError e) {
+            JOptionPane.showMessageDialog(this, "Lỗi truy vấn dữ liệu!");
+            System.err.println(e);
+        }
+    }
+
+    boolean checkDaCo(int Month, int Year) {
+        rs = JDBC.executeQuery("SELECT CanHoId FROM dbo.HoaDonDichVu"
+                + " WHERE CanHoId = ? AND MONTH(Thang) = ? AND YEAR(Thang) = ?", CanhoId(), Month, Year);
+        try {
+            while (rs.next()) {
+                String CHID = rs.getString(1);
+                System.err.println(CHID);
+                if (CHID.equals(CanhoId())) {
+                    JOptionPane.showMessageDialog(this, "Căn hộ " + txt_CanHo.getText() + " đã có hóa đơn tháng này");
+                    return false;
+                }
+            }
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+        return true;
+    }
+
+    HoaDonDichVu getModel_KH() {
+        HoaDonDichVu model = new HoaDonDichVu();
+        model.setCanHoid(CanhoId());
+        model.setTienDichVuCoBan(TienDV);
+        model.setGuiXeID(GuiXEid());
+        model.setTongTien(TongTien());
+        model.setUserID(UserId());
+        return model;
+    }
+
+    void insert_HD() {
+        HoaDonDichVu model = getModel_KH();
+        try {
+            hoaDonDichVuDAO.insertHoaDon(model);
+            JOptionPane.showMessageDialog(this, "Thêm hóa đơn căn hộ " + txt_CanHo.getText() + " thành công!");
+            this.load_HoaDon(month, year);
+        } catch (ExceptionInInitializerError e) {
+            JOptionPane.showMessageDialog(this, "Thêm hóa đơn thất bại!");
+            System.err.println(e);
+        }
+    }
+
+    void update_HD(int Month, int Year) {
+        HoaDonDichVu model = getModel_KH();
+        try {
+            hoaDonDichVuDAO.updateHoaDon(model, Month, Year);
+            JOptionPane.showMessageDialog(this, "Cập nhật hóa đơn căn hộ " + txt_CanHo.getText() + " thành công!");
+            this.load_HoaDon(month, year);
+            this.edit_HD(Month, Year);
+        } catch (ExceptionInInitializerError e) {
+            JOptionPane.showMessageDialog(this, "Cập nhật hóa đơn thất bại!");
+            System.err.println(e);
+        }
+    }
+
+    void checkTonTaiCanHo() {
+        rs = JDBC.executeQuery("SELECT MaSoCanHo FROM dbo.CanHo WHERE MaSoCanHo = ? ", txt_CanHo.getText());
+        try {
+            if (rs.next()) {
+                String CHID = rs.getString(1);
+                System.err.println(CHID);
+                if (CHID != null) {
+                    this.insert_HD();
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Sai mã căn hộ hoặc không tồn tại căn hộ này");
+                txt_CanHo.setText("");
+                txt_CanHo.setVisible(true);
+            }
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+    }
+
+    boolean checkNguoiO() {
+        rs = JDBC.executeQuery("SELECT COUNT(KH.KhachHangId) FROM dbo.ThongTinKhachHang KH JOIN dbo.CanHo "
+                + "CH ON CH.CanHoId = KH.CanHoId WHERE CH.MaSoCanHo = ? ", txt_CanHo.getText());
+        try {
+            if (rs.next()) {
+                int SL = rs.getInt(1);
+                if (SL == 0) {
+                    JOptionPane.showMessageDialog(this, "Căn hộ này không có người ở");
+                    txt_CanHo.setText("");
+                    return false;
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+        return true;
+    }
+
+    boolean checkTrong() {
+        if (txt_CanHo.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(this, "Không để trống mã căn hộ ");
+            txt_CanHo.setVisible(true);
+            return false;
+        }
+        return true;
+    }
+
+    void newModel() {
+        txt_CanHo.enable();
+        txt_CanHo.setText("");
+        lbl_TienGX.setText("");
+        lbl_TongTien.setText("");
     }
 
 }

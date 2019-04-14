@@ -57,12 +57,19 @@ public class QuanLyXeJFrame extends javax.swing.JFrame {
         sclGuiXe = new javax.swing.JScrollPane();
         tblQuanLyXe = new javax.swing.JTable();
         lbl_xuatexcel = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        lblCanHo = new javax.swing.JLabel();
+        lblHoTen = new javax.swing.JLabel();
+        lblSLxeDap = new javax.swing.JLabel();
+        lblSLXemay = new javax.swing.JLabel();
+        lblSLXeHoi = new javax.swing.JLabel();
+        lblTienGuiXe = new javax.swing.JLabel();
+        lbl_maCanHo = new javax.swing.JLabel();
+        lbl_HoTenChuHo = new javax.swing.JLabel();
+        txt_soluongXeDap = new javax.swing.JTextField();
+        txt_soLuongxeMay = new javax.swing.JTextField();
+        txt_soluongXehoi = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        lbl_NhapSoLuongXe = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -158,23 +165,67 @@ public class QuanLyXeJFrame extends javax.swing.JFrame {
         });
         pnlMain.add(lbl_xuatexcel, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 470, 150, 40));
 
-        jLabel1.setText("Căn Hộ");
-        pnlMain.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, -1, -1));
+        lblCanHo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblCanHo.setText("Căn Hộ");
+        pnlMain.add(lblCanHo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, -1, -1));
 
-        jLabel2.setText("Họ Tên Chủ Hộ");
-        pnlMain.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, -1, -1));
+        lblHoTen.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblHoTen.setText("Họ Tên Chủ Hộ");
+        pnlMain.add(lblHoTen, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, -1, -1));
 
-        jLabel3.setText("Số Lượng Xe Đạp");
-        pnlMain.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 70, -1, -1));
+        lblSLxeDap.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblSLxeDap.setText("Số Lượng Xe Đạp");
+        pnlMain.add(lblSLxeDap, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 70, -1, -1));
 
-        jLabel4.setText("Số Lượng Xe Máy");
-        pnlMain.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 130, -1, -1));
+        lblSLXemay.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblSLXemay.setText("Số Lượng Xe Máy");
+        pnlMain.add(lblSLXemay, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 130, -1, -1));
 
-        jLabel5.setText("Số Lượng Xe Hơi");
-        pnlMain.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 190, -1, -1));
+        lblSLXeHoi.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblSLXeHoi.setText("Số Lượng Xe Hơi");
+        pnlMain.add(lblSLXeHoi, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 190, -1, -1));
 
-        jLabel6.setText("Tiền Gửi Xe ");
-        pnlMain.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 110, -1, -1));
+        lblTienGuiXe.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblTienGuiXe.setText("Tiền Gửi Xe ");
+        pnlMain.add(lblTienGuiXe, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 110, -1, -1));
+
+        lbl_maCanHo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lbl_maCanHo.setForeground(new java.awt.Color(255, 0, 0));
+        lbl_maCanHo.setText("Can ho");
+        pnlMain.add(lbl_maCanHo, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 80, 260, -1));
+
+        lbl_HoTenChuHo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lbl_HoTenChuHo.setForeground(new java.awt.Color(255, 0, 0));
+        lbl_HoTenChuHo.setText("HoTen");
+        pnlMain.add(lbl_HoTenChuHo, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 150, 250, -1));
+
+        txt_soluongXeDap.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
+        pnlMain.add(txt_soluongXeDap, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 70, 80, -1));
+
+        txt_soLuongxeMay.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
+        pnlMain.add(txt_soLuongxeMay, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 130, 80, -1));
+
+        txt_soluongXehoi.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
+        pnlMain.add(txt_soluongXehoi, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 190, 80, -1));
+
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel9.setText("200,000");
+        pnlMain.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 150, -1, -1));
+
+        lbl_NhapSoLuongXe.setBackground(new java.awt.Color(153, 204, 0));
+        lbl_NhapSoLuongXe.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lbl_NhapSoLuongXe.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_NhapSoLuongXe.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_NhapSoLuongXe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/duan/Logo/New.png"))); // NOI18N
+        lbl_NhapSoLuongXe.setText("Nhập");
+        lbl_NhapSoLuongXe.setOpaque(true);
+        lbl_NhapSoLuongXe.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                lbl_NhapSoLuongXeMousePressed(evt);
+            }
+        });
+        pnlMain.add(lbl_NhapSoLuongXe, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 200, 110, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -221,16 +272,17 @@ public class QuanLyXeJFrame extends javax.swing.JFrame {
             int Traloi = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn xuất File ?", "Thông Báo", JOptionPane.YES_NO_OPTION);
             if (Traloi == 0) {
                 ExportExcel();
-                JOptionPane.showMessageDialog(this, "Xuất file Excel Thành Công");
-                
-            } else {
-                
-            }
+                JOptionPane.showMessageDialog(this, "Xuất file Excel Thành Công");               
+            } 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Lỗi ! Xuất File Excel Thất Bại");
             System.err.println(e);         
         }
     }//GEN-LAST:event_lbl_xuatexcelMousePressed
+
+    private void lbl_NhapSoLuongXeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_NhapSoLuongXeMousePressed
+       
+    }//GEN-LAST:event_lbl_NhapSoLuongXeMousePressed
 
     /**
      * @param args the command line arguments
@@ -268,20 +320,27 @@ public class QuanLyXeJFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel lblCanHo;
     private javax.swing.JLabel lblClose;
+    private javax.swing.JLabel lblHoTen;
     private javax.swing.JLabel lblMinimize;
     private javax.swing.JLabel lblQuanLyNguoi;
+    private javax.swing.JLabel lblSLXeHoi;
+    private javax.swing.JLabel lblSLXemay;
+    private javax.swing.JLabel lblSLxeDap;
+    private javax.swing.JLabel lblTienGuiXe;
+    private javax.swing.JLabel lbl_HoTenChuHo;
+    private javax.swing.JLabel lbl_NhapSoLuongXe;
     private javax.swing.JLabel lbl_Titlebar;
+    private javax.swing.JLabel lbl_maCanHo;
     private javax.swing.JLabel lbl_xuatexcel;
     private javax.swing.JPanel pnlMain;
     private javax.swing.JScrollPane sclGuiXe;
     private javax.swing.JTable tblQuanLyXe;
+    private javax.swing.JTextField txt_soLuongxeMay;
+    private javax.swing.JTextField txt_soluongXeDap;
+    private javax.swing.JTextField txt_soluongXehoi;
     // End of variables declaration//GEN-END:variables
 
    QuanLyXeDAO qlxDAO = new QuanLyXeDAO();
