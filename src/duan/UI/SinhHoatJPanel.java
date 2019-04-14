@@ -287,8 +287,8 @@ public class SinhHoatJPanel extends javax.swing.JPanel {
             this.newmodel();
             moi = 0;
             check = 0;
-        } else if (checkDaCo(month, year)&& checkNguoiO()) {
-            this.checkTonTaiCanHo();
+        } else if (checkTonTaiCanHo() && checkNguoiO() && checkDaCo(month, year)) {
+            this.insert_HD();
             this.newmodel();
             check = 0;
         }
@@ -492,21 +492,19 @@ public class SinhHoatJPanel extends javax.swing.JPanel {
         }
     }
 
-    void checkTonTaiCanHo() {
+    boolean checkTonTaiCanHo() {
         rs = JDBC.executeQuery("SELECT MaSoCanHo FROM dbo.CanHo WHERE MaSoCanHo = ? ", txt_CanHo.getText());
         try {
             if (rs.next()) {
-                String CHID = rs.getString(1);
-                if (CHID != null) {
-                    insert_HD();
-                }
             } else {
                 JOptionPane.showMessageDialog(this, "Sai mã căn hộ hoặc không tồn tại căn hộ này");
                 txt_CanHo.setText("");
+                return false;
             }
         } catch (Exception e) {
             System.err.println(e);
         }
+        return true;
     }
 
     boolean checkDaCo(int Month, int Year) {
@@ -516,7 +514,6 @@ public class SinhHoatJPanel extends javax.swing.JPanel {
         try {
             while (rs.next()) {
                 String CHID = rs.getString(1);
-                System.err.println(CHID);
                 if (CHID.equals(CanhoId())) {
                     JOptionPane.showMessageDialog(this, "Căn hộ " + txt_CanHo.getText() + " đã có hóa đơn tháng này");
                     return false;
@@ -527,7 +524,8 @@ public class SinhHoatJPanel extends javax.swing.JPanel {
         }
         return true;
     }
-     boolean checkNguoiO() {
+
+    boolean checkNguoiO() {
         rs = JDBC.executeQuery("SELECT COUNT(KH.KhachHangId) FROM dbo.ThongTinKhachHang KH JOIN dbo.CanHo "
                 + "CH ON CH.CanHoId = KH.CanHoId WHERE CH.MaSoCanHo = ? ", txt_CanHo.getText());
         try {

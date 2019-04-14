@@ -104,8 +104,8 @@ public class TrangChuJPanel extends javax.swing.JPanel {
         pnl_SoNhanKhau.setMaximumSize(new java.awt.Dimension(330, 230));
         pnl_SoNhanKhau.setMinimumSize(new java.awt.Dimension(330, 230));
         pnl_SoNhanKhau.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                pnl_SoNhanKhauMouseClicked(evt);
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                pnl_SoNhanKhauMousePressed(evt);
             }
         });
 
@@ -156,6 +156,11 @@ public class TrangChuJPanel extends javax.swing.JPanel {
         pnl_SoNhanKhau1.setBackground(new java.awt.Color(121, 196, 71));
         pnl_SoNhanKhau1.setMaximumSize(new java.awt.Dimension(330, 230));
         pnl_SoNhanKhau1.setMinimumSize(new java.awt.Dimension(330, 230));
+        pnl_SoNhanKhau1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                pnl_SoNhanKhau1MousePressed(evt);
+            }
+        });
 
         lbl_IconBike.setIcon(new javax.swing.ImageIcon(getClass().getResource("/duan/Logo/Motorcycle.png"))); // NOI18N
 
@@ -198,9 +203,13 @@ public class TrangChuJPanel extends javax.swing.JPanel {
         add(pnl_SoNhanKhau1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 60, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void pnl_SoNhanKhauMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_SoNhanKhauMouseClicked
-        new QuanLyNhanKhauJFrame().setVisible(true);
-    }//GEN-LAST:event_pnl_SoNhanKhauMouseClicked
+    private void pnl_SoNhanKhauMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_SoNhanKhauMousePressed
+      new QuanLyNhanKhauJFrame().setVisible(true);
+    }//GEN-LAST:event_pnl_SoNhanKhauMousePressed
+
+    private void pnl_SoNhanKhau1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_SoNhanKhau1MousePressed
+        new QuanLyXeJFrame().setVisible(true);
+    }//GEN-LAST:event_pnl_SoNhanKhau1MousePressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

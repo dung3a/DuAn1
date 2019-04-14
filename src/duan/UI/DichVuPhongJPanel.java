@@ -256,8 +256,8 @@ public class DichVuPhongJPanel extends javax.swing.JPanel {
         if (moi == 0) {
             this.newModel();
             moi = 1;
-        } else if (checkDaCo(month, year) && checkTrong() && checkNguoiO()) {
-            this.checkTonTaiCanHo();
+        } else if (checkTrong() && checkTonTaiCanHo() && checkNguoiO() && checkDaCo(month, year)) {
+            this.insert_HD();
             check = 0;
             this.newModel();
         }
@@ -466,36 +466,32 @@ public class DichVuPhongJPanel extends javax.swing.JPanel {
         }
     }
 
-    void checkTonTaiCanHo() {
+    boolean checkTonTaiCanHo() {
         rs = JDBC.executeQuery("SELECT MaSoCanHo FROM dbo.CanHo WHERE MaSoCanHo = ? ", txt_CanHo.getText());
         try {
             if (rs.next()) {
-                String CHID = rs.getString(1);
-                System.err.println(CHID);
-                if (CHID != null) {
-                    this.insert_HD();
-                }
             } else {
                 JOptionPane.showMessageDialog(this, "Sai mã căn hộ hoặc không tồn tại căn hộ này");
                 txt_CanHo.setText("");
                 txt_CanHo.setVisible(true);
+                return false;
             }
         } catch (SQLException e) {
             System.err.println(e);
         }
+        return true;
+
     }
 
     boolean checkNguoiO() {
-        rs = JDBC.executeQuery("SELECT COUNT(KH.KhachHangId) FROM dbo.ThongTinKhachHang KH JOIN dbo.CanHo "
-                + "CH ON CH.CanHoId = KH.CanHoId WHERE CH.MaSoCanHo = ? ", txt_CanHo.getText());
+        rs = JDBC.executeQuery("SELECT KH.KhachHangId FROM dbo.ThongTinKhachHang KH "
+                + "JOIN dbo.CanHo CH ON CH.CanHoId = KH.CanHoId WHERE CH.MaSoCanHo = ? ", txt_CanHo.getText());
         try {
             if (rs.next()) {
-                int SL = rs.getInt(1);
-                if (SL == 0) {
-                    JOptionPane.showMessageDialog(this, "Căn hộ này không có người ở");
-                    txt_CanHo.setText("");
-                    return false;
-                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Căn hộ này không có người ở");
+                txt_CanHo.setText("");
+                return false;
             }
         } catch (SQLException e) {
             System.err.println(e);

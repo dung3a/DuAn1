@@ -284,12 +284,14 @@ public class InternetJPanel extends javax.swing.JPanel {
         if (moi == 0) {
             this.newModel();
             moi = 1;
-        } else if (checkDaCo(month, year) && checkTrong() && checkNguoiO()) {
-            this.checkTonTaiCanHo();
+        } else if (checkTrong() && checkTonTaiCanHo() && checkNguoiO() && checkDaCo(month, year)) {
+            this.insert_HD();
             check = 0;
             this.newModel();
-            this.load_HoaDonInternet(year, year);
+            this.load_HoaDonInternet(month, year);
         }
+
+
     }//GEN-LAST:event_lbl_TaoHDThangMousePressed
 
     private void lbl_SuaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_SuaMousePressed
@@ -433,21 +435,19 @@ public class InternetJPanel extends javax.swing.JPanel {
         }
     }
 
-    void checkTonTaiCanHo() {
+    boolean checkTonTaiCanHo() {
         rs = JDBC.executeQuery("SELECT MaSoCanHo FROM dbo.CanHo WHERE MaSoCanHo = ? ", txt_MaCH.getText());
         try {
             if (rs.next()) {
-                String CHID = rs.getString(1);
-                if (CHID != null) {
-                    insert_HD();
-                }
             } else {
                 JOptionPane.showMessageDialog(this, "Sai mã căn hộ hoặc không tồn tại căn hộ này");
                 txt_MaCH.setText("");
+                return false;
             }
         } catch (Exception e) {
             System.err.println(e);
         }
+        return true;
     }
 
     boolean checkDaCo(int Month, int Year) {
@@ -469,23 +469,22 @@ public class InternetJPanel extends javax.swing.JPanel {
         return true;
     }
 
-     boolean checkNguoiO() {
-        rs = JDBC.executeQuery("SELECT COUNT(KH.KhachHangId) FROM dbo.ThongTinKhachHang KH JOIN dbo.CanHo "
-                + "CH ON CH.CanHoId = KH.CanHoId WHERE CH.MaSoCanHo = ? ", txt_MaCH.getText());
+    boolean checkNguoiO() {
+        rs = JDBC.executeQuery("SELECT KH.KhachHangId FROM dbo.ThongTinKhachHang KH "
+                + "JOIN dbo.CanHo CH ON CH.CanHoId = KH.CanHoId WHERE CH.MaSoCanHo = ? ", txt_MaCH.getText());
         try {
             if (rs.next()) {
-                int SL = rs.getInt(1);
-                if (SL == 0) {
-                    JOptionPane.showMessageDialog(this, "Căn hộ này không có người ở");
-                    txt_MaCH.setText("");
-                    return false;
-                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Căn hộ này không có người ở");
+                txt_MaCH.setText("");
+                return false;
             }
         } catch (SQLException e) {
             System.err.println(e);
         }
         return true;
     }
+
     boolean checkTrong() {
         if (txt_MaCH.getText().trim().equals("")) {
             JOptionPane.showMessageDialog(this, "Không để trống mã căn hộ ");

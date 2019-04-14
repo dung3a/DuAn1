@@ -7,11 +7,14 @@ package duan.UI;
 
 import duan.DAO.QuanLyXeDAO;
 import duan.DAO.ThongTinKhachHangDAO;
+import duan.JDBC.JDBC;
 import duan.JDBC.XuLy;
 import duan.model.QuanLyXe;
 import duan.model.ThongTinKhachHang;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -27,19 +30,19 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  */
 public class QuanLyXeJFrame extends javax.swing.JFrame {
 
-   
     public QuanLyXeJFrame() {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setTitle("Quản Lý Xe");
-      this.load_Xe();
- 
+        this.load_Xe();
+        this.loadTienTrongCoiHT();
+
     }
-    
-    
+
     int check = 1;
-    int index = 0 ;
+    int index = 0;
     int xMouse, yMouse;
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -68,8 +71,8 @@ public class QuanLyXeJFrame extends javax.swing.JFrame {
         txt_soluongXeDap = new javax.swing.JTextField();
         txt_soLuongxeMay = new javax.swing.JTextField();
         txt_soluongXehoi = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
-        lbl_NhapSoLuongXe = new javax.swing.JLabel();
+        lblTienGui = new javax.swing.JLabel();
+        lbl_CapNhat = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -165,39 +168,37 @@ public class QuanLyXeJFrame extends javax.swing.JFrame {
         });
         pnlMain.add(lbl_xuatexcel, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 470, 150, 40));
 
-        lblCanHo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblCanHo.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         lblCanHo.setText("Căn Hộ");
-        pnlMain.add(lblCanHo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, -1, -1));
+        pnlMain.add(lblCanHo, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 80, -1, -1));
 
-        lblHoTen.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblHoTen.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         lblHoTen.setText("Họ Tên Chủ Hộ");
         pnlMain.add(lblHoTen, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, -1, -1));
 
-        lblSLxeDap.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblSLxeDap.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         lblSLxeDap.setText("Số Lượng Xe Đạp");
         pnlMain.add(lblSLxeDap, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 70, -1, -1));
 
-        lblSLXemay.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblSLXemay.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         lblSLXemay.setText("Số Lượng Xe Máy");
         pnlMain.add(lblSLXemay, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 130, -1, -1));
 
-        lblSLXeHoi.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblSLXeHoi.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         lblSLXeHoi.setText("Số Lượng Xe Hơi");
         pnlMain.add(lblSLXeHoi, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 190, -1, -1));
 
-        lblTienGuiXe.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblTienGuiXe.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         lblTienGuiXe.setText("Tiền Gửi Xe ");
         pnlMain.add(lblTienGuiXe, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 110, -1, -1));
 
-        lbl_maCanHo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lbl_maCanHo.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         lbl_maCanHo.setForeground(new java.awt.Color(255, 0, 0));
-        lbl_maCanHo.setText("Can ho");
-        pnlMain.add(lbl_maCanHo, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 80, 260, -1));
+        pnlMain.add(lbl_maCanHo, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 80, 260, 20));
 
-        lbl_HoTenChuHo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lbl_HoTenChuHo.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         lbl_HoTenChuHo.setForeground(new java.awt.Color(255, 0, 0));
-        lbl_HoTenChuHo.setText("HoTen");
-        pnlMain.add(lbl_HoTenChuHo, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 150, 250, -1));
+        pnlMain.add(lbl_HoTenChuHo, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 150, 250, 20));
 
         txt_soluongXeDap.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         pnlMain.add(txt_soluongXeDap, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 70, 80, -1));
@@ -208,24 +209,24 @@ public class QuanLyXeJFrame extends javax.swing.JFrame {
         txt_soluongXehoi.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         pnlMain.add(txt_soluongXehoi, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 190, 80, -1));
 
-        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 0, 0));
-        jLabel9.setText("200,000");
-        pnlMain.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 150, -1, -1));
+        lblTienGui.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        lblTienGui.setForeground(new java.awt.Color(255, 0, 0));
+        lblTienGui.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        pnlMain.add(lblTienGui, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 150, 130, 20));
 
-        lbl_NhapSoLuongXe.setBackground(new java.awt.Color(153, 204, 0));
-        lbl_NhapSoLuongXe.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lbl_NhapSoLuongXe.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_NhapSoLuongXe.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbl_NhapSoLuongXe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/duan/Logo/New.png"))); // NOI18N
-        lbl_NhapSoLuongXe.setText("Nhập");
-        lbl_NhapSoLuongXe.setOpaque(true);
-        lbl_NhapSoLuongXe.addMouseListener(new java.awt.event.MouseAdapter() {
+        lbl_CapNhat.setBackground(new java.awt.Color(255, 153, 0));
+        lbl_CapNhat.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lbl_CapNhat.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_CapNhat.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_CapNhat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/duan/Logo/Updates_25px.png"))); // NOI18N
+        lbl_CapNhat.setText("Cập Nhật");
+        lbl_CapNhat.setOpaque(true);
+        lbl_CapNhat.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                lbl_NhapSoLuongXeMousePressed(evt);
+                lbl_CapNhatMousePressed(evt);
             }
         });
-        pnlMain.add(lbl_NhapSoLuongXe, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 200, 110, 40));
+        pnlMain.add(lbl_CapNhat, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 200, 110, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -243,7 +244,7 @@ public class QuanLyXeJFrame extends javax.swing.JFrame {
 
     private void tblQuanLyXeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblQuanLyXeMouseClicked
         index = tblQuanLyXe.getSelectedRow();
-        check = 2;
+        this.edit_HD();
 
     }//GEN-LAST:event_tblQuanLyXeMouseClicked
 
@@ -268,21 +269,21 @@ public class QuanLyXeJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_lblMinimizeMouseClicked
 
     private void lbl_xuatexcelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_xuatexcelMousePressed
-          try { 
+        try {
             int Traloi = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn xuất File ?", "Thông Báo", JOptionPane.YES_NO_OPTION);
             if (Traloi == 0) {
                 ExportExcel();
-                JOptionPane.showMessageDialog(this, "Xuất file Excel Thành Công");               
-            } 
+                JOptionPane.showMessageDialog(this, "Xuất file Excel Thành Công");
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Lỗi ! Xuất File Excel Thất Bại");
-            System.err.println(e);         
+            System.err.println(e);
         }
     }//GEN-LAST:event_lbl_xuatexcelMousePressed
 
-    private void lbl_NhapSoLuongXeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_NhapSoLuongXeMousePressed
-       
-    }//GEN-LAST:event_lbl_NhapSoLuongXeMousePressed
+    private void lbl_CapNhatMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_CapNhatMousePressed
+        this.updateSoLuongXe();
+    }//GEN-LAST:event_lbl_CapNhatMousePressed
 
     /**
      * @param args the command line arguments
@@ -320,7 +321,6 @@ public class QuanLyXeJFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel lblCanHo;
     private javax.swing.JLabel lblClose;
     private javax.swing.JLabel lblHoTen;
@@ -329,9 +329,10 @@ public class QuanLyXeJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel lblSLXeHoi;
     private javax.swing.JLabel lblSLXemay;
     private javax.swing.JLabel lblSLxeDap;
+    private javax.swing.JLabel lblTienGui;
     private javax.swing.JLabel lblTienGuiXe;
+    private javax.swing.JLabel lbl_CapNhat;
     private javax.swing.JLabel lbl_HoTenChuHo;
-    private javax.swing.JLabel lbl_NhapSoLuongXe;
     private javax.swing.JLabel lbl_Titlebar;
     private javax.swing.JLabel lbl_maCanHo;
     private javax.swing.JLabel lbl_xuatexcel;
@@ -343,9 +344,33 @@ public class QuanLyXeJFrame extends javax.swing.JFrame {
     private javax.swing.JTextField txt_soluongXehoi;
     // End of variables declaration//GEN-END:variables
 
-   QuanLyXeDAO qlxDAO = new QuanLyXeDAO();
+    QuanLyXeDAO qlxDAO = new QuanLyXeDAO();
+    ResultSet rs = null;
+    float TienGuiXeDap, TienGuiXeMay, TienGuiXeHoi;
 
-         void load_Xe() {
+    void loadTienTrongCoiHT() {
+        ResultSet rs1 = JDBC.executeQuery("SELECT GiaTrongCoi FROM dbo.LoaiXe WHERE LoaixeId = 'XD'");
+        ResultSet rs2 = JDBC.executeQuery("SELECT GiaTrongCoi FROM dbo.LoaiXe WHERE LoaixeId = 'XM'");
+        ResultSet rs3 = JDBC.executeQuery("SELECT GiaTrongCoi FROM dbo.LoaiXe WHERE LoaixeId = 'XH'");
+        try {
+            if (rs1.next()) {
+                TienGuiXeDap = rs1.getFloat(1);
+                System.err.println(TienGuiXeDap);
+            }
+            if (rs2.next()) {
+                TienGuiXeMay = rs2.getFloat(1);
+                System.err.println(TienGuiXeMay);
+            }
+            if (rs3.next()) {
+                TienGuiXeHoi = rs3.getFloat(1);
+                System.err.println(TienGuiXeHoi);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    void load_Xe() {
         DefaultTableModel model = (DefaultTableModel) tblQuanLyXe.getModel();
         model.setRowCount(0);
         try {
@@ -353,7 +378,7 @@ public class QuanLyXeJFrame extends javax.swing.JFrame {
             for (QuanLyXe Xe : list_Xe) {   //Tạo vong lặp for 
 
                 Object[] row = {
-                    Xe.getMaSoCanHo(),
+                    Xe.getCanHoID(),
                     Xe.getTenKhachHang(),
                     Xe.getSoLuongXeDap(),
                     Xe.getSoLuongXeMay(),
@@ -367,27 +392,97 @@ public class QuanLyXeJFrame extends javax.swing.JFrame {
         }
     }
 
-         // export Excel
-         public void ExportExcel(){
-         try {
+    void setModel_HD(QuanLyXe model) {
+        lbl_maCanHo.setText(model.getCanHoID());
+        lbl_HoTenChuHo.setText(model.getTenKhachHang());
+        txt_soluongXeDap.setText(String.valueOf(model.getSoLuongXeDap()));
+        txt_soLuongxeMay.setText(String.valueOf(model.getSoLuongXeMay()));
+        txt_soluongXehoi.setText(String.valueOf(model.getSoLuongXeHoi()));
+        lblTienGui.setText(XuLy.xulySo(String.valueOf(model.getTongTienGui())));
+    }
+
+    void edit_HD() {
+        try {
+            String maCh = (String) tblQuanLyXe.getValueAt(index, 0);
+            QuanLyXe model = qlxDAO.selectGuiXe(maCh);
+            if (model != null) {
+                this.setModel_HD(model);
+            }
+        } catch (ExceptionInInitializerError e) {
+            JOptionPane.showMessageDialog(this, "Lỗi truy vấn dữ liệu!");
+            System.err.println(e);
+        }
+    }
+
+    public String CanhoId() {
+        String CanHoID = "";
+        rs = JDBC.executeQuery("SELECT CanHoId FROM dbo.CanHo WHERE MaSoCanHo = ?", lbl_maCanHo.getText());
+        try {
+            while (rs.next()) {
+                CanHoID = rs.getString(1);
+            }
+        } catch (Exception e) {
+        }
+        return CanHoID;
+    }
+
+    QuanLyXe getModel_KH() {
+        int XeMay = Integer.parseInt(txt_soLuongxeMay.getText());
+        int XeDap = Integer.parseInt(txt_soluongXeDap.getText());
+        int XeHoi = Integer.parseInt(txt_soluongXehoi.getText());
+        QuanLyXe model = new QuanLyXe();
+        model.setCanHoID(CanhoId());
+        model.setSoLuongXeDap(Integer.parseInt(txt_soluongXeDap.getText()));
+        model.setTienGuiXeDap(TienGuiXeDap);
+        model.setSoLuongXeMay(Integer.parseInt(txt_soLuongxeMay.getText()));
+        model.setTienGuiXeDap(TienGuiXeMay);
+        model.setSoLuongXeHoi(Integer.parseInt(txt_soluongXehoi.getText()));
+        model.setTienGuiXeDap(TienGuiXeHoi);
+        model.setTongTienGui(XeDap * TienGuiXeDap + XeMay * TienGuiXeMay + XeHoi * TienGuiXeHoi);
+        return model;
+    }
+
+    void updateSoLuongXe() {
+        QuanLyXe model = getModel_KH();
+        try {
+            qlxDAO.updateXe(model);
+            JOptionPane.showMessageDialog(this, "Cập nhật số lượng xe căn hộ " + lbl_maCanHo.getText() + " thành công!");
+            this.load_Xe();
+            this.edit_HD();
+        } catch (ExceptionInInitializerError e) {
+            JOptionPane.showMessageDialog(this, "Cập nhật số lượng xe  thất bại!");
+            System.err.println(e);
+        }
+    }
+
+    void newmodel() {
+        lbl_maCanHo.setText("");
+        lbl_HoTenChuHo.setText("");
+        txt_soLuongxeMay.setText("");
+        txt_soluongXeDap.setText("");
+        txt_soluongXehoi.setText("");
+        lblTienGui.setText("");
+    }
+
+    // export Excel
+    public void ExportExcel() {
+        try {
             XSSFWorkbook workbook = new XSSFWorkbook();
             XSSFSheet spreadsheet = workbook.createSheet("Danh Sách Số Lượng Xe ");
- 
-            
+
             XSSFRow row = null;
             Cell cell = null;
- 
+
             row = spreadsheet.createRow((short) 2);
             row.setHeight((short) 500);
             cell = row.createCell(0, CellType.STRING);
             cell.setCellValue("DANH SÁCH SỐ LƯỢNG XE");
- 
+
             row = spreadsheet.createRow((short) 3);
             row.setHeight((short) 500);
             cell = row.createCell(0, CellType.STRING);
             cell.setCellValue("STT");
-            
-           
+
             cell = row.createCell(1, CellType.STRING);
             cell.setCellValue("Căn Hộ");
             cell = row.createCell(2, CellType.STRING);
@@ -400,32 +495,31 @@ public class QuanLyXeJFrame extends javax.swing.JFrame {
             cell.setCellValue(" Xe Hơi");
             cell = row.createCell(6, CellType.STRING);
             cell.setCellValue("Tổng Tiền");
-          
-            
+
             QuanLyXe QLX = new QuanLyXe();
- 
+
             List<QuanLyXe> list = new QuanLyXeDAO().selectQuanLyXe();
- 
+
             for (int i = 0; i < list.size(); i++) {
                 QuanLyXe qlx = list.get(i);
                 row = spreadsheet.createRow((short) 4 + i);
                 row.setHeight((short) 400);
                 row.createCell(0).setCellValue(i + 1);
-                row.createCell(1).setCellValue(qlx.getMaSoCanHo());
+                row.createCell(1).setCellValue(qlx.getCanHoID());
                 row.createCell(2).setCellValue(qlx.getTenKhachHang());
                 row.createCell(3).setCellValue(qlx.getSoLuongXeDap());
                 row.createCell(4).setCellValue(qlx.getSoLuongXeMay());
                 row.createCell(5).setCellValue(qlx.getSoLuongXeHoi());
                 row.createCell(6).setCellValue(qlx.getTongTienGui());
-                
+
             }
- 
+
             FileOutputStream out = new FileOutputStream(new File("D:/Quản Lý Xe.xlsx"));
             workbook.write(out);
             out.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }    
-         
+    }
+
 }

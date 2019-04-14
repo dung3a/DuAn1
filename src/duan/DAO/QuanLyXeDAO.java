@@ -17,11 +17,40 @@ import java.util.List;
  * @author Tam Fat
  */
 public class QuanLyXeDAO {
-      
- public List<QuanLyXe> selectQuanLyXe() {
-        String sql = " select CH.MaSoCanHo , TT.TenKhachHang , GX.SoLuongXeDap , GX.SoLuongXeMay , GX.SoLuongXeHoi, GX.TongTienGui "
-                + "from CanHo CH join ThongTinKhachHang TT on CH.KhachHangId = TT.KhachHangId Join GuiXe GX on GX.CanHoId = CH.CanHoId";
+
+    public List<QuanLyXe> selectQuanLyXe() {
+        String sql = " SELECT CH.MaSoCanHo , TT.TenKhachHang , GX.SoLuongXeDap , GX.SoLuongXeMay , GX.SoLuongXeHoi, GX.TongTienGui \n"
+                + " FROM CanHo CH JOIN ThongTinKhachHang TT ON TT.CanHoId = CH.CanHoId JOIN GuiXe GX ON GX.CanHoId = CH.CanHoId WHERE TT.ChuHo = 1";
         return select(sql);
+    }
+
+    public QuanLyXe selectGuiXe(String MaCH) {
+        String sql = "SELECT CH.MaSoCanHo,KH.TenKhachHang,GX.SoLuongXeDap,GX.SoLuongXeMay,GX.SoLuongXeHoi,"
+                + "GX.TongTienGui FROM dbo.GuiXe GX JOIN dbo.ThongTinKhachHang KH \n"
+                + "ON KH.CanHoId = GX.CanHoId JOIN dbo.CanHo CH ON CH.CanHoId = GX.CanHoId WHERE KH.ChuHo = 1 AND CH.MaSoCanHo =  ? ";
+        List<QuanLyXe> list = select(sql, MaCH);
+        return list.size() > 0 ? list.get(0) : null;
+    }
+
+    
+    public void updateXe(QuanLyXe model) {
+        String sql = "  UPDATE dbo.GuiXe  SET SoLuongXeDap = ? , "
+                + "TienGuiXeDap = SoLuongXeDap * ? ,"
+                + "SoLuongXeMay = ? ,"
+                + "TienGuiXeMay = SoLuongXeMay * ? ,"
+                + "SoLuongXeHoi = ? ,"
+                + "TienGuiXeHoi = SoLuongXeHoi * ? ,"
+                + "TongTienGui = ? WHERE CanHoId = ?";
+        JDBC.executeUpdate(sql,
+                model.getSoLuongXeDap(),
+                model.getTienGuiXeDap(),
+                model.getSoLuongXeMay(),
+                model.getTienGuiXeMay(),
+                model.getSoLuongXeHoi(),
+                model.getTienGuiXeHoi(),
+                model.getTongTienGui(),
+                model.getCanHoID()
+                );
     }
 
     private List<QuanLyXe> select(String sql, Object... args) {
@@ -45,12 +74,12 @@ public class QuanLyXeDAO {
 
     private QuanLyXe readFromResultSet(ResultSet rs) throws SQLException {
         QuanLyXe model = new QuanLyXe();
-        model.setMaSoCanHo(rs.getString(1));
+        model.setCanHoID(rs.getString(1));
         model.setTenKhachHang(rs.getString(2));
         model.setSoLuongXeDap(rs.getInt(3));
         model.setSoLuongXeMay(rs.getInt(4));
         model.setSoLuongXeHoi(rs.getInt(5));
         model.setTongTienGui(rs.getFloat(6));
-     return model;     
+        return model;
     }
 }

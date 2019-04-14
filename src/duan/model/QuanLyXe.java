@@ -10,33 +10,60 @@ package duan.model;
  * @author Tam Fat
  */
 public class QuanLyXe {
-    
-    private String MaSoCanHo ;
-    private String TenKhachHang ;
-    private int SoLuongXeDap; 
-    private int SoLuongXeMay; 
-    private int SoLuongXeHoi; 
+
+    private String CanHoID;
+    private String TenKhachHang;
+    private int SoLuongXeDap;
+    private float TienGuiXeDap;
+    private int SoLuongXeMay;
+    private float TienGuiXeMay;
+    private int SoLuongXeHoi;
+    private float TienGuiXeHoi;
     private float TongTienGui;
-    
-   
-    public QuanLyXe(){
-}
-    
-    public QuanLyXe(String MaSoCanHo , String TenKhachHang  , int SoLuongXeDap , int SoLuongXeMay ,int SoLuongXeHoi, float TongTienGui){
-        this.MaSoCanHo = MaSoCanHo;
-        this.TenKhachHang = TenKhachHang ;
-        this.SoLuongXeDap = SoLuongXeDap ;
-        this.SoLuongXeMay = SoLuongXeMay ; 
-        this.SoLuongXeHoi = SoLuongXeHoi ;
+
+    public QuanLyXe() {
+    }
+
+    public QuanLyXe(String CanHoID, String TenKhachHang, int SoLuongXeDap, int SoLuongXeMay, int SoLuongXeHoi, float TongTienGui) {
+        this.CanHoID = CanHoID;
+        this.TenKhachHang = TenKhachHang;
+        this.SoLuongXeDap = SoLuongXeDap;
+        this.SoLuongXeMay = SoLuongXeMay;
+        this.SoLuongXeHoi = SoLuongXeHoi;
         this.TongTienGui = TongTienGui;
     }
 
-    public String getMaSoCanHo() {
-        return MaSoCanHo;
+    public float getTienGuiXeDap() {
+        return TienGuiXeDap;
     }
 
-    public void setMaSoCanHo(String MaSoCanHo) {
-        this.MaSoCanHo = MaSoCanHo;
+    public void setTienGuiXeDap(float TienGuiXeDap) {
+        this.TienGuiXeDap = TienGuiXeDap;
+    }
+
+    public float getTienGuiXeMay() {
+        return TienGuiXeMay;
+    }
+
+    public void setTienGuiXeMay(float TienGuiXeMay) {
+        this.TienGuiXeMay = TienGuiXeMay;
+    }
+
+    public float getTienGuiXeHoi() {
+        return TienGuiXeHoi;
+    }
+
+    public void setTienGuiXeHoi(float TienGuiXeHoi) {
+        this.TienGuiXeHoi = TienGuiXeHoi;
+    }
+
+    
+    public String getCanHoID() {
+        return CanHoID;
+    }
+
+    public void setCanHoID(String CanHoID) {
+        this.CanHoID = CanHoID;
     }
 
     public String getTenKhachHang() {
@@ -79,10 +106,4 @@ public class QuanLyXe {
         this.TongTienGui = TongTienGui;
     }
 
-
-    
 }
-
-   
-
-

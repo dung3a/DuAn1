@@ -5,7 +5,6 @@
  */
 package duan.UI;
 
-
 import duan.DAO.ThongTinKhachHangDAO;
 import duan.DAO.ThongTinKhachHangDAO2;
 import static duan.JDBC.XuLy.loaiboKhoangTrang;
@@ -21,7 +20,6 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.File;
 import java.io.FileOutputStream;
-
 
 /**
  *
@@ -41,7 +39,7 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
     }
     int xMouse, yMouse;
     int check = 1;
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -296,7 +294,7 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
     private void lbl_TitlebarMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_TitlebarMouseDragged
         int x = evt.getXOnScreen();
         int y = evt.getYOnScreen();
-        
+
         this.setLocation(x - xMouse, y - yMouse);
     }//GEN-LAST:event_lbl_TitlebarMouseDragged
 
@@ -320,7 +318,7 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_tblQuanLyNhanKhauMouseClicked
 
     private void lblTimMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblTimMouseClicked
-        this.newModel();     
+        this.newModel();
         this.load_KhachHangByID();
         txtTimKiem.setText("");
     }//GEN-LAST:event_lblTimMouseClicked
@@ -330,9 +328,8 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_lblXuatExcelMousePressed
 
     private void lblCapNhatMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCapNhatMousePressed
-         check = 1;
-         
-     
+        check = 1;
+
         if (checkTT()) {
             this.update_KH();
             this.load_KhachHang();
@@ -341,7 +338,7 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCapNhatMousePressed
 
     private void lbl_NhapMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_NhapMousePressed
-         if (checkTT() && check == 1) {
+        if (checkTT() && check == 1) {
             this.insert_KH();
             this.load_KhachHang();
             this.newModel();
@@ -419,7 +416,6 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
 
     ThongTinKhachHangDAO2 khachHangDAO = new ThongTinKhachHangDAO2();
     int index = 0;
-    
 
     void loadcboTrangThai() {
         if (check == 1) {
@@ -594,32 +590,30 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
         } else if (txtSoDienThoai.getText().length() < 8) {
             JOptionPane.showMessageDialog(this, "Số điện thoại không dưới 8 số!");
             return false;
-        } else if (!txtSoDienThoai.getText().trim().substring(0,2).equals("09") 
-                || !txtSoDienThoai.getText().trim().substring(0,2).equals("08")
-                || !txtSoDienThoai.getText().trim().substring(0,2).equals("03")
-                || !txtSoDienThoai.getText().trim().substring(0,2).equals("05")
-                || !txtSoDienThoai.getText().trim().substring(0,2).equals("07") ){
+        } else if (!txtSoDienThoai.getText().trim().substring(0, 2).equals("09")
+                && !txtSoDienThoai.getText().trim().substring(0, 2).equals("08")
+                && !txtSoDienThoai.getText().trim().substring(0, 2).equals("03")
+                && !txtSoDienThoai.getText().trim().substring(0, 2).equals("05")
+                && !txtSoDienThoai.getText().trim().substring(0, 2).equals("07")) {
             JOptionPane.showMessageDialog(this, "Đầu Số Bắt Đầu Bằng 09 | 08 | 07 | 05 | 03 !");
             return false;
         }
         return true;
     }
-    
-    
-    
-    public void ExportExcel(){
-         try {
+
+    public void ExportExcel() {
+        try {
             XSSFWorkbook workbook = new XSSFWorkbook();
             XSSFSheet spreadsheet = workbook.createSheet("Danh Sách Khách Hàng");
- 
+
             XSSFRow row = null;
             Cell cell = null;
- 
+
             row = spreadsheet.createRow((short) 2);
             row.setHeight((short) 500);
             cell = row.createCell(0, CellType.STRING);
             cell.setCellValue("DANH SÁCH KHÁCH HÀNG");
- 
+
             row = spreadsheet.createRow((short) 3);
             row.setHeight((short) 500);
             cell = row.createCell(0, CellType.STRING);
@@ -642,11 +636,11 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
             cell.setCellValue("Trạng Thái");
             cell = row.createCell(9, CellType.STRING);
             cell.setCellValue("Chủ Hộ");
-            
+
             ThongTinKhachHang TTKH = new ThongTinKhachHang();
- 
+
             List<ThongTinKhachHang> list = new ThongTinKhachHangDAO().listTTKH();
- 
+
             for (int i = 0; i < list.size(); i++) {
                 ThongTinKhachHang ttkh = list.get(i);
                 row = spreadsheet.createRow((short) 4 + i);
@@ -662,7 +656,7 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
                 row.createCell(8).setCellValue(ttkh.getTrangThai());
                 row.createCell(9).setCellValue(ttkh.isChuHo() ? "X" : " ");
             }
- 
+
             FileOutputStream out = new FileOutputStream(new File("D:/Khách Hàng.xlsx"));
             workbook.write(out);
             out.close();
