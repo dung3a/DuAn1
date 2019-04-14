@@ -13,18 +13,22 @@ public class QuanLyXe {
     
     private String MaSoCanHo ;
     private String TenKhachHang ;
+    private int SoLuongXeDap; 
+    private int SoLuongXeMay; 
+    private int SoLuongXeHoi; 
+    private float TongTienGui;
     
-    private String Loai;
-    private int SoLuong;
-    
+   
     public QuanLyXe(){
-    }
+}
     
-    public QuanLyXe(String MaSoCanHo , String TenKhachHang  , String Loai , int SoLuong){
+    public QuanLyXe(String MaSoCanHo , String TenKhachHang  , int SoLuongXeDap , int SoLuongXeMay ,int SoLuongXeHoi, float TongTienGui){
         this.MaSoCanHo = MaSoCanHo;
         this.TenKhachHang = TenKhachHang ;
-        this.Loai = Loai;
-        this.SoLuong = SoLuong;
+        this.SoLuongXeDap = SoLuongXeDap ;
+        this.SoLuongXeMay = SoLuongXeMay ; 
+        this.SoLuongXeHoi = SoLuongXeHoi ;
+        this.TongTienGui = TongTienGui;
     }
 
     public String getMaSoCanHo() {
@@ -43,21 +47,42 @@ public class QuanLyXe {
         this.TenKhachHang = TenKhachHang;
     }
 
-    public String getLoai() {
-        return Loai;
+    public int getSoLuongXeDap() {
+        return SoLuongXeDap;
     }
 
-    public void setLoai(String Loai) {
-        this.Loai = Loai;
+    public void setSoLuongXeDap(int SoLuongXeDap) {
+        this.SoLuongXeDap = SoLuongXeDap;
     }
 
-    public int getSoLuong() {
-        return SoLuong;
+    public int getSoLuongXeMay() {
+        return SoLuongXeMay;
     }
 
-    public void setSoLuong(int SoLuong) {
-        this.SoLuong = SoLuong;
+    public void setSoLuongXeMay(int SoLuongXeMay) {
+        this.SoLuongXeMay = SoLuongXeMay;
     }
+
+    public int getSoLuongXeHoi() {
+        return SoLuongXeHoi;
+    }
+
+    public void setSoLuongXeHoi(int SoLuongXeHoi) {
+        this.SoLuongXeHoi = SoLuongXeHoi;
+    }
+
+    public float getTongTienGui() {
+        return TongTienGui;
+    }
+
+    public void setTongTienGui(float TongTienGui) {
+        this.TongTienGui = TongTienGui;
+    }
+
+
     
 }
+
+   
+
 

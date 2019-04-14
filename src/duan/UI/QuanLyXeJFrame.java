@@ -5,23 +5,34 @@
  */
 package duan.UI;
 
+import duan.DAO.QuanLyXeDAO;
+import duan.DAO.ThongTinKhachHangDAO;
+import duan.JDBC.XuLy;
+import duan.model.QuanLyXe;
 import duan.model.ThongTinKhachHang;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
  * @author Tam Fat
  */
-public class QuanLyXe extends javax.swing.JFrame {
+public class QuanLyXeJFrame extends javax.swing.JFrame {
 
    
-    public QuanLyXe() {
+    public QuanLyXeJFrame() {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setTitle("Quản Lý Xe");
-      //  this.load_Xe();
+      this.load_Xe();
  
     }
     
@@ -43,20 +54,25 @@ public class QuanLyXe extends javax.swing.JFrame {
         lblClose = new javax.swing.JLabel();
         lblQuanLyNguoi = new javax.swing.JLabel();
         lbl_Titlebar = new javax.swing.JLabel();
-        sclNhanKhau = new javax.swing.JScrollPane();
+        sclGuiXe = new javax.swing.JScrollPane();
         tblQuanLyXe = new javax.swing.JTable();
-        txtTimKiem = new javax.swing.JTextField();
-        lblTim = new javax.swing.JLabel();
-        pnl_xuatexcel = new javax.swing.JPanel();
         lbl_xuatexcel = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         pnlMain.setBackground(new java.awt.Color(255, 255, 255));
         pnlMain.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(102, 102, 102)));
         pnlMain.setMaximumSize(new java.awt.Dimension(1000, 700));
         pnlMain.setMinimumSize(new java.awt.Dimension(1000, 700));
         pnlMain.setName(""); // NOI18N
+        pnlMain.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblMinimize.setIcon(new javax.swing.ImageIcon(getClass().getResource("/duan/Logo/Minimize.png"))); // NOI18N
         lblMinimize.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -64,6 +80,7 @@ public class QuanLyXe extends javax.swing.JFrame {
                 lblMinimizeMouseClicked(evt);
             }
         });
+        pnlMain.add(lblMinimize, new org.netbeans.lib.awtextra.AbsoluteConstraints(921, 1, -1, -1));
 
         lblClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/duan/Logo/Close.png"))); // NOI18N
         lblClose.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -71,11 +88,13 @@ public class QuanLyXe extends javax.swing.JFrame {
                 lblCloseMouseClicked(evt);
             }
         });
+        pnlMain.add(lblClose, new org.netbeans.lib.awtextra.AbsoluteConstraints(961, 1, -1, -1));
 
         lblQuanLyNguoi.setFont(new java.awt.Font("Verdana", 3, 14)); // NOI18N
         lblQuanLyNguoi.setForeground(new java.awt.Color(255, 255, 255));
         lblQuanLyNguoi.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblQuanLyNguoi.setText("Quản Lý Xe");
+        pnlMain.add(lblQuanLyNguoi, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 11, 128, -1));
 
         lbl_Titlebar.setBackground(new java.awt.Color(0, 153, 153));
         lbl_Titlebar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/duan/Logo/Titlebar_background2.png"))); // NOI18N
@@ -89,8 +108,9 @@ public class QuanLyXe extends javax.swing.JFrame {
                 lbl_TitlebarMousePressed(evt);
             }
         });
+        pnlMain.add(lbl_Titlebar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 1, 1000, 40));
 
-        sclNhanKhau.setBorder(null);
+        sclGuiXe.setBorder(null);
 
         tblQuanLyXe.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         tblQuanLyXe.setModel(new javax.swing.table.DefaultTableModel(
@@ -101,9 +121,17 @@ public class QuanLyXe extends javax.swing.JFrame {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "Mã Số Căn Hộ", "Họ Tên Chủ Hộ", "Số Lượng Xe Đạp", "Số Lượng Xe Máy", "Số Lượng Xe Hơi", "Tổng Số Lượng Xe"
+                "Mã Số Căn Hộ", "Họ Tên Chủ Hộ", "Số Lượng Xe Đạp", "Số Lượng Xe Máy", "Số Lượng Xe Hơi", "Tiền Gửi Xe"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tblQuanLyXe.setMaximumSize(new java.awt.Dimension(300, 64));
         tblQuanLyXe.setMinimumSize(new java.awt.Dimension(300, 64));
         tblQuanLyXe.setRowHeight(20);
@@ -112,96 +140,41 @@ public class QuanLyXe extends javax.swing.JFrame {
                 tblQuanLyXeMouseClicked(evt);
             }
         });
-        sclNhanKhau.setViewportView(tblQuanLyXe);
+        sclGuiXe.setViewportView(tblQuanLyXe);
 
-        txtTimKiem.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtTimKiem.setToolTipText("Nhập mã khách hàng hoặc tên khách hàng");
+        pnlMain.add(sclGuiXe, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 1000, 200));
 
-        lblTim.setIcon(new javax.swing.ImageIcon(getClass().getResource("/duan/Logo/Search_35px_Black.png"))); // NOI18N
-        lblTim.setToolTipText("Tìm Kiếm");
-        lblTim.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblTimMouseClicked(evt);
-            }
-        });
-
-        pnl_xuatexcel.setBackground(new java.awt.Color(153, 204, 0));
-        pnl_xuatexcel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        pnl_xuatexcel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                pnl_xuatexcelMouseClicked(evt);
-            }
-        });
-
+        lbl_xuatexcel.setBackground(new java.awt.Color(153, 204, 0));
         lbl_xuatexcel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lbl_xuatexcel.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_xuatexcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/duan/Logo/Wite.png"))); // NOI18N
-        lbl_xuatexcel.setText("Xuất Excel");
+        lbl_xuatexcel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_xuatexcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/duan/Logo/Excel_25px.png"))); // NOI18N
+        lbl_xuatexcel.setText("  Xuất Excel");
+        lbl_xuatexcel.setOpaque(true);
+        lbl_xuatexcel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                lbl_xuatexcelMousePressed(evt);
+            }
+        });
+        pnlMain.add(lbl_xuatexcel, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 470, 150, 40));
 
-        javax.swing.GroupLayout pnl_xuatexcelLayout = new javax.swing.GroupLayout(pnl_xuatexcel);
-        pnl_xuatexcel.setLayout(pnl_xuatexcelLayout);
-        pnl_xuatexcelLayout.setHorizontalGroup(
-            pnl_xuatexcelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_xuatexcelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lbl_xuatexcel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        pnl_xuatexcelLayout.setVerticalGroup(
-            pnl_xuatexcelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lbl_xuatexcel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
-        );
+        jLabel1.setText("Căn Hộ");
+        pnlMain.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, -1, -1));
 
-        javax.swing.GroupLayout pnlMainLayout = new javax.swing.GroupLayout(pnlMain);
-        pnlMain.setLayout(pnlMainLayout);
-        pnlMainLayout.setHorizontalGroup(
-            pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlMainLayout.createSequentialGroup()
-                .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbl_Titlebar, javax.swing.GroupLayout.PREFERRED_SIZE, 1000, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(pnlMainLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblQuanLyNguoi, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlMainLayout.createSequentialGroup()
-                                .addGap(822, 822, 822)
-                                .addComponent(lblClose))
-                            .addGroup(pnlMainLayout.createSequentialGroup()
-                                .addGap(782, 782, 782)
-                                .addComponent(lblMinimize)))))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(sclNhanKhau, javax.swing.GroupLayout.Alignment.TRAILING)
-            .addGroup(pnlMainLayout.createSequentialGroup()
-                .addGap(340, 340, 340)
-                .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblTim)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMainLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(pnl_xuatexcel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(426, 426, 426))
-        );
-        pnlMainLayout.setVerticalGroup(
-            pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlMainLayout.createSequentialGroup()
-                .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblClose)
-                    .addComponent(lblMinimize)
-                    .addComponent(lbl_Titlebar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(pnlMainLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(lblQuanLyNguoi)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lblTim, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtTimKiem))
-                .addGap(18, 18, 18)
-                .addComponent(sclNhanKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(pnl_xuatexcel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        jLabel2.setText("Họ Tên Chủ Hộ");
+        pnlMain.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, -1, -1));
+
+        jLabel3.setText("Số Lượng Xe Đạp");
+        pnlMain.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 70, -1, -1));
+
+        jLabel4.setText("Số Lượng Xe Máy");
+        pnlMain.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 130, -1, -1));
+
+        jLabel5.setText("Số Lượng Xe Hơi");
+        pnlMain.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 190, -1, -1));
+
+        jLabel6.setText("Tiền Gửi Xe ");
+        pnlMain.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 110, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -216,16 +189,6 @@ public class QuanLyXe extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void pnl_xuatexcelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_xuatexcelMouseClicked
-//        ExportExcel();
-    }//GEN-LAST:event_pnl_xuatexcelMouseClicked
-
-    private void lblTimMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblTimMouseClicked
-        //this.newModel();
-       
-        txtTimKiem.setText("");
-    }//GEN-LAST:event_lblTimMouseClicked
 
     private void tblQuanLyXeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblQuanLyXeMouseClicked
         index = tblQuanLyXe.getSelectedRow();
@@ -253,6 +216,22 @@ public class QuanLyXe extends javax.swing.JFrame {
         this.setState(this.ICONIFIED);
     }//GEN-LAST:event_lblMinimizeMouseClicked
 
+    private void lbl_xuatexcelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_xuatexcelMousePressed
+          try { 
+            int Traloi = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn xuất File ?", "Thông Báo", JOptionPane.YES_NO_OPTION);
+            if (Traloi == 0) {
+                ExportExcel();
+                JOptionPane.showMessageDialog(this, "Xuất file Excel Thành Công");
+                
+            } else {
+                
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Lỗi ! Xuất File Excel Thất Bại");
+            System.err.println(e);         
+        }
+    }//GEN-LAST:event_lbl_xuatexcelMousePressed
+
     /**
      * @param args the command line arguments
      */
@@ -264,7 +243,7 @@ public class QuanLyXe extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -283,41 +262,44 @@ public class QuanLyXe extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new QuanLyXe().setVisible(true);
+                new QuanLyXeJFrame().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel lblClose;
     private javax.swing.JLabel lblMinimize;
     private javax.swing.JLabel lblQuanLyNguoi;
-    private javax.swing.JLabel lblTim;
     private javax.swing.JLabel lbl_Titlebar;
     private javax.swing.JLabel lbl_xuatexcel;
     private javax.swing.JPanel pnlMain;
-    private javax.swing.JPanel pnl_xuatexcel;
-    private javax.swing.JScrollPane sclNhanKhau;
+    private javax.swing.JScrollPane sclGuiXe;
     private javax.swing.JTable tblQuanLyXe;
-    private javax.swing.JTextField txtTimKiem;
     // End of variables declaration//GEN-END:variables
 
-        /*void load_Xe() {
+   QuanLyXeDAO qlxDAO = new QuanLyXeDAO();
+
+         void load_Xe() {
         DefaultTableModel model = (DefaultTableModel) tblQuanLyXe.getModel();
         model.setRowCount(0);
         try {
-            List<ThongTinKhachHang> list_SP = khachHangDAO.selectQuanLy("");
-            for (ThongTinKhachHang KhachHang : list_SP) {   //Tạo vong lặp for 
+            List<QuanLyXe> list_Xe = qlxDAO.selectQuanLyXe();
+            for (QuanLyXe Xe : list_Xe) {   //Tạo vong lặp for 
 
                 Object[] row = {
-                    KhachHang.getKhachHangid(),
-                    KhachHang.getCanHoid(),
-                    KhachHang.getTenKhachHang(),
-                    KhachHang.getCMND(),
-                    KhachHang.getGioiTinh() ? "Nam" : "Nữ",
-                    KhachHang.getSodt(),
-                    KhachHang.getEmail(),
-                    KhachHang.getTrangThai()};
+                    Xe.getMaSoCanHo(),
+                    Xe.getTenKhachHang(),
+                    Xe.getSoLuongXeDap(),
+                    Xe.getSoLuongXeMay(),
+                    Xe.getSoLuongXeHoi(),
+                    XuLy.xulySo(String.valueOf(Xe.getTongTienGui()))};
                 model.addRow(row);
             }
         } catch (Exception e) {
@@ -326,8 +308,65 @@ public class QuanLyXe extends javax.swing.JFrame {
         }
     }
 
-    public void setMaSoCanHo(String string) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }*/
-    
+         // export Excel
+         public void ExportExcel(){
+         try {
+            XSSFWorkbook workbook = new XSSFWorkbook();
+            XSSFSheet spreadsheet = workbook.createSheet("Danh Sách Số Lượng Xe ");
+ 
+            
+            XSSFRow row = null;
+            Cell cell = null;
+ 
+            row = spreadsheet.createRow((short) 2);
+            row.setHeight((short) 500);
+            cell = row.createCell(0, CellType.STRING);
+            cell.setCellValue("DANH SÁCH SỐ LƯỢNG XE");
+ 
+            row = spreadsheet.createRow((short) 3);
+            row.setHeight((short) 500);
+            cell = row.createCell(0, CellType.STRING);
+            cell.setCellValue("STT");
+            
+           
+            cell = row.createCell(1, CellType.STRING);
+            cell.setCellValue("Căn Hộ");
+            cell = row.createCell(2, CellType.STRING);
+            cell.setCellValue("Họ Và Tên ");
+            cell = row.createCell(3, CellType.STRING);
+            cell.setCellValue(" Xe Đạp ");
+            cell = row.createCell(4, CellType.STRING);
+            cell.setCellValue(" Xe Máy");
+            cell = row.createCell(5, CellType.STRING);
+            cell.setCellValue(" Xe Hơi");
+            cell = row.createCell(6, CellType.STRING);
+            cell.setCellValue("Tổng Tiền");
+          
+            
+            QuanLyXe QLX = new QuanLyXe();
+ 
+            List<QuanLyXe> list = new QuanLyXeDAO().selectQuanLyXe();
+ 
+            for (int i = 0; i < list.size(); i++) {
+                QuanLyXe qlx = list.get(i);
+                row = spreadsheet.createRow((short) 4 + i);
+                row.setHeight((short) 400);
+                row.createCell(0).setCellValue(i + 1);
+                row.createCell(1).setCellValue(qlx.getMaSoCanHo());
+                row.createCell(2).setCellValue(qlx.getTenKhachHang());
+                row.createCell(3).setCellValue(qlx.getSoLuongXeDap());
+                row.createCell(4).setCellValue(qlx.getSoLuongXeMay());
+                row.createCell(5).setCellValue(qlx.getSoLuongXeHoi());
+                row.createCell(6).setCellValue(qlx.getTongTienGui());
+                
+            }
+ 
+            FileOutputStream out = new FileOutputStream(new File("D:/Quản Lý Xe.xlsx"));
+            workbook.write(out);
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }    
+         
 }

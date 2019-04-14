@@ -157,7 +157,7 @@ public class TienDichVuJPanel extends javax.swing.JPanel {
                 lblCapNhaTienGuiXeMousePressed(evt);
             }
         });
-        add(lblCapNhaTienGuiXe, new org.netbeans.lib.awtextra.AbsoluteConstraints(456, 238, 125, 47));
+        add(lblCapNhaTienGuiXe, new org.netbeans.lib.awtextra.AbsoluteConstraints(456, 238, 125, 40));
 
         lblCapNhatTienDV.setBackground(new java.awt.Color(255, 153, 0));
         lblCapNhatTienDV.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N

@@ -6,9 +6,7 @@
 package duan.DAO;
 
 import duan.JDBC.JDBC;
-import duan.UI.QuanLyXe;
-import duan.model.LoaiXe;
-import duan.model.ThongTinKhachHang;
+import duan.model.QuanLyXe;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -19,12 +17,14 @@ import java.util.List;
  * @author Tam Fat
  */
 public class QuanLyXeDAO {
-/* public List<QuanLyXe> selectQuanLyXe() {
-        String sql = " SELECT TT.KhachHangId,CH.MaSoCanHo,TT.TenKhachHang,TT.CMND,TT.GioiTinh,TT.SoDT,TT.Email,TT.TrangThai,TT.ChuHo FROM dbo.ThongTinKhachHang TT JOIN dbo.CanHo CH ON CH.CanHoId = TT.CanHoId ";
+      
+ public List<QuanLyXe> selectQuanLyXe() {
+        String sql = " select CH.MaSoCanHo , TT.TenKhachHang , GX.SoLuongXeDap , GX.SoLuongXeMay , GX.SoLuongXeHoi, GX.TongTienGui "
+                + "from CanHo CH join ThongTinKhachHang TT on CH.KhachHangId = TT.KhachHangId Join GuiXe GX on GX.CanHoId = CH.CanHoId";
         return select(sql);
     }
 
-    private List<QuanLyXe> select(String sql) {
+    private List<QuanLyXe> select(String sql, Object... args) {
         List<QuanLyXe> list = new ArrayList<>();
         try {
             ResultSet rs = null;
@@ -42,18 +42,15 @@ public class QuanLyXeDAO {
         }
         return list;
     }
-    
-      private ThongTinKhachHang readFromResultSet(ResultSet rs) throws SQLException {
+
+    private QuanLyXe readFromResultSet(ResultSet rs) throws SQLException {
         QuanLyXe model = new QuanLyXe();
         model.setMaSoCanHo(rs.getString(1));
-        model.setCanHoid(rs.getString(2));
-        model.setTenKhachHang(rs.getString(3));
-        model.setCMND(rs.getString(4));
-        model.setGioiTinh(rs.getBoolean(5));
-        model.setSodt(rs.getString(6));
-        model.setEmail(rs.getString(7));
-        model.setTrangThai(rs.getString(8));
-        model.setChuHo(rs.getBoolean(9));
-        return model;
-    }*/
+        model.setTenKhachHang(rs.getString(2));
+        model.setSoLuongXeDap(rs.getInt(3));
+        model.setSoLuongXeMay(rs.getInt(4));
+        model.setSoLuongXeHoi(rs.getInt(5));
+        model.setTongTienGui(rs.getFloat(6));
+     return model;     
+    }
 }
