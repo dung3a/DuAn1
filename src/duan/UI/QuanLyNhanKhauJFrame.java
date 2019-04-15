@@ -23,6 +23,11 @@ import java.io.FileOutputStream;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Row;
 
 /**
  *
@@ -610,70 +615,120 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
         return true;
     }
 
+     private static HSSFCellStyle createStyleForTitle(HSSFWorkbook workbook) {
+        HSSFFont font = workbook.createFont();
+        font.setBold(true);
+        font.setFontHeightInPoints((short) 10);
+
+        HSSFCellStyle style = workbook.createCellStyle();
+        style.setFont(font);
+        return style;
+    }
+     
     public void ExportExcel() {
         try {
-            XSSFWorkbook workbook = new XSSFWorkbook();
-            XSSFSheet spreadsheet = workbook.createSheet("Danh Sách Khách Hàng");
-
-            XSSFRow row = null;
-            Cell cell = null;
-
-            row = spreadsheet.createRow((short) 2);
-            row.setHeight((short) 500);
-            cell = row.createCell(0, CellType.STRING);
-            cell.setCellValue("DANH SÁCH KHÁCH HÀNG");
-
-            row = spreadsheet.createRow((short) 3);
-            row.setHeight((short) 500);
-            cell = row.createCell(0, CellType.STRING);
-            cell.setCellValue("STT");
-            cell = row.createCell(1, CellType.STRING);
-            cell.setCellValue("Mã Khách Hàng");
-            cell = row.createCell(2, CellType.STRING);
-            cell.setCellValue("Họ Và Tên ");
-            cell = row.createCell(3, CellType.STRING);
-            cell.setCellValue("Căn Hộ ");
-            cell = row.createCell(4, CellType.STRING);
-            cell.setCellValue("CMND");
-            cell = row.createCell(5, CellType.STRING);
-            cell.setCellValue("Giới tính");
-            cell = row.createCell(6, CellType.STRING);
-            cell.setCellValue("Số điện thoại");
-            cell = row.createCell(7, CellType.STRING);
-            cell.setCellValue("Email");
-            cell = row.createCell(8, CellType.STRING);
-            cell.setCellValue("Trạng Thái");
-            cell = row.createCell(9, CellType.STRING);
-            cell.setCellValue("Chủ Hộ");
+            HSSFWorkbook workbook = new HSSFWorkbook();
+            HSSFSheet sheet = workbook.createSheet("Danh Sách Quản Lý Nhân Khẩu");
 
             ThongTinKhachHang TTKH = new ThongTinKhachHang();
-
             List<ThongTinKhachHang> list = new ThongTinKhachHangDAO().listTTKH();
 
-            for (int i = 0; i < list.size(); i++) {
-                ThongTinKhachHang ttkh = list.get(i);
-                row = spreadsheet.createRow((short) 4 + i);
-                row.setHeight((short) 400);
-                row.createCell(0).setCellValue(i + 1);
-                row.createCell(1).setCellValue(ttkh.getKhachHangid());
-                row.createCell(2).setCellValue(ttkh.getTenKhachHang());
-                row.createCell(3).setCellValue(ttkh.getCanHoid());
-                row.createCell(4).setCellValue(ttkh.getCMND());
-                row.createCell(5).setCellValue(ttkh.getGioiTinh() ? "Nam" : "Nữ");
-                row.createCell(6).setCellValue(ttkh.getSodt());
-                row.createCell(7).setCellValue(ttkh.getEmail());
-                row.createCell(8).setCellValue(ttkh.getTrangThai());
-                row.createCell(9).setCellValue(ttkh.isChuHo() ? "X" : " ");
+            int rownum = 0;
+            Cell cell;
+            Row row;
+            // tạo bảng
+            HSSFCellStyle style = createStyleForTitle(workbook);
+            row = sheet.createRow(rownum);
+
+            // STT
+            cell = row.createCell(0, CellType.STRING);
+            cell.setCellValue("STT");
+            cell.setCellStyle(style);
+            // Họ Và Tên
+            cell = row.createCell(1, CellType.STRING);
+            cell.setCellValue("Họ Và Tên");
+            cell.setCellStyle(style);
+            // Căn Hộ
+            cell = row.createCell(2, CellType.STRING);
+            cell.setCellValue("Căn Hộ");
+            cell.setCellStyle(style);
+            // CMND
+            cell = row.createCell(3, CellType.STRING);
+            cell.setCellValue("CMND");
+            cell.setCellStyle(style);
+            // Gioi Tinh
+            cell = row.createCell(4, CellType.STRING);
+            cell.setCellValue("Giới tính");
+            cell.setCellStyle(style);
+            // SDT
+            cell = row.createCell(5, CellType.STRING);
+            cell.setCellValue("Số điện thoại");
+            cell.setCellStyle(style);
+            // Email
+            cell = row.createCell(6, CellType.STRING);
+            cell.setCellValue("Email");
+            cell.setCellStyle(style);
+            //trang thai
+            cell = row.createCell(7, CellType.STRING);
+            cell.setCellValue("Trạng Thái");
+            cell.setCellStyle(style);
+            // Chủ Hộ
+            cell = row.createCell(8, CellType.STRING);
+            cell.setCellValue("Chủ Hộ");
+            cell.setCellStyle(style);
+
+            // add giữ liệu vào
+            for (ThongTinKhachHang ttkh : list) {
+                rownum++;
+                row = sheet.createRow(rownum);
+
+                //STT
+                cell = row.createCell(0, CellType.STRING);
+                cell.setCellValue(rownum);
+                sheet.setColumnWidth(0, 2000);
+                // Tên KH
+                cell = row.createCell(1, CellType.STRING);
+                cell.setCellValue(ttkh.getTenKhachHang());
+                sheet.setColumnWidth(1, 6500);
+                // Căn Hộ
+                cell = row.createCell(2, CellType.STRING);
+                cell.setCellValue(ttkh.getCanHoid());
+                sheet.setColumnWidth(2, 2000);
+                // CMND
+                cell = row.createCell(3, CellType.STRING);
+                cell.setCellValue(ttkh.getCMND());
+                sheet.setColumnWidth(3, 4000);
+                // Gioi Tinh
+                cell = row.createCell(4, CellType.STRING);
+                cell.setCellValue(ttkh.getGioiTinh() ? "Nam" : "Nữ");
+                sheet.setColumnWidth(4, 2500);
+                // SDT
+                cell = row.createCell(5, CellType.STRING);
+                cell.setCellValue(ttkh.getSodt());
+                sheet.setColumnWidth(5, 3500);
+                // Email
+                cell = row.createCell(6, CellType.STRING);
+                cell.setCellValue(ttkh.getEmail());
+                sheet.setColumnWidth(6, 7000);
+                // Trang Thái
+                cell = row.createCell(7, CellType.STRING);
+                cell.setCellValue(ttkh.getTrangThai());
+                sheet.setColumnWidth(7, 3000);
+                // Chủ Hộ
+                cell = row.createCell(8, CellType.STRING);
+                cell.setCellValue(ttkh.isChuHo() ? "X" : " ");
+                sheet.setColumnWidth(8, 2000);
+
             }
 
             JFileChooser fs = new JFileChooser(new File("D:\\"));
             fs.setDialogTitle("Lưu File");
-            fs.setFileFilter(new FileNameExtensionFilter(" Microsoft Excel", ".xlsx"));
+            fs.setFileFilter(new FileNameExtensionFilter(" Microsoft Excel", ".xls"));
             int result = fs.showSaveDialog(null);
             if (result == JFileChooser.APPROVE_OPTION) {
                 String name = fs.getSelectedFile().getAbsolutePath();
-                if (!name.toLowerCase().endsWith(".xlsx")) {
-                    name += ".xlsx";
+                if (!name.toLowerCase().endsWith(".xls")) {
+                    name += ".xls";
                 }
                 FileOutputStream out = new FileOutputStream(name);
                 workbook.write(out);

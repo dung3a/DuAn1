@@ -47,6 +47,16 @@ public class ThongTinKhachHangDAO {
                 model.getCanHoid(),
                 model.getKhachHangid());
     }
+     public void updateCanHoTinhTrangO(ThongTinKhachHang model) {
+        String sql = "UPDATE dbo.CanHo SET TinhTrang = 1 WHERE CanHoId = ?";
+        JDBC.executeUpdate(sql,
+                model.getCanHoid());
+    }
+      public void updateCanHoTinhTrangTrong(ThongTinKhachHang model) {
+        String sql = "UPDATE dbo.CanHo SET TinhTrang = 0 WHERE CanHoId = ?";
+        JDBC.executeUpdate(sql,
+                model.getCanHoid());
+    }
 
     public void updateChuHo(String Ten, String Ten2, String CanhoId) {
         String sql = "UPDATE dbo.ThongTinKhachHang SET ChuHo = 0 WHERE TenKhachHang LIKE ? AND CanHoId = ?\n"

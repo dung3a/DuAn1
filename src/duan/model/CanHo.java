@@ -14,15 +14,25 @@ public class CanHo {
     private String MaSoCanHo ;
     private String KhachHangid ;
     private byte Tang ;
+    private boolean TinhTrang;
     
     public CanHo(){
     }
 
-    public CanHo(String CanHoid , String MaSoCanHo , String KhachHangid , byte Tang){
+    public CanHo(String CanHoid , String MaSoCanHo , String KhachHangid , byte Tang,boolean TinhTrang){
         this.CanHoid = CanHoid ;
         this.MaSoCanHo = MaSoCanHo ;
         this.KhachHangid = KhachHangid ;
         this.Tang = Tang ;
+        this.TinhTrang = TinhTrang;
+    }
+
+    public boolean isTinhTrang() {
+        return TinhTrang;
+    }
+
+    public void setTinhTrang(boolean TinhTrang) {
+        this.TinhTrang = TinhTrang;
     }
     
     public String getCanHoid() {

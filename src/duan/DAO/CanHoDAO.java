@@ -49,10 +49,11 @@ public class CanHoDAO {
 
     private CanHo readFromResultSet(ResultSet rs) throws SQLException {
         CanHo model = new CanHo();
-        model.setCanHoid(rs.getString("CanHoId"));
-        model.setMaSoCanHo(rs.getString("MaSoCanHo"));
-        model.setKhachHangid(rs.getString("KhachhangId"));
-        model.setTang(rs.getByte("Tang"));
+        model.setCanHoid(rs.getString(1));
+        model.setMaSoCanHo(rs.getString(2));
+        model.setKhachHangid(rs.getString(3));
+        model.setTang(rs.getByte(4));
+        model.setTinhTrang(rs.getBoolean(5));
         return model;
     }
 }

@@ -147,10 +147,10 @@ public class CanHoJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txt_TimKiem;
     // End of variables declaration//GEN-END:variables
 
-     private void clickSlect(String masocanho,String canhoID) {
-        new ThongTinCanHoJFrame(masocanho, canhoID ).setVisible(true);
+    private void clickSlect(String masocanho, String canhoID) {
+        new ThongTinCanHoJFrame(masocanho, canhoID).setVisible(true);
     }
-    
+
     private void loadTang() {
         rs = JDBC.executeQuery("SELECT DISTINCT  Tang FROM dbo.CanHo ");
         try {
@@ -172,33 +172,64 @@ public class CanHoJPanel extends javax.swing.JPanel {
         int soluongcanho = listCanHo.size();
 
         for (CanHo canHo : listCanHo) {
-            String noidung = "<html> <style>body{\n"
-                    + "    text-align: center;\n"
-                    + "    font-family: 'Tahoma';\n"
-                    + "    color: white;\n"
-                    + "}</style>";
-            noidung += "<b><font size=5> Căn Hộ  " + (canHo.getMaSoCanHo()) + " </b></font>";
-            JLabel canholb = new JLabel();
-            canholb.setPreferredSize(new Dimension(245, 200));
-            canholb.setForeground(new Color(121, 196, 71));
-            canholb.setCursor(new Cursor(Cursor.HAND_CURSOR));
-            canholb.setBackground(new Color(121, 196, 71));
-            canholb.setPreferredSize(new Dimension(245, 195));
-            canholb.setHorizontalAlignment((int) LEFT_ALIGNMENT);
-            canholb.setIcon(new ImageIcon(this.getClass().getResource("/duan/Logo/LogoMain.png")));
+            if (!canHo.isTinhTrang()) {
 
-            canholb.setText(noidung);
-            canholb.setToolTipText("Click vào để xem thông tin căn hộ " + (canHo.getMaSoCanHo()));
-            canholb.setHorizontalAlignment(SwingConstants.CENTER);
-            canholb.setOpaque(true);
-            canholb.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    clickSlect(canHo.getMaSoCanHo(),canHo.getCanHoid());
-                }
+                String noidung = "<html> <style>body{\n"
+                        + "    text-align: center;\n"
+                        + "    font-family: 'Tahoma';\n"
+                        + "    color: white;\n"
+                        + "}</style>";
+                noidung += "<b><font size=5> Căn Hộ  " + (canHo.getMaSoCanHo()) + " </b></font>";
+                JLabel canholb = new JLabel();
+                canholb.setPreferredSize(new Dimension(245, 200));
+                canholb.setForeground(new Color(255, 153, 51));
+                canholb.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                canholb.setBackground(new Color(255, 153, 51));
+                canholb.setPreferredSize(new Dimension(245, 195));
+                canholb.setHorizontalAlignment((int) LEFT_ALIGNMENT);
+                canholb.setIcon(new ImageIcon(this.getClass().getResource("/duan/Logo/LogoMain.png")));
 
-            });
-            pnlCanHo.add(canholb);
+                canholb.setText(noidung);
+                canholb.setToolTipText("Click vào để xem thông tin căn hộ " + (canHo.getMaSoCanHo()));
+                canholb.setHorizontalAlignment(SwingConstants.CENTER);
+                canholb.setOpaque(true);
+                canholb.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        clickSlect(canHo.getMaSoCanHo(), canHo.getCanHoid());
+                    }
+
+                });
+                pnlCanHo.add(canholb);
+            } else {
+                String noidung = "<html> <style>body{\n"
+                        + "    text-align: center;\n"
+                        + "    font-family: 'Tahoma';\n"
+                        + "    color: white;\n"
+                        + "}</style>";
+                noidung += "<b><font size=5> Căn Hộ  " + (canHo.getMaSoCanHo()) + " </b></font>";
+                JLabel canholb = new JLabel();
+                canholb.setPreferredSize(new Dimension(245, 200));
+                canholb.setForeground(new Color(121, 196, 71));
+                canholb.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                canholb.setBackground(new Color(121, 196, 71));
+                canholb.setPreferredSize(new Dimension(245, 195));
+                canholb.setHorizontalAlignment((int) LEFT_ALIGNMENT);
+                canholb.setIcon(new ImageIcon(this.getClass().getResource("/duan/Logo/LogoMain.png")));
+
+                canholb.setText(noidung);
+                canholb.setToolTipText("Click vào để xem thông tin căn hộ " + (canHo.getMaSoCanHo()));
+                canholb.setHorizontalAlignment(SwingConstants.CENTER);
+                canholb.setOpaque(true);
+                canholb.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        clickSlect(canHo.getMaSoCanHo(), canHo.getCanHoid());
+                    }
+
+                });
+                pnlCanHo.add(canholb);
+            }
         }
 
         if (soluongcanho % 4 != 0) {
@@ -248,7 +279,7 @@ public class CanHoJPanel extends javax.swing.JPanel {
             canholb.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    clickSlect(canHo.getMaSoCanHo(),canHo.getCanHoid());
+                    clickSlect(canHo.getMaSoCanHo(), canHo.getCanHoid());
                 }
 
             });

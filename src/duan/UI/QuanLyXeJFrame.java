@@ -16,8 +16,13 @@ import java.sql.SQLException;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -459,63 +464,106 @@ public class QuanLyXeJFrame extends javax.swing.JFrame {
         lblTienGui.setText("");
     }
 
-    // export Excel
-    public void ExportExcel() {
-        try {
-            XSSFWorkbook workbook = new XSSFWorkbook();
-            XSSFSheet spreadsheet = workbook.createSheet("Danh Sách Số Lượng Xe ");
-
-            XSSFRow row = null;
-            Cell cell = null;
-
-            row = spreadsheet.createRow((short) 2);
-            row.setHeight((short) 500);
-            cell = row.createCell(0, CellType.STRING);
-            cell.setCellValue("DANH SÁCH SỐ LƯỢNG XE");
-
-            row = spreadsheet.createRow((short) 3);
-            row.setHeight((short) 500);
+    private static HSSFCellStyle createStyleForTitle(HSSFWorkbook workbook) {
+        HSSFFont font = workbook.createFont();
+        font.setBold(true);
+        font.setFontHeightInPoints((short) 10);
+        
+        
+        HSSFCellStyle style = workbook.createCellStyle();
+        style.setFont(font);
+        return style;
+    }
+        
+         public void ExportExcel(){
+         try {
+            HSSFWorkbook workbook = new HSSFWorkbook();
+            HSSFSheet sheet = workbook.createSheet("Danh Sách Quản Lý Xe");
+ 
+            QuanLyXe QLX = new QuanLyXe();
+            List<QuanLyXe> list = new QuanLyXeDAO().selectQuanLyXe();
+            
+            int rownum = 0;
+            Cell cell ;
+            Row row;
+            // tạo bảng
+            HSSFCellStyle style = createStyleForTitle(workbook);
+            row = sheet.createRow(rownum);
+ 
+            // STT
             cell = row.createCell(0, CellType.STRING);
             cell.setCellValue("STT");
-
+            cell.setCellStyle(style);
+            // Căn Hộ
             cell = row.createCell(1, CellType.STRING);
             cell.setCellValue("Căn Hộ");
+            cell.setCellStyle(style);
+            // Họ Và Tên
             cell = row.createCell(2, CellType.STRING);
-            cell.setCellValue("Họ Và Tên ");
+            cell.setCellValue("Họ Và Tên");
+            cell.setCellStyle(style);
+            // Xe Đạp
             cell = row.createCell(3, CellType.STRING);
-            cell.setCellValue(" Xe Đạp ");
+            cell.setCellValue("Xe Đạp");
+            cell.setCellStyle(style);
+            // Xe Máy
             cell = row.createCell(4, CellType.STRING);
-            cell.setCellValue(" Xe Máy");
+            cell.setCellValue("Xe Máy");
+            cell.setCellStyle(style);
+            // Xe Hơi
             cell = row.createCell(5, CellType.STRING);
-            cell.setCellValue(" Xe Hơi");
+            cell.setCellValue("Xe Hơi");
+            cell.setCellStyle(style);
+            // Tổng Tiền Gữi Xe
             cell = row.createCell(6, CellType.STRING);
-            cell.setCellValue("Tổng Tiền");
-
-            QuanLyXe QLX = new QuanLyXe();
-
-            List<QuanLyXe> list = new QuanLyXeDAO().selectQuanLyXe();
-
-            for (int i = 0; i < list.size(); i++) {
-                QuanLyXe qlx = list.get(i);
-                row = spreadsheet.createRow((short) 4 + i);
-                row.setHeight((short) 400);
-                row.createCell(0).setCellValue(i + 1);
-                row.createCell(1).setCellValue(qlx.getCanHoID());
-                row.createCell(2).setCellValue(qlx.getTenKhachHang());
-                row.createCell(3).setCellValue(qlx.getSoLuongXeDap());
-                row.createCell(4).setCellValue(qlx.getSoLuongXeMay());
-                row.createCell(5).setCellValue(qlx.getSoLuongXeHoi());
-                row.createCell(6).setCellValue(qlx.getTongTienGui());
+            cell.setCellValue("Tổng Tiền Gữi Xe");
+            cell.setCellStyle(style);
+                
+            // add giữ liệu vào
+            for (QuanLyXe qlx : list) {
+                rownum++;
+                row = sheet.createRow(rownum);
+                
+                //STT
+                cell = row.createCell(0,CellType.STRING);
+                cell.setCellValue(rownum);
+                sheet.setColumnWidth(0, 2000);
+                // Căn Hộ
+                cell = row.createCell(1,CellType.STRING);
+                cell.setCellValue(qlx.getCanHoID());
+                sheet.setColumnWidth(1, 2000);
+                // Họ Và Tên
+                cell = row.createCell(2,CellType.STRING);
+                cell.setCellValue(qlx.getTenKhachHang());
+                sheet.setColumnWidth(2, 7000);
+                // So Luong Xe Dap
+                cell = row.createCell(3,CellType.STRING);
+                cell.setCellValue(qlx.getSoLuongXeDap());
+                sheet.setColumnWidth(3, 2000);
+                
+                // So Luong Xe may
+                cell = row.createCell(4,CellType.STRING);
+                cell.setCellValue(qlx.getSoLuongXeMay());
+                sheet.setColumnWidth(4, 2000);
+                // So Luong Xe hoi
+                cell = row.createCell(5,CellType.STRING);
+                cell.setCellValue(qlx.getSoLuongXeHoi());
+                sheet.setColumnWidth(5, 2000);
+                // tong tien gui xe
+                String formula = XuLy.xulySo(String.valueOf(qlx.getTongTienGui())) ;
+                cell = row.createCell(6,CellType.STRING);
+                cell.setCellValue(formula);
+                sheet.setColumnWidth(6, 5000);
             }
 
             JFileChooser fs = new JFileChooser(new File("D:\\"));
             fs.setDialogTitle("Lưu File");
-            fs.setFileFilter(new FileNameExtensionFilter(" Microsoft Excel", ".xlsx"));
+            fs.setFileFilter(new FileNameExtensionFilter(" Microsoft Excel", ".xls"));
             int result = fs.showSaveDialog(null);
             if (result == JFileChooser.APPROVE_OPTION) {
                 String name = fs.getSelectedFile().getAbsolutePath();
-                if (!name.toLowerCase().endsWith(".xlsx")) {
-                    name += ".xlsx";
+                if (!name.toLowerCase().endsWith(".xls")) {
+                    name += ".xls";
                 }
                 FileOutputStream out = new FileOutputStream(name);
                 workbook.write(out);

@@ -38,7 +38,8 @@ public class ThongTinCanHoJFrame extends javax.swing.JFrame {
         this.Logo();
     }
     int xMouse, yMouse;
-      public void Logo() {
+
+    public void Logo() {
         ImageIcon img = new ImageIcon("src\\duan\\Logo\\LOGO.png");
         this.setIconImage(img.getImage());
     }
@@ -635,6 +636,7 @@ public class ThongTinCanHoJFrame extends javax.swing.JFrame {
 
     private void lblXoaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblXoaMousePressed
         this.loaibo();
+        this.setTinhTrang();
         this.loadThanhVien();
         this.load_KhachHang();
         this.loadThanhVien();
@@ -869,6 +871,7 @@ public class ThongTinCanHoJFrame extends javax.swing.JFrame {
         ThongTinKhachHang model = getModel_KH();
         try {
             khachHangDAO.updateCanHo(model);
+            khachHangDAO.updateCanHoTinhTrangO(model);
             this.load_KhachHang();
         } catch (Exception e) {
             System.err.println(e);
@@ -941,6 +944,21 @@ public class ThongTinCanHoJFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Loại bỏ thành viên thất bại");
             System.err.println(e);
             newmodel();
+        }
+    }
+
+    void setTinhTrang() {
+        ThongTinKhachHang model = getModel_KH();
+        int SoNguoi = 0;
+        ResultSet rs = JDBC.executeQuery("SELECT COUNT(KhachHangId) FROM dbo.ThongTinKhachHang WHERE CanHoId =?", canhoID);
+        try {
+            if (rs.next()) {
+                SoNguoi = rs.getInt(1);
+            }
+            if (SoNguoi == 0) {
+                khachHangDAO.updateCanHoTinhTrangTrong(model);
+            }
+        } catch (Exception e) {
         }
     }
 
