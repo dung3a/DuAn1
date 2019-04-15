@@ -11,6 +11,7 @@ import duan.model.ThongTinKhachHang;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -34,8 +35,13 @@ public class ThongTinCanHoJFrame extends javax.swing.JFrame {
         this.canhoID = canhoID;
         this.loadThanhVien();
         this.loadChuHo();
+        this.Logo();
     }
     int xMouse, yMouse;
+      public void Logo() {
+        ImageIcon img = new ImageIcon("src\\duan\\Logo\\LOGO.png");
+        this.setIconImage(img.getImage());
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

@@ -9,6 +9,7 @@ import duan.Bean.DanhMucBean;
 import duan.Controller.ChuyenManHinhController;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.ImageIcon;
  
 /**
  *
@@ -22,22 +23,22 @@ public class mainJFrame extends javax.swing.JFrame {
     public mainJFrame() {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.setTitle("Công Cụ Quản Lý Chung Cư");
-        
-        
+        this.setTitle("Công Cụ Quản Lý Chung Cư");     
         ChuyenManHinhController controller = new ChuyenManHinhController(jpn_View);
         controller.setView(jpn_TrangChu, jlbTrangChu);
-        
         List<DanhMucBean> listItem = new ArrayList<>();
         listItem.add(new DanhMucBean("TrangChu", jpn_TrangChu, jlbTrangChu));
         listItem.add(new DanhMucBean("CanHo", jpn_CanHo, jlbCanHo));
         listItem.add(new DanhMucBean("DichVu", jpn_DichVu, jlbDichVu));
-
-        
+        this.Logo();
         controller.setEvent(listItem);
     }
     int xMouse, yMouse;
     ThongTinTKJFrame thongTinAcc = new ThongTinTKJFrame();
+      public void Logo() {
+        ImageIcon img = new ImageIcon("src\\duan\\Logo\\LOGO.png");
+        this.setIconImage(img.getImage());
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -310,7 +311,6 @@ public class mainJFrame extends javax.swing.JFrame {
     private void lbl_TitlebarMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_TitlebarMouseDragged
         int x = evt.getXOnScreen();
         int y = evt.getYOnScreen();
-
         this.setLocation(x - xMouse, y - yMouse);
     }//GEN-LAST:event_lbl_TitlebarMouseDragged
 

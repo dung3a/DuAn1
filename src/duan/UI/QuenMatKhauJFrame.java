@@ -34,8 +34,13 @@ public class QuenMatKhauJFrame extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setTitle("Nhận lại mật khẩu");
         getContentPane().setBackground(Color.white);
+        this.Logo();
     }
     int xMouse, yMouse;
+      public void Logo() {
+        ImageIcon img = new ImageIcon("src\\duan\\Logo\\LOGO.png");
+        this.setIconImage(img.getImage());
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

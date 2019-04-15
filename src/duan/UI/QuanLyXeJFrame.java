@@ -34,9 +34,13 @@ public class QuanLyXeJFrame extends javax.swing.JFrame {
         this.setTitle("Quản Lý Xe");
         this.load_Xe();
         this.loadTienTrongCoiHT();
+        this.Logo();
 
     }
-
+  public void Logo() {
+        ImageIcon img = new ImageIcon("src\\duan\\Logo\\LOGO.png");
+        this.setIconImage(img.getImage());
+    }
     int check = 1;
     int index = 0;
     int xMouse, yMouse;

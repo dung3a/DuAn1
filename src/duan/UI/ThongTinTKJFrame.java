@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -32,10 +33,15 @@ public class ThongTinTKJFrame extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setTitle("Thông Tin Tài Khoản");
         this.load_user();
-
+        this.Logo();
     }
     int yMouse, xMouse;
     int Dem = 0;
+
+    public void Logo() {
+        ImageIcon img = new ImageIcon("src\\duan\\Logo\\LOGO.png");
+        this.setIconImage(img.getImage());
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

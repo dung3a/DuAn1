@@ -3,6 +3,7 @@ package duan.UI;
 import duan.JDBC.JDBC;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -16,11 +17,17 @@ public class DangNhapJFrame extends javax.swing.JFrame {
      */
     public DangNhapJFrame() {
         initComponents();
+        this.Logo();
         this.setTitle("Đăng Nhập");
         this.setLocationRelativeTo(null);
     }
-    int Dem = 0; //day la bien dem de an password
+    int Dem = 0;
     int xMouse, yMouse;
+
+    public void Logo() {
+        ImageIcon img = new ImageIcon("src\\duan\\Logo\\LOGO.png");
+        this.setIconImage(img.getImage());
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -213,35 +220,35 @@ public class DangNhapJFrame extends javax.swing.JFrame {
     private void txt_PasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_PasswordKeyPressed
 
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-             try {
+            try {
 
-            if (check()) {
+                if (check()) {
 
-                ResultSet rs = JDBC.executeQuery("SELECT * FROM USERS WHERE UserId = ? ", txt_User.getText());
+                    ResultSet rs = JDBC.executeQuery("SELECT * FROM USERS WHERE UserId = ? ", txt_User.getText());
 
-                if (rs.next()) {
-                    String pass = rs.getString(2);// Lấy Pass
-                    if (txt_Password.getText().equals(pass)) {//So sánh Pass
+                    if (rs.next()) {
+                        String pass = rs.getString(2);// Lấy Pass
+                        if (txt_Password.getText().equals(pass)) {//So sánh Pass
 
-                        JOptionPane.showMessageDialog(rootPane, "Đăng nhập thành công");
+                            JOptionPane.showMessageDialog(rootPane, "Đăng nhập thành công");
 
-                        new mainJFrame().setVisible(true);
-                        this.dispose();
+                            new mainJFrame().setVisible(true);
+                            this.dispose();
 
-                        //Thông báo nếu Pass không trùng khớp
+                            //Thông báo nếu Pass không trùng khớp
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Sai mật khẩu !", "Thông Báo", JOptionPane.WARNING_MESSAGE);
+                        }
+                        //Thông báo nếu Tài khoản không tồn tại
                     } else {
-                        JOptionPane.showMessageDialog(this, "Sai mật khẩu !", "Thông Báo", JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.showMessageDialog(this, "Tài khoản không tồn tại !", "Thông Báo", JOptionPane.WARNING_MESSAGE);
                     }
-                    //Thông báo nếu Tài khoản không tồn tại
-                } else {
-                    JOptionPane.showMessageDialog(this, "Tài khoản không tồn tại !", "Thông Báo", JOptionPane.WARNING_MESSAGE);
+
                 }
 
+            } catch (Exception e) {
+                System.out.println(e);
             }
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
 
         }
     }//GEN-LAST:event_txt_PasswordKeyPressed
