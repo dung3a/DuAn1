@@ -20,6 +20,8 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.File;
 import java.io.FileOutputStream;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -146,7 +148,7 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
         });
         sclNhanKhau.setViewportView(tblQuanLyNhanKhau);
 
-        pnlMain.add(sclNhanKhau, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 358, 1000, 341));
+        pnlMain.add(sclNhanKhau, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 358, 1000, 280));
 
         lblMaKH.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblMaKH.setText("Mã Khách Hàng");
@@ -247,7 +249,7 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
                 lblXuatExcelMousePressed(evt);
             }
         });
-        pnlMain.add(lblXuatExcel, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 310, 130, 36));
+        pnlMain.add(lblXuatExcel, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 650, 130, 36));
 
         lbl_Nhap.setBackground(new java.awt.Color(153, 204, 0));
         lbl_Nhap.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -261,7 +263,7 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
                 lbl_NhapMousePressed(evt);
             }
         });
-        pnlMain.add(lbl_Nhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 310, 100, 36));
+        pnlMain.add(lbl_Nhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 310, 100, 36));
 
         lblCapNhat.setBackground(new java.awt.Color(255, 153, 0));
         lblCapNhat.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -275,7 +277,7 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
                 lblCapNhatMousePressed(evt);
             }
         });
-        pnlMain.add(lblCapNhat, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 310, 110, 36));
+        pnlMain.add(lblCapNhat, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 310, 110, 36));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -657,9 +659,20 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
                 row.createCell(9).setCellValue(ttkh.isChuHo() ? "X" : " ");
             }
 
-            FileOutputStream out = new FileOutputStream(new File("D:/Khách Hàng.xlsx"));
-            workbook.write(out);
-            out.close();
+            JFileChooser fs = new JFileChooser(new File("D:\\"));
+            fs.setDialogTitle("Lưu File");
+            fs.setFileFilter(new FileNameExtensionFilter(" Microsoft Excel", ".xlsx"));
+            int result = fs.showSaveDialog(null);
+            if (result == JFileChooser.APPROVE_OPTION) {
+                String name = fs.getSelectedFile().getAbsolutePath();
+                if (!name.toLowerCase().endsWith(".xlsx")) {
+                    name += ".xlsx";
+                }
+                FileOutputStream out = new FileOutputStream(name);
+                workbook.write(out);
+                out.close();
+                JOptionPane.showMessageDialog(this, "Lưu Thành Công!");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

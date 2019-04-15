@@ -5,18 +5,16 @@
  */
 package duan.UI;
 
-import duan.DAO.QuanLyXeDAO;
-import duan.DAO.ThongTinKhachHangDAO;
-import duan.JDBC.JDBC;
-import duan.JDBC.XuLy;
+import duan.DAO.*;
+import duan.JDBC.*;
 import duan.model.QuanLyXe;
 import duan.model.ThongTinKhachHang;
-import java.io.File;
-import java.io.FileOutputStream;
+import java.io.*;
+import javax.swing.filechooser.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-import javax.swing.JOptionPane;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
@@ -269,20 +267,13 @@ public class QuanLyXeJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_lblMinimizeMouseClicked
 
     private void lbl_xuatexcelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_xuatexcelMousePressed
-        try {
-            int Traloi = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn xuất File ?", "Thông Báo", JOptionPane.YES_NO_OPTION);
-            if (Traloi == 0) {
-                ExportExcel();
-                JOptionPane.showMessageDialog(this, "Xuất file Excel Thành Công");
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Lỗi ! Xuất File Excel Thất Bại");
-            System.err.println(e);
-        }
+        this.ExportExcel();
     }//GEN-LAST:event_lbl_xuatexcelMousePressed
 
     private void lbl_CapNhatMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_CapNhatMousePressed
-        this.updateSoLuongXe();
+        if (check()) {
+            this.updateSoLuongXe();
+        }
     }//GEN-LAST:event_lbl_CapNhatMousePressed
 
     /**
@@ -511,15 +502,54 @@ public class QuanLyXeJFrame extends javax.swing.JFrame {
                 row.createCell(4).setCellValue(qlx.getSoLuongXeMay());
                 row.createCell(5).setCellValue(qlx.getSoLuongXeHoi());
                 row.createCell(6).setCellValue(qlx.getTongTienGui());
-
             }
 
-            FileOutputStream out = new FileOutputStream(new File("D:/Quản Lý Xe.xlsx"));
-            workbook.write(out);
-            out.close();
+            JFileChooser fs = new JFileChooser(new File("D:\\"));
+            fs.setDialogTitle("Lưu File");
+            fs.setFileFilter(new FileNameExtensionFilter(" Microsoft Excel", ".xlsx"));
+            int result = fs.showSaveDialog(null);
+            if (result == JFileChooser.APPROVE_OPTION) {
+                String name = fs.getSelectedFile().getAbsolutePath();
+                if (!name.toLowerCase().endsWith(".xlsx")) {
+                    name += ".xlsx";
+                }
+                FileOutputStream out = new FileOutputStream(name);
+                workbook.write(out);
+                out.close();
+                JOptionPane.showMessageDialog(this, "Lưu Thành Công!");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    boolean check() {
+        if (XuLy.loaiboKhoangTrang(txt_soluongXeDap.getText()).equals("")) {
+            JOptionPane.showMessageDialog(this, "Không để trống sô lượng xe đạp ");
+            txt_soluongXeDap.setVisible(true);
+            return false;
+        } else if (XuLy.loaiboKhoangTrang(txt_soLuongxeMay.getText()).equals("")) {
+            JOptionPane.showMessageDialog(this, "Không để trống sô lượng xe đạp ");
+            txt_soLuongxeMay.setVisible(true);
+            return false;
+        } else if (XuLy.loaiboKhoangTrang(txt_soLuongxeMay.getText()).equals("")) {
+            JOptionPane.showMessageDialog(this, "Không để trống sô lượng xe đạp ");
+            txt_soluongXehoi.setVisible(true);
+            return false;
+        } else if (!XuLy.loaiboKhoangTrang(txt_soluongXeDap.getText().trim()).matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "Số lượng xe không nhập kí tự!");
+            txt_soluongXeDap.setVisible(true);
+            return false;
+        } else if (!XuLy.loaiboKhoangTrang(txt_soLuongxeMay.getText().trim()).matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "Số lượng xe không nhập kí tự!");
+            txt_soLuongxeMay.setVisible(true);
+            return false;
+        } else if (!XuLy.loaiboKhoangTrang(txt_soLuongxeMay.getText().trim()).matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "Số lượng xe không nhập kí tự!");
+            txt_soLuongxeMay.setVisible(true);
+            return false;
+        }
+        return true;
     }
 
 }
