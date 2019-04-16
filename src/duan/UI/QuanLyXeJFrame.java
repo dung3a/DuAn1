@@ -39,10 +39,10 @@ public class QuanLyXeJFrame extends javax.swing.JFrame {
         this.setTitle("Quản Lý Xe");
         this.load_Xe();
         this.loadTienTrongCoiHT();
-        this.Logo();
 
     }
-  public void Logo() {
+
+    public void Logo() {
         ImageIcon img = new ImageIcon("src\\duan\\Logo\\LOGO.png");
         this.setIconImage(img.getImage());
     }
@@ -468,28 +468,27 @@ public class QuanLyXeJFrame extends javax.swing.JFrame {
         HSSFFont font = workbook.createFont();
         font.setBold(true);
         font.setFontHeightInPoints((short) 10);
-        
-        
+
         HSSFCellStyle style = workbook.createCellStyle();
         style.setFont(font);
         return style;
     }
-        
-         public void ExportExcel(){
-         try {
+
+    public void ExportExcel() {
+        try {
             HSSFWorkbook workbook = new HSSFWorkbook();
             HSSFSheet sheet = workbook.createSheet("Danh Sách Quản Lý Xe");
- 
+
             QuanLyXe QLX = new QuanLyXe();
             List<QuanLyXe> list = new QuanLyXeDAO().selectQuanLyXe();
-            
+
             int rownum = 0;
-            Cell cell ;
+            Cell cell;
             Row row;
             // tạo bảng
             HSSFCellStyle style = createStyleForTitle(workbook);
             row = sheet.createRow(rownum);
- 
+
             // STT
             cell = row.createCell(0, CellType.STRING);
             cell.setCellValue("STT");
@@ -518,40 +517,40 @@ public class QuanLyXeJFrame extends javax.swing.JFrame {
             cell = row.createCell(6, CellType.STRING);
             cell.setCellValue("Tổng Tiền Gữi Xe");
             cell.setCellStyle(style);
-                
+
             // add giữ liệu vào
             for (QuanLyXe qlx : list) {
                 rownum++;
                 row = sheet.createRow(rownum);
-                
+
                 //STT
-                cell = row.createCell(0,CellType.STRING);
+                cell = row.createCell(0, CellType.STRING);
                 cell.setCellValue(rownum);
                 sheet.setColumnWidth(0, 2000);
                 // Căn Hộ
-                cell = row.createCell(1,CellType.STRING);
+                cell = row.createCell(1, CellType.STRING);
                 cell.setCellValue(qlx.getCanHoID());
                 sheet.setColumnWidth(1, 2000);
                 // Họ Và Tên
-                cell = row.createCell(2,CellType.STRING);
+                cell = row.createCell(2, CellType.STRING);
                 cell.setCellValue(qlx.getTenKhachHang());
                 sheet.setColumnWidth(2, 7000);
                 // So Luong Xe Dap
-                cell = row.createCell(3,CellType.STRING);
+                cell = row.createCell(3, CellType.STRING);
                 cell.setCellValue(qlx.getSoLuongXeDap());
                 sheet.setColumnWidth(3, 2000);
-                
+
                 // So Luong Xe may
-                cell = row.createCell(4,CellType.STRING);
+                cell = row.createCell(4, CellType.STRING);
                 cell.setCellValue(qlx.getSoLuongXeMay());
                 sheet.setColumnWidth(4, 2000);
                 // So Luong Xe hoi
-                cell = row.createCell(5,CellType.STRING);
+                cell = row.createCell(5, CellType.STRING);
                 cell.setCellValue(qlx.getSoLuongXeHoi());
                 sheet.setColumnWidth(5, 2000);
                 // tong tien gui xe
-                String formula = XuLy.xulySo(String.valueOf(qlx.getTongTienGui())) ;
-                cell = row.createCell(6,CellType.STRING);
+                String formula = XuLy.xulySo(String.valueOf(qlx.getTongTienGui()));
+                cell = row.createCell(6, CellType.STRING);
                 cell.setCellValue(formula);
                 sheet.setColumnWidth(6, 5000);
             }

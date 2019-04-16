@@ -5,6 +5,7 @@ package duan.UI;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import duan.Controller.ChuyenManHinhController;
 import duan.DAO.CanHoDAO;
 import duan.JDBC.JDBC;
 import duan.model.CanHo;
@@ -38,7 +39,6 @@ public class CanHoJPanel extends javax.swing.JPanel {
         initComponents();
         this.loadPhong(macanho);
         this.loadTang();
-
     }
 
     /**
@@ -56,6 +56,7 @@ public class CanHoJPanel extends javax.swing.JPanel {
         lblTang = new javax.swing.JLabel();
         cbo_Tang = new javax.swing.JComboBox<>();
         lblThongBaoCanHo = new javax.swing.JLabel();
+        lblCapNhat = new javax.swing.JLabel();
         sclCanHo = new javax.swing.JScrollPane();
         pnlCanHo = new javax.swing.JPanel();
 
@@ -108,6 +109,20 @@ public class CanHoJPanel extends javax.swing.JPanel {
         lblThongBaoCanHo.setForeground(new java.awt.Color(255, 153, 153));
         jPanel1.add(lblThongBaoCanHo, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 80, 400, 40));
 
+        lblCapNhat.setBackground(new java.awt.Color(255, 153, 0));
+        lblCapNhat.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblCapNhat.setForeground(new java.awt.Color(255, 255, 255));
+        lblCapNhat.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblCapNhat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/duan/Logo/Updates_25px.png"))); // NOI18N
+        lblCapNhat.setText("Làm Mới");
+        lblCapNhat.setOpaque(true);
+        lblCapNhat.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                lblCapNhatMousePressed(evt);
+            }
+        });
+        jPanel1.add(lblCapNhat, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 40, 120, 40));
+
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 120));
 
         pnlCanHo.setBackground(new java.awt.Color(255, 255, 255));
@@ -135,10 +150,17 @@ public class CanHoJPanel extends javax.swing.JPanel {
 
     }//GEN-LAST:event_cbo_TangActionPerformed
 
+    private void lblCapNhatMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCapNhatMousePressed
+        loadPhong("");
+    }//GEN-LAST:event_lblCapNhatMousePressed
+
+ 
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cbo_Tang;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblCapNhat;
     private javax.swing.JLabel lblTang;
     private javax.swing.JLabel lblThongBaoCanHo;
     private javax.swing.JLabel lblTimKiem;
@@ -149,6 +171,7 @@ public class CanHoJPanel extends javax.swing.JPanel {
 
     private void clickSlect(String masocanho, String canhoID) {
         new ThongTinCanHoJFrame(masocanho, canhoID).setVisible(true);
+        loadPhongbyTang("Tất cả");
     }
 
     private void loadTang() {
@@ -156,10 +179,8 @@ public class CanHoJPanel extends javax.swing.JPanel {
         try {
             while (rs.next()) {
                 cbo_Tang.addItem(rs.getString("Tang"));
-
             }
             cbo_Tang.setSelectedItem(1);
-
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -171,9 +192,8 @@ public class CanHoJPanel extends javax.swing.JPanel {
         List<CanHo> listCanHo = canho.select(masocanho);
         int soluongcanho = listCanHo.size();
 
-        for (CanHo canHo : listCanHo) {
+       for (CanHo canHo : listCanHo) {
             if (!canHo.isTinhTrang()) {
-
                 String noidung = "<html> <style>body{\n"
                         + "    text-align: center;\n"
                         + "    font-family: 'Tahoma';\n"
@@ -188,7 +208,6 @@ public class CanHoJPanel extends javax.swing.JPanel {
                 canholb.setPreferredSize(new Dimension(245, 195));
                 canholb.setHorizontalAlignment((int) LEFT_ALIGNMENT);
                 canholb.setIcon(new ImageIcon(this.getClass().getResource("/duan/Logo/LogoMain.png")));
-
                 canholb.setText(noidung);
                 canholb.setToolTipText("Click vào để xem thông tin căn hộ " + (canHo.getMaSoCanHo()));
                 canholb.setHorizontalAlignment(SwingConstants.CENTER);
@@ -196,7 +215,7 @@ public class CanHoJPanel extends javax.swing.JPanel {
                 canholb.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
-                        clickSlect(canHo.getMaSoCanHo(), canHo.getCanHoid());
+                       clickSlect(canHo.getMaSoCanHo(), canHo.getCanHoid());
                     }
 
                 });
@@ -216,7 +235,6 @@ public class CanHoJPanel extends javax.swing.JPanel {
                 canholb.setPreferredSize(new Dimension(245, 195));
                 canholb.setHorizontalAlignment((int) LEFT_ALIGNMENT);
                 canholb.setIcon(new ImageIcon(this.getClass().getResource("/duan/Logo/LogoMain.png")));
-
                 canholb.setText(noidung);
                 canholb.setToolTipText("Click vào để xem thông tin căn hộ " + (canHo.getMaSoCanHo()));
                 canholb.setHorizontalAlignment(SwingConstants.CENTER);
@@ -224,9 +242,8 @@ public class CanHoJPanel extends javax.swing.JPanel {
                 canholb.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
-                        clickSlect(canHo.getMaSoCanHo(), canHo.getCanHoid());
+                       clickSlect(canHo.getMaSoCanHo(), canHo.getCanHoid());
                     }
-
                 });
                 pnlCanHo.add(canholb);
             }
@@ -234,11 +251,11 @@ public class CanHoJPanel extends javax.swing.JPanel {
 
         if (soluongcanho % 4 != 0) {
             pnlCanHo.setPreferredSize(new Dimension(1000, 200 * (soluongcanho / 4 + 1)));
-
         } else {
             pnlCanHo.setPreferredSize(new Dimension(1000, 200 * (soluongcanho / 4)));
-
         }
+        pnlCanHo.repaint();
+        pnlCanHo.revalidate();
         sclCanHo.setPreferredSize(new Dimension(1014, 500));
         sclCanHo.getVerticalScrollBar().setUnitIncrement(20);
         sclCanHo.setViewportView(pnlCanHo);
@@ -253,46 +270,71 @@ public class CanHoJPanel extends javax.swing.JPanel {
         } else {
             listCanHo = canho.selectbyTang(tang);
         }
-
         int soluongcanho = listCanHo.size();
 
         for (CanHo canHo : listCanHo) {
-            String noidung = "<html> <style>body{\n"
-                    + "    text-align: center;\n"
-                    + "    font-family: 'Tahoma';\n"
-                    + "    color: white;\n"
-                    + "}</style>";
-            noidung += "<b><font size=5> Căn Hộ  " + (canHo.getMaSoCanHo()) + " </b></font>";
-            JLabel canholb = new JLabel();
-            canholb.setPreferredSize(new Dimension(245, 200));
-            canholb.setForeground(new Color(121, 196, 71));
-            canholb.setCursor(new Cursor(Cursor.HAND_CURSOR));
-            canholb.setBackground(new Color(121, 196, 71));
-            canholb.setPreferredSize(new Dimension(245, 195));
-            canholb.setHorizontalAlignment((int) LEFT_ALIGNMENT);
-            canholb.setIcon(new ImageIcon(this.getClass().getResource("/duan/Logo/LogoMain.png")));
-
-            canholb.setText(noidung);
-            canholb.setToolTipText("Click vào để xem thông tin căn hộ " + (canHo.getMaSoCanHo()));
-            canholb.setHorizontalAlignment(SwingConstants.CENTER);
-            canholb.setOpaque(true);
-            canholb.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    clickSlect(canHo.getMaSoCanHo(), canHo.getCanHoid());
-                }
-
-            });
-            pnlCanHo.add(canholb);
+            if (!canHo.isTinhTrang()) {
+                String noidung = "<html> <style>body{\n"
+                        + "    text-align: center;\n"
+                        + "    font-family: 'Tahoma';\n"
+                        + "    color: white;\n"
+                        + "}</style>";
+                noidung += "<b><font size=5> Căn Hộ  " + (canHo.getMaSoCanHo()) + " </b></font>";
+                JLabel canholb = new JLabel();
+                canholb.setPreferredSize(new Dimension(245, 200));
+                canholb.setForeground(new Color(255, 153, 51));
+                canholb.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                canholb.setBackground(new Color(255, 153, 51));
+                canholb.setPreferredSize(new Dimension(245, 195));
+                canholb.setHorizontalAlignment((int) LEFT_ALIGNMENT);
+                canholb.setIcon(new ImageIcon(this.getClass().getResource("/duan/Logo/LogoMain.png")));
+                canholb.setText(noidung);
+                canholb.setToolTipText("Click vào để xem thông tin căn hộ " + (canHo.getMaSoCanHo()));
+                canholb.setHorizontalAlignment(SwingConstants.CENTER);
+                canholb.setOpaque(true);
+                canholb.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                       clickSlect(canHo.getMaSoCanHo(), canHo.getCanHoid());
+                    }
+                });
+                pnlCanHo.add(canholb);
+            } else {
+                String noidung = "<html> <style>body{\n"
+                        + "    text-align: center;\n"
+                        + "    font-family: 'Tahoma';\n"
+                        + "    color: white;\n"
+                        + "}</style>";
+                noidung += "<b><font size=5> Căn Hộ  " + (canHo.getMaSoCanHo()) + " </b></font>";
+                JLabel canholb = new JLabel();
+                canholb.setPreferredSize(new Dimension(245, 200));
+                canholb.setForeground(new Color(121, 196, 71));
+                canholb.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                canholb.setBackground(new Color(121, 196, 71));
+                canholb.setPreferredSize(new Dimension(245, 195));
+                canholb.setHorizontalAlignment((int) LEFT_ALIGNMENT);
+                canholb.setIcon(new ImageIcon(this.getClass().getResource("/duan/Logo/LogoMain.png")));
+                canholb.setText(noidung);
+                canholb.setToolTipText("Click vào để xem thông tin căn hộ " + (canHo.getMaSoCanHo()));
+                canholb.setHorizontalAlignment(SwingConstants.CENTER);
+                canholb.setOpaque(true);
+                canholb.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                       clickSlect(canHo.getMaSoCanHo(), canHo.getCanHoid());
+                    }
+                });
+                pnlCanHo.add(canholb);
+            }
         }
 
         if (soluongcanho % 4 != 0) {
             pnlCanHo.setPreferredSize(new Dimension(1000, 200 * (soluongcanho / 4 + 1)));
-
         } else {
             pnlCanHo.setPreferredSize(new Dimension(1000, 200 * (soluongcanho / 4)));
-
         }
+        pnlCanHo.repaint();
+        pnlCanHo.revalidate();
         sclCanHo.setPreferredSize(new Dimension(1014, 500));
         sclCanHo.getVerticalScrollBar().setUnitIncrement(20);
         sclCanHo.setViewportView(pnlCanHo);
