@@ -153,8 +153,14 @@ public class MailThongBaoJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblGuiMaiThongBaoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblGuiMaiThongBaoMousePressed
-        if (check()) {
-            this.GuiMail();
+        if (!XuLy.loaiboKhoangTrang(txt_GuiChoCanHo.getText().trim()).equals("")) {
+            if (checkTonTaiCanHo() && check()) {
+                this.GuiMail();
+            }
+        } else {
+            if (check()) {
+                this.GuiMail();
+            }
         }
     }//GEN-LAST:event_lblGuiMaiThongBaoMousePressed
 
@@ -290,11 +296,11 @@ int check = 0;
             JOptionPane.showMessageDialog(this, "Vui lòng nhâp số căn hộ hoặc check vào Gửi Toàn Chung Cư để gửi mail");
             txt_GuiChoCanHo.setVisible(true);
             return false;
-        }else if (txtMessage.getText().trim().equals("")) {
+        } else if (txtMessage.getText().trim().equals("")) {
             JOptionPane.showMessageDialog(this, "Nội dung mail không có");
             txtMessage.setVisible(true);
             return false;
-        }else if (!loaiboKhoangTrang(txtMessage.getText().trim()).matches("\\d+")) {
+        } else if (!loaiboKhoangTrang(txt_GuiChoCanHo.getText().trim()).matches("\\d+")) {
             JOptionPane.showMessageDialog(this, "Số mã số căn hộ không được chứa kí tự!");
             txt_GuiChoCanHo.setVisible(true);
             return false;
@@ -302,4 +308,19 @@ int check = 0;
         return true;
     }
 
+    boolean checkTonTaiCanHo() {
+        ResultSet rs = JDBC.executeQuery("SELECT MaSoCanHo FROM dbo.CanHo WHERE MaSoCanHo = ? ", txt_GuiChoCanHo.getText());
+        try {
+            if (rs.next()) {
+            } else {
+                JOptionPane.showMessageDialog(this, "Sai mã căn hộ hoặc không tồn tại căn hộ này");
+                txt_GuiChoCanHo.setText("");
+                txt_GuiChoCanHo.setVisible(true);
+                return false;
+            }
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+        return true;
+    }
 }
