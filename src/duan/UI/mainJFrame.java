@@ -30,6 +30,7 @@ public class mainJFrame extends javax.swing.JFrame {
         listItem.add(new DanhMucBean("TrangChu", jpn_TrangChu, jlbTrangChu));
         listItem.add(new DanhMucBean("CanHo", jpn_CanHo, jlbCanHo));
         listItem.add(new DanhMucBean("DichVu", jpn_DichVu, jlbDichVu));
+        listItem.add(new DanhMucBean("MailThongBao", jpn_MailThongBao, jlbMailThongBao));
         this.Logo();
         controller.setEvent(listItem);
     }
@@ -66,6 +67,8 @@ public class mainJFrame extends javax.swing.JFrame {
         jlbDichVu = new javax.swing.JLabel();
         jpn_ThongTin = new javax.swing.JPanel();
         jlbThongTin = new javax.swing.JLabel();
+        jpn_MailThongBao = new javax.swing.JPanel();
+        jlbMailThongBao = new javax.swing.JLabel();
         jpn_View = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -232,6 +235,25 @@ public class mainJFrame extends javax.swing.JFrame {
             .addComponent(jlbThongTin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
         );
 
+        jpn_MailThongBao.setBackground(new java.awt.Color(121, 196, 71));
+
+        jlbMailThongBao.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        jlbMailThongBao.setForeground(new java.awt.Color(255, 255, 255));
+        jlbMailThongBao.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbMailThongBao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/duan/Logo/Mail_50px.png"))); // NOI18N
+        jlbMailThongBao.setText("  Gửi Mail Thông Báo");
+
+        javax.swing.GroupLayout jpn_MailThongBaoLayout = new javax.swing.GroupLayout(jpn_MailThongBao);
+        jpn_MailThongBao.setLayout(jpn_MailThongBaoLayout);
+        jpn_MailThongBaoLayout.setHorizontalGroup(
+            jpn_MailThongBaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jlbMailThongBao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jpn_MailThongBaoLayout.setVerticalGroup(
+            jpn_MailThongBaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jlbMailThongBao, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout pnl_MenuLayout = new javax.swing.GroupLayout(pnl_Menu);
         pnl_Menu.setLayout(pnl_MenuLayout);
         pnl_MenuLayout.setHorizontalGroup(
@@ -246,7 +268,8 @@ public class mainJFrame extends javax.swing.JFrame {
                 .addGroup(pnl_MenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jpn_DichVu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jpn_CanHo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jpn_ThongTin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jpn_ThongTin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jpn_MailThongBao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(pnl_MenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(pnl_MenuLayout.createSequentialGroup()
@@ -262,7 +285,9 @@ public class mainJFrame extends javax.swing.JFrame {
                 .addComponent(jpn_CanHo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jpn_DichVu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 117, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jpn_MailThongBao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addComponent(jpn_ThongTin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(lbl_nhom6)
@@ -375,10 +400,12 @@ public class mainJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jlbCanHo;
     private javax.swing.JLabel jlbDichVu;
+    private javax.swing.JLabel jlbMailThongBao;
     private javax.swing.JLabel jlbThongTin;
     private javax.swing.JLabel jlbTrangChu;
     private javax.swing.JPanel jpn_CanHo;
     private javax.swing.JPanel jpn_DichVu;
+    private javax.swing.JPanel jpn_MailThongBao;
     private javax.swing.JPanel jpn_QLCC;
     private javax.swing.JPanel jpn_ThongTin;
     private javax.swing.JPanel jpn_Tong;

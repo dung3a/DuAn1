@@ -7,6 +7,7 @@ import duan.UI.DichVuJPanel;
 import duan.UI.DichVuPhongJPanel;
 import duan.UI.TienDichVuJPanel;
 import duan.UI.InternetJPanel;
+import duan.UI.MailThongBaoJPanel;
 import duan.UI.SinhHoatJPanel;
 import duan.UI.TienDichVuJPanel;
 import java.awt.BorderLayout;
@@ -92,6 +93,9 @@ public class ChuyenManHinhController {
                 case "HoaDon":
                     node = new TienDichVuJPanel();
                     break;
+                case "MailThongBao":
+                    node = new MailThongBaoJPanel();
+                    break;
                 case "SinhHoat":
                     node = new SinhHoatJPanel();
                     break;
@@ -140,8 +144,6 @@ public class ChuyenManHinhController {
         }
 
     }
-
- 
 
     private void setChangeBackgroud(String kind) {
         for (DanhMucBean item : listItem) {

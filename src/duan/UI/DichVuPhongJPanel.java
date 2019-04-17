@@ -243,11 +243,11 @@ public class DichVuPhongJPanel extends javax.swing.JPanel {
         index = tbl_BangDichVu.getSelectedRow();
         txt_CanHo.disable();
         if (check == 1) {
-            this.edit_HD(month, year);
-        } else {
             int Month = Integer.parseInt((String) cbo_Thang.getSelectedItem());
             int Year = Integer.parseInt((String) cbo_Year.getSelectedItem());
             this.edit_HD(Month, Year);
+        } else {           
+            this.edit_HD(month, year);
         }
         moi = 0;
     }//GEN-LAST:event_tbl_BangDichVuMouseClicked
