@@ -7,6 +7,7 @@ package duan.UI;
 
 import duan.JDBC.JDBC;
 import duan.JDBC.XuLy;
+import static duan.JDBC.XuLy.loaiboKhoangTrang;
 import java.sql.ResultSet;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -216,10 +217,10 @@ int check = 0;
                     String to = Email;
                     String subject = "Thông Báo Chung Cư";
                     String body = "Kính Gửi Anh(Chị): " + HoTen
-                            + "\n Căn Hộ: " + MaSoCH + "\n\n"
+                            + "\nCăn Hộ: " + MaSoCH + "\n\n"
                             + "Ban quản lý Chung Cư MILLENNIUM Xin Trân Trọng Thông Báo \n\n"
                             + txtMessage.getText()
-                            + "\nTrân Trọng!";
+                            + "\nTrân Trọng! \n\nP/S: Đây là mail tự động vui lòng không trả lời lại!";
 
                     Message msg = new MimeMessage(s);
                     msg.setFrom(new InternetAddress(from));
@@ -262,7 +263,7 @@ int check = 0;
                 String body = "Kính Gửi cư dân Chung Cư MILLENNIUM \n\n"
                         + "Ban quản lý Chung Cư MILLENNIUM Xin Trân Trọng Thông Báo \n\n"
                         + txtMessage.getText()
-                        + "\nTrân Trọng!";
+                        + "\nTrân Trọng! \n\nP/S: Đây là mail tự động vui lòng không trả lời lại!";
 
                 Message msg = new MimeMessage(s);
                 msg.setFrom(new InternetAddress(from));
@@ -287,7 +288,15 @@ int check = 0;
     boolean check() {
         if (txt_GuiChoCanHo.getText().trim().equals("") && check == 0) {
             JOptionPane.showMessageDialog(this, "Vui lòng nhâp số căn hộ hoặc check vào Gửi Toàn Chung Cư để gửi mail");
+            txt_GuiChoCanHo.setVisible(true);
+            return false;
+        }else if (txtMessage.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(this, "Nội dung mail không có");
             txtMessage.setVisible(true);
+            return false;
+        }else if (!loaiboKhoangTrang(txtMessage.getText().trim()).matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "Số mã số căn hộ không được chứa kí tự!");
+            txt_GuiChoCanHo.setVisible(true);
             return false;
         }
         return true;
