@@ -13,6 +13,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -162,6 +164,11 @@ public class SinhHoatJPanel extends javax.swing.JPanel {
         jpn_ThanhCongCu.add(lbl_TienNuoc, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 250, -1, -1));
 
         txt_CanHo.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txt_CanHo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_CanHoKeyReleased(evt);
+            }
+        });
         jpn_ThanhCongCu.add(txt_CanHo, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 40, 132, -1));
 
         txt_MaHoaDonDien.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
@@ -308,6 +315,19 @@ public class SinhHoatJPanel extends javax.swing.JPanel {
             moi = 0;
         }
     }//GEN-LAST:event_lblSuaMousePressed
+
+    private void txt_CanHoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_CanHoKeyReleased
+        ResultSet rs = JDBC.executeQuery("select ChiSoDienCuoi,ChiSoNuocCuoi  FROM dbo.HoaDonSinhHoat HD JOIN dbo.CanHo CH ON CH.CanHoId = HD.CanHoId"
+                + " where MaSoCanHo = '" + txt_CanHo.getText() + "' and MONTH(NgayThang)= " + (month - 1) + "");
+        try {
+            while (rs.next()) {
+                txt_ChiSoNuocDau.setText(rs.getString(2));
+                txt_ChiSoDienDau.setText(rs.getString(1));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SinhHoatJPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_txt_CanHoKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

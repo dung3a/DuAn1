@@ -526,7 +526,7 @@ public class ThongTinTKJFrame extends javax.swing.JFrame {
             lbl_ThongBaoTk.setForeground(new Color(255, 0, 51));
             lbl_ThongBaoTk.setText("Tên chứa ký tự không hợp lệ !");
             return false;
-        } else if (!txt_Email.getText().matches("^[\\w-_\\.]+\\@[\\w&&[^0-9]]+\\.[\\w&&[^0-9]]+$")) {
+        } else if (!txt_Email.getText().matches("[a-zA-Z]\\w{1,}@[a-zA-Z]\\w{1,}(.[a-zA-Z]{2,4}){1,2}")) {
             lbl_ThongBaoTk.setForeground(new Color(255, 0, 51));
             lbl_ThongBaoTk.setText("Sai định dạng email !");
             return false;

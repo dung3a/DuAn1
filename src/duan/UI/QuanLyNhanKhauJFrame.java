@@ -5,28 +5,24 @@
  */
 package duan.UI;
 
-import duan.DAO.ThongTinKhachHangDAO;
-import duan.DAO.ThongTinKhachHangDAO2;
+import duan.DAO.*;
+import duan.JDBC.JDBC;
 import static duan.JDBC.XuLy.loaiboKhoangTrang;
 import duan.model.ThongTinKhachHang;
+import java.awt.Toolkit;
 import java.sql.SQLException;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.*;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.sql.ResultSet;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFFont;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.Row;
 
 /**
@@ -39,6 +35,7 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
      * Creates new form QuanLyNguoiJFrame
      */
     public QuanLyNhanKhauJFrame() {
+
         initComponents();
         this.setLocationRelativeTo(null);
         this.setTitle("Quản Lý Nhân Khẩu");
@@ -90,6 +87,8 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
         lblCapNhat = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/duan/Logo/LOGO.png")).getImage()
+        );
         setMinimumSize(new java.awt.Dimension(1000, 700));
         setUndecorated(true);
 
@@ -343,7 +342,6 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
 
     private void lblCapNhatMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCapNhatMousePressed
         check = 1;
-
         if (checkTT()) {
             this.update_KH();
             this.load_KhachHang();
@@ -352,7 +350,7 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCapNhatMousePressed
 
     private void lbl_NhapMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_NhapMousePressed
-        if (checkTT() && check == 1) {
+        if (checkTT() && checkDaCo() && check == 1) {
             this.insert_KH();
             this.load_KhachHang();
             this.newModel();
@@ -578,44 +576,86 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
     private boolean checkTT() {
         if (txtHoTen.getText().trim().equals("")) {
             JOptionPane.showMessageDialog(this, "Không để trống tên của khách hàng!");
+            txtHoTen.setVisible(true);
             return false;
         } else if (txtSoDienThoai.getText().trim().equals("")) {
             JOptionPane.showMessageDialog(this, "Không để trống số điện thoại của khách hàng!");
+            txtSoDienThoai.setVisible(true);
             return false;
         } else if (txtCMND.getText().trim().equals("")) {
             JOptionPane.showMessageDialog(this, "Không để trống CMND của khách hàng!");
+            txtCMND.setVisible(true);
             return false;
         } else if (!loaiboKhoangTrang(txtCMND.getText().trim()).matches("\\d+")) {
             JOptionPane.showMessageDialog(this, "Số CMND không được chứa kí tự!");
+            txtCMND.setVisible(true);
             return false;
         } else if (!txtHoTen.getText().matches("[A-Za-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚÝàáâãèéêìíòóôõùúýĂăĐđĨĩŨũƠơƯưẠ-ỹ\\s]{1,}")) {
             JOptionPane.showMessageDialog(this, "Tên khách hàng không được chứa kí tự đặc biệt!");
+            txtHoTen.setVisible(true);
             return false;
-        } else if (!txtEmail.getText().matches("^[\\w-_\\.]+\\@[\\w&&[^0-9]]+\\.[\\w&&[^0-9]]+$")) {
+        } else if (!txtEmail.getText().matches("[a-zA-Z]\\w{1,}@[a-zA-Z]\\w{1,}(.[a-zA-Z]{2,4}){1,2}")) {
             JOptionPane.showMessageDialog(this, "Định dạng email của khách hàng không đúng!");
+            txtEmail.setVisible(true);
             return false;
         } else if (!loaiboKhoangTrang(txtSoDienThoai.getText().trim()).matches("\\d+")) {
             JOptionPane.showMessageDialog(this, "Số điện thoại không được chứa kí tự!");
+            txtSoDienThoai.setVisible(true);
             return false;
-
         } else if (loaiboKhoangTrang(txtSoDienThoai.getText()).length() > 10) {
             JOptionPane.showMessageDialog(this, "Số điện thoại không quá 10 số!");
+            txtSoDienThoai.setVisible(true);
             return false;
         } else if (txtSoDienThoai.getText().length() < 8) {
             JOptionPane.showMessageDialog(this, "Số điện thoại không dưới 8 số!");
+            txtSoDienThoai.setVisible(true);
+            return false;
+        } else if (txtCMND.getText().trim().length() > 12) {
+            JOptionPane.showMessageDialog(this, " Số CMND Phải Đủ 9 Số  ! \n Số Căn Cước Công Dân phải đủ 12 số ");
+            txtCMND.setVisible(true);
+            return false;
+        } else if (txtCMND.getText().trim().length() < 9) {
+            JOptionPane.showMessageDialog(this, " Số CMND Phải Đủ 9 Số  ! \n Số Căn Cước Công Dân phải đủ 12 số ");
+            txtCMND.setVisible(true);
+            return false;
+        } else if (txtCMND.getText().trim().length() == 10) {
+            JOptionPane.showMessageDialog(this, " Số CMND Phải Đủ 9 Số  ! \n Số Căn Cước Công Dân phải đủ 12 số ");
+            txtCMND.setVisible(true);
+            return false;
+        } else if (txtCMND.getText().trim().length() == 11) {
+            JOptionPane.showMessageDialog(this, " Số CMND Phải Đủ 9 Số  ! \n Số Căn Cước Công Dân phải đủ 12 số ");
+            txtCMND.setVisible(true);
             return false;
         } else if (!txtSoDienThoai.getText().trim().substring(0, 2).equals("09")
                 && !txtSoDienThoai.getText().trim().substring(0, 2).equals("08")
                 && !txtSoDienThoai.getText().trim().substring(0, 2).equals("03")
                 && !txtSoDienThoai.getText().trim().substring(0, 2).equals("05")
                 && !txtSoDienThoai.getText().trim().substring(0, 2).equals("07")) {
-            JOptionPane.showMessageDialog(this, "Đầu Số Bắt Đầu Bằng 09 | 08 | 07 | 05 | 03 !");
+            JOptionPane.showMessageDialog(this, "Đầu SĐT Bắt Đầu Bằng 09 | 08 | 07 | 05 | 03 !");
+            txtSoDienThoai.setVisible(true);
             return false;
         }
         return true;
     }
+    ResultSet rs = null;
 
-     private static HSSFCellStyle createStyleForTitle(HSSFWorkbook workbook) {
+    boolean checkDaCo() {
+        rs = JDBC.executeQuery("select CMND from ThongTinKhachHang");
+        try {
+            while (rs.next()) {
+                String CHID = rs.getString(1);
+                if (CHID.equals(txtCMND.getText().trim())) {
+                    JOptionPane.showMessageDialog(this, "Số CMND hoặc Căn Cước Công Dân đã tồn tại !");
+                    return false;
+                }
+            }
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+        return true;
+    }
+
+    private static HSSFCellStyle createStyleForTitle(HSSFWorkbook workbook) {
         HSSFFont font = workbook.createFont();
         font.setBold(true);
         font.setFontHeightInPoints((short) 10);
@@ -624,7 +664,7 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
         style.setFont(font);
         return style;
     }
-     
+
     public void ExportExcel() {
         try {
             HSSFWorkbook workbook = new HSSFWorkbook();
