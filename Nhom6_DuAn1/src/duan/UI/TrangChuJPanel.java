@@ -5,6 +5,7 @@
  */
 package duan.UI;
 
+import duan.Controller.ChuyenManHinhController;
 import duan.JDBC.JDBC;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -28,8 +29,9 @@ public class TrangChuJPanel extends javax.swing.JPanel {
         this.soNguoi();
         this.soCanHo();
         this.soXe();
+
     }
-   
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -51,8 +53,8 @@ public class TrangChuJPanel extends javax.swing.JPanel {
         lbl_IconBike = new javax.swing.JLabel();
         lbl_PhuongTien = new javax.swing.JLabel();
         lbl_TongSoPhuongTien = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        pnlNen = new javax.swing.JPanel();
+        lblLogo = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMaximumSize(new java.awt.Dimension(1040, 660));
@@ -230,33 +232,33 @@ public class TrangChuJPanel extends javax.swing.JPanel {
 
         add(pnl_QuanLyXe, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 30, -1, -1));
 
-        jPanel1.setBackground(new java.awt.Color(255, 204, 51));
+        pnlNen.setBackground(new java.awt.Color(255, 204, 51));
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/duan/Logo/LOGO_100px.png"))); // NOI18N
+        lblLogo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/duan/Logo/LOGO_100px.png"))); // NOI18N
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout pnlNenLayout = new javax.swing.GroupLayout(pnlNen);
+        pnlNen.setLayout(pnlNenLayout);
+        pnlNenLayout.setHorizontalGroup(
+            pnlNenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlNenLayout.createSequentialGroup()
                 .addGap(342, 342, 342)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(374, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        pnlNenLayout.setVerticalGroup(
+            pnlNenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlNenLayout.createSequentialGroup()
                 .addGap(32, 32, 32)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(60, Short.MAX_VALUE))
         );
 
-        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 270, 1020, 370));
+        add(pnlNen, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 270, 1020, 370));
     }// </editor-fold>//GEN-END:initComponents
 
     private void pnl_SoNhanKhauMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_SoNhanKhauMousePressed
-        
+
         new QuanLyNhanKhauJFrame().setVisible(true);
     }//GEN-LAST:event_pnl_SoNhanKhauMousePressed
 
@@ -265,39 +267,32 @@ public class TrangChuJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_pnl_QuanLyXeMousePressed
 
     private void pnl_SoPhongDangQuanLyMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_SoPhongDangQuanLyMouseEntered
-       pnl_SoPhongDangQuanLy.setBackground( new Color(255,204,51));
-        // TODO add your handling code here:
+        pnl_SoPhongDangQuanLy.setBackground(new Color(255, 204, 51));
     }//GEN-LAST:event_pnl_SoPhongDangQuanLyMouseEntered
 
     private void pnl_SoPhongDangQuanLyMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_SoPhongDangQuanLyMouseExited
-      pnl_SoPhongDangQuanLy.setBackground(new Color(255,85,85));
-        // TODO add your handling code here:
+        pnl_SoPhongDangQuanLy.setBackground(new Color(255, 85, 85));
     }//GEN-LAST:event_pnl_SoPhongDangQuanLyMouseExited
 
     private void pnl_SoNhanKhauMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_SoNhanKhauMouseEntered
-      pnl_SoNhanKhau.setBackground( new Color(255,204,51));
-        // TODO add your handling code here:
+        pnl_SoNhanKhau.setBackground(new Color(255, 204, 51));
     }//GEN-LAST:event_pnl_SoNhanKhauMouseEntered
 
     private void pnl_SoNhanKhauMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_SoNhanKhauMouseExited
-       pnl_SoNhanKhau.setBackground(new Color(255,85,85));
-        // TODO add your handling code here:
+        pnl_SoNhanKhau.setBackground(new Color(255, 85, 85));
     }//GEN-LAST:event_pnl_SoNhanKhauMouseExited
 
     private void pnl_QuanLyXeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_QuanLyXeMouseEntered
-pnl_QuanLyXe.setBackground( new Color(255,204,51));
-        // TODO add your handling code here:
+        pnl_QuanLyXe.setBackground(new Color(255, 204, 51));
     }//GEN-LAST:event_pnl_QuanLyXeMouseEntered
 
     private void pnl_QuanLyXeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_QuanLyXeMouseExited
-pnl_QuanLyXe.setBackground(new Color(255,85,85));
-        // TODO add your handling code here:
+        pnl_QuanLyXe.setBackground(new Color(255, 85, 85));
     }//GEN-LAST:event_pnl_QuanLyXeMouseExited
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblLogo;
     private javax.swing.JLabel lbl_CanHo;
     private javax.swing.JLabel lbl_IconBike;
     private javax.swing.JLabel lbl_IconHome;
@@ -307,38 +302,39 @@ pnl_QuanLyXe.setBackground(new Color(255,85,85));
     private javax.swing.JLabel lbl_TongSoCanHo;
     private javax.swing.JLabel lbl_TongSoNguoi;
     private javax.swing.JLabel lbl_TongSoPhuongTien;
+    private javax.swing.JPanel pnlNen;
     private javax.swing.JPanel pnl_QuanLyXe;
     private javax.swing.JPanel pnl_SoNhanKhau;
     private javax.swing.JPanel pnl_SoPhongDangQuanLy;
     // End of variables declaration//GEN-END:variables
 
-private void soNguoi(){
-    try {
-        ResultSet rs = JDBC.executeQuery("SELECT COUNT(KhachHangId) FROM dbo.ThongTinKhachHang");
-    if (rs.next()) {
-        lbl_TongSoNguoi.setText(rs.getString(1));
+    private void soNguoi() {
+        try {
+            ResultSet rs = JDBC.executeQuery("SELECT COUNT(KhachHangId) FROM dbo.ThongTinKhachHang");
+            if (rs.next()) {
+                lbl_TongSoNguoi.setText(rs.getString(1));
+            }
+        } catch (Exception e) {
+        }
     }
-    } catch (Exception e) {
-    }   
-}
 
-private void soCanHo(){
-    try {
-        ResultSet rs = JDBC.executeQuery("SELECT COUNT(CanHoId) FROM dbo.CanHo");
-    if (rs.next()) {
-        lbl_TongSoCanHo.setText(rs.getString(1));
+    private void soCanHo() {
+        try {
+            ResultSet rs = JDBC.executeQuery("SELECT COUNT(CanHoId) FROM dbo.CanHo");
+            if (rs.next()) {
+                lbl_TongSoCanHo.setText(rs.getString(1));
+            }
+        } catch (Exception e) {
+        }
     }
-    } catch (Exception e) {
-    }   
-}
 
-private void soXe(){
-    try {
-        ResultSet rs = JDBC.executeQuery("SELECT SUM(SoLuongXeDap)+SUM(SoLuongXeMay)+SUM(SoLuongXeHoi) AS SoLuongXe FROM dbo.GuiXe");
-    if (rs.next()) {
-        lbl_TongSoPhuongTien.setText(rs.getString(1));
+    private void soXe() {
+        try {
+            ResultSet rs = JDBC.executeQuery("SELECT SUM(SoLuongXeDap)+SUM(SoLuongXeMay)+SUM(SoLuongXeHoi) AS SoLuongXe FROM dbo.GuiXe");
+            if (rs.next()) {
+                lbl_TongSoPhuongTien.setText(rs.getString(1));
+            }
+        } catch (Exception e) {
+        }
     }
-    } catch (Exception e) {
-    }   
-}
 }
