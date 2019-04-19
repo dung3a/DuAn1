@@ -27,6 +27,7 @@ public class mainJFrame extends javax.swing.JFrame {
      */
     public mainJFrame() {
         initComponents();
+        this.DateTime();
         this.setLocationRelativeTo(null);
         this.setTitle("Công Cụ Quản Lý Chung Cư");     
         ChuyenManHinhController controller = new ChuyenManHinhController(jpn_View);
@@ -37,8 +38,7 @@ public class mainJFrame extends javax.swing.JFrame {
         listItem.add(new DanhMucBean("DichVu", jpn_DichVu, jlbDichVu));
         listItem.add(new DanhMucBean("MailThongBao", jpn_MailThongBao, jlbMailThongBao));
         this.Logo();
-        controller.setEvent(listItem);
-        this.init();
+        controller.setEvent(listItem);    
     }
     int xMouse, yMouse;
     ThongTinTKJFrame thongTinAcc = new ThongTinTKJFrame();
@@ -427,7 +427,7 @@ public class mainJFrame extends javax.swing.JFrame {
     private javax.swing.JPanel pnl_Menu;
     // End of variables declaration//GEN-END:variables
      
-    void init() {
+    void DateTime() {
         new Timer(1000, new ActionListener() {
             SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss | dd/MM/yyyy");
             

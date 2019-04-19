@@ -7,7 +7,12 @@ package duan.UI;
 
 import duan.JDBC.JDBC;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.Timer;
 
 /**
  *
@@ -24,7 +29,7 @@ public class TrangChuJPanel extends javax.swing.JPanel {
         this.soCanHo();
         this.soXe();
     }
-
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -46,6 +51,7 @@ public class TrangChuJPanel extends javax.swing.JPanel {
         lbl_IconBike = new javax.swing.JLabel();
         lbl_PhuongTien = new javax.swing.JLabel();
         lbl_TongSoPhuongTien = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMaximumSize(new java.awt.Dimension(1040, 660));
@@ -222,6 +228,21 @@ public class TrangChuJPanel extends javax.swing.JPanel {
         );
 
         add(pnl_QuanLyXe, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 30, -1, -1));
+
+        jPanel1.setBackground(new java.awt.Color(255, 204, 51));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1020, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 370, Short.MAX_VALUE)
+        );
+
+        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 270, 1020, 370));
     }// </editor-fold>//GEN-END:initComponents
 
     private void pnl_SoNhanKhauMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnl_SoNhanKhauMousePressed
@@ -265,6 +286,7 @@ pnl_QuanLyXe.setBackground(new Color(255,85,85));
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lbl_CanHo;
     private javax.swing.JLabel lbl_IconBike;
     private javax.swing.JLabel lbl_IconHome;
