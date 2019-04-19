@@ -184,7 +184,7 @@ public class CanHoJPanel extends javax.swing.JPanel {
         }
     }
 
-    private void loadPhong(String masocanho) {
+    public void loadPhong(String masocanho) {
         pnlCanHo.removeAll();
         CanHoDAO canho = new CanHoDAO();
         List<CanHo> listCanHo = canho.select(masocanho);
@@ -282,7 +282,7 @@ public class CanHoJPanel extends javax.swing.JPanel {
         sclCanHo.setViewportView(pnlCanHo);
     }
 
-    private void loadPhongbyTang(String tang) {
+    public void loadPhongbyTang(String tang) {
         pnlCanHo.removeAll();
         CanHoDAO canho = new CanHoDAO();
         List<CanHo> listCanHo = null;

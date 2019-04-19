@@ -606,7 +606,7 @@ public class ThongTinCanHoJFrame extends javax.swing.JFrame {
     private void lbl_TitlebarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_TitlebarMousePressed
         xMouse = evt.getX();
         yMouse = evt.getY();
-        
+
     }//GEN-LAST:event_lbl_TitlebarMousePressed
 
     private void jpn_MinimizeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpn_MinimizeMouseClicked
@@ -615,7 +615,6 @@ public class ThongTinCanHoJFrame extends javax.swing.JFrame {
 
     private void jpn_CloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpn_CloseMouseClicked
         this.dispose();
-       CanHoJPanel.getDefaultLocale();
     }//GEN-LAST:event_jpn_CloseMouseClicked
 
     private void tblKhachhangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblKhachhangMouseClicked
