@@ -39,7 +39,7 @@ public class ThongTinCanHoJFrame extends javax.swing.JFrame {
         this.loadChuHo();
         this.Logo();
     }
-    int xMouse, yMouse,TableClick = 0;
+    int xMouse, yMouse, TableClick = 0;
 
     public void Logo() {
         ImageIcon img = new ImageIcon("src\\duan\\Logo\\LOGO.png");
@@ -620,7 +620,7 @@ public class ThongTinCanHoJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jpn_CloseMouseClicked
 
     private void tblKhachhangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblKhachhangMouseClicked
-       TableClick = 1;
+        TableClick = 1;
         index = tblKhachhang.getSelectedRow();
         this.edit_KH();
     }//GEN-LAST:event_tblKhachhangMouseClicked
@@ -631,25 +631,27 @@ public class ThongTinCanHoJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void lblThemMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblThemMousePressed
-        if (check()) {
+
+        if (check() && CheckChuSoHuu()) {
             this.CheckNguoi(txtmaKhachhang.getText());
             this.loadThanhVien();
+
         }
         this.newmodel();
     }//GEN-LAST:event_lblThemMousePressed
 
     private void lblXoaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblXoaMousePressed
-        if (TableClick ==0) {
+        if (TableClick == 0) {
             JOptionPane.showMessageDialog(this, "Bạn chưa chọn để loại bỏ");
         } else {
             this.loaibo();
-        this.setTinhTrang();
-        this.loadThanhVien();
-        this.load_KhachHang();
-        this.loadThanhVien();
-        this.loadChuHo();
+            this.setTinhTrang();
+            this.loadThanhVien();
+            this.load_KhachHang();
+            this.loadThanhVien();
+            this.loadChuHo();
         }
-        TableClick = 0;      
+        TableClick = 0;
     }//GEN-LAST:event_lblXoaMousePressed
 
     private void lblChuyenMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblChuyenMousePressed
@@ -1012,10 +1014,27 @@ QuanLyXeDAO quanLyXeDAO = new QuanLyXeDAO();
             if (rs.next()) {
                 int SoNguoi = rs.getInt(1);
                 if (SoNguoi == 0) {
-                   quanLyXeDAO.updateXoaXe(model);             
+                    quanLyXeDAO.updateXoaXe(model);
                 }
             }
         } catch (Exception e) {
         }
+    }
+
+    boolean CheckChuSoHuu() {
+        try {
+            ResultSet rs = JDBC.executeQuery("SELECT KhachHangId FROM dbo.CanHo WHERE CanHoId  = ?", canhoID);
+            if (rs.next()) {
+                String KHID = rs.getString(1).trim();
+                if (KHID.equals("")) {
+                    JOptionPane.showMessageDialog(this, "Căn hộ này chưa có chủ sở hữu! \n"
+                            + "Vui lòng thêm chủ sở hữu trước khi thêm người ở ");
+                    return false;
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println(e);
+        }       
+        return true;
     }
 }

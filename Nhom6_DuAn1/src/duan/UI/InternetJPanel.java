@@ -285,7 +285,7 @@ public class InternetJPanel extends javax.swing.JPanel {
         if (moi == 0) {
             this.newModel();
             moi = 1;
-        } else if (checkTrong() && checkTonTaiCanHo() && checkNguoiO() && checkDaCo(month, year)) {
+        } else if (checkTrong() && checkTonTaiCanHo() && checkNguoiO() && checkDaCo(month, year)&& checkChuHo()) {
             this.insert_HD();
             check = 0;
             this.newModel();
@@ -504,6 +504,22 @@ public class InternetJPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Không để trống số tiền phí");
             txt_TienInternet.setVisible(true);
             return false;
+        }
+        return true;
+    }
+    
+    boolean checkChuHo() {
+        try {
+            ResultSet rs = JDBC.executeQuery("SELECT KH.KhachHangId FROM dbo.CanHo CH JOIN dbo.ThongTinKhachHang KH ON Kh.CanHoId = CH.CanHoId WHERE CH.CanHoId = ? AND KH.ChuHo = 1", CanhoId());
+            if (rs.next()) {
+            } else {
+                JOptionPane.showMessageDialog(this, "Căn hộ này chưa có chủ hộ đại diện! \n"
+                        + "Vui lòng thêm chủ hộ để nhập hóa đơn này ");
+                new ThongTinCanHoJFrame(txt_MaCH.getText(), CanhoId()).setVisible(true);
+                return false;
+            }
+        } catch (Exception e) {
+            System.err.println(e);
         }
         return true;
     }

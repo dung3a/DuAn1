@@ -298,12 +298,13 @@ public class SinhHoatJPanel extends javax.swing.JPanel {
                 this.newmodel();
                 moi = 0;
                 check = 0;
-            } else if (checkTonTaiCanHo() && checkNguoiO() && checkDaCo(month, year)) {
+            } else if (checkTonTaiCanHo() && checkNguoiO() && checkDaCo(month, year)&& checkChuHo()) {
                 this.insert_HD();
                 this.newmodel();
                 check = 0;
             }
         }
+
     }//GEN-LAST:event_lblNhapHoaDonMousePressed
 
     private void lblSuaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSuaMousePressed
@@ -315,15 +316,13 @@ public class SinhHoatJPanel extends javax.swing.JPanel {
                 int Year = Integer.parseInt((String) cbo_Nam.getSelectedItem());
                 this.update_HD(Month, Year);
                 this.newmodel();
-                moi = 0;
             } else {
                 this.update_HD(month, year);
-                this.newmodel();
-                moi = 0;
+                this.newmodel();             
             }
         }
         TableClick = 0;
-
+        moi = 0;
     }//GEN-LAST:event_lblSuaMousePressed
 
     private void txt_CanHoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_CanHoKeyReleased
@@ -373,7 +372,7 @@ public class SinhHoatJPanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     ResultSet rs = null;
-    int index = 0, check = 0, moi = 1, TableClick = 0;
+    int index = 0, check = 0, moi = 0, TableClick = 0;
     HoaDonSinhHoatDAO hoaDonSinhHoatDAO = new HoaDonSinhHoatDAO();
 
     private void loadYear() {
@@ -586,4 +585,19 @@ public class SinhHoatJPanel extends javax.swing.JPanel {
         txt_maHoaDonNuoc.setText("");
     }
 
+    boolean checkChuHo() {
+        try {
+            ResultSet rs = JDBC.executeQuery("SELECT KH.KhachHangId FROM dbo.CanHo CH JOIN dbo.ThongTinKhachHang KH ON Kh.CanHoId = CH.CanHoId WHERE CH.CanHoId = ? AND KH.ChuHo = 1", CanhoId());
+            if (rs.next()) {
+            } else {
+                JOptionPane.showMessageDialog(this, "Căn hộ này chưa có chủ hộ đại diện! \n"
+                        + "Vui lòng thêm chủ hộ để nhập hóa đơn này ");
+                new ThongTinCanHoJFrame(txt_CanHo.getText(), CanhoId()).setVisible(true);
+                return false;
+            }
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+        return true;
+    }
 }

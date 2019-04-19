@@ -241,7 +241,7 @@ public class DichVuPhongJPanel extends javax.swing.JPanel {
 
     private void tbl_BangDichVuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_BangDichVuMouseClicked
         TableClick = 1;
-        index = tbl_BangDichVu.getSelectedRow();        
+        index = tbl_BangDichVu.getSelectedRow();
         txt_CanHo.disable();
         if (check != 0) {
             int Month = Integer.parseInt((String) cbo_Thang.getSelectedItem());
@@ -257,7 +257,7 @@ public class DichVuPhongJPanel extends javax.swing.JPanel {
         if (moi == 0) {
             this.newModel();
             moi = 1;
-        } else if (checkTrong() && checkTonTaiCanHo() && checkNguoiO() && checkDaCo(month, year)) {
+        } else if ( checkTrong() && checkTonTaiCanHo() && checkNguoiO() && checkDaCo(month, year) && checkChuHo()) {
             this.insert_HD();
             check = 0;
             this.newModel();
@@ -265,7 +265,7 @@ public class DichVuPhongJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_lbl_TaoHDThangMousePressed
 
     private void lbl_CapNhatMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_CapNhatMousePressed
-        if (TableClick ==0) {
+        if (TableClick == 0) {
             JOptionPane.showMessageDialog(this, "Bạn chưa chọn để cập nhật");
         } else {
             this.update_HD(month, year);
@@ -518,6 +518,22 @@ public class DichVuPhongJPanel extends javax.swing.JPanel {
         txt_CanHo.setText("");
         lbl_TienGX.setText("");
         lbl_TongTien.setText("");
+    }
+
+    boolean checkChuHo() {
+        try {
+            ResultSet rs = JDBC.executeQuery("SELECT KH.KhachHangId FROM dbo.CanHo CH JOIN dbo.ThongTinKhachHang KH ON Kh.CanHoId = CH.CanHoId WHERE CH.CanHoId = ? AND KH.ChuHo = 1", CanhoId());
+            if (rs.next()) {
+            } else {
+                JOptionPane.showMessageDialog(this, "Căn hộ này chưa có chủ hộ đại diện! \n"
+                        + "Vui lòng thêm chủ hộ để nhập hóa đơn này ");
+                new ThongTinCanHoJFrame(txt_CanHo.getText(), CanhoId()).setVisible(true);
+                return false;
+            }
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+        return true;
     }
 
 }
