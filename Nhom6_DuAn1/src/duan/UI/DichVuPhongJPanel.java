@@ -24,7 +24,7 @@ public class DichVuPhongJPanel extends javax.swing.JPanel {
 
     LocalDate today = LocalDate.now();
     int month = today.getMonthValue(), year = today.getYear();
-    int index, check = 1, moi = 1, TienDV;
+    int index, check = 0, moi = 1, TienDV;
 
     public DichVuPhongJPanel() {
         initComponents();
@@ -240,13 +240,13 @@ public class DichVuPhongJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_lbl_TimMousePressed
 
     private void tbl_BangDichVuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_BangDichVuMouseClicked
-        index = tbl_BangDichVu.getSelectedRow();
-        txt_CanHo.disable();
-        if (check == 1) {
+       index = tbl_BangDichVu.getSelectedRow();
+       txt_CanHo.disable();
+        if (check != 0) {
             int Month = Integer.parseInt((String) cbo_Thang.getSelectedItem());
             int Year = Integer.parseInt((String) cbo_Year.getSelectedItem());
             this.edit_HD(Month, Year);
-        } else {           
+        } else {
             this.edit_HD(month, year);
         }
         moi = 0;
@@ -352,6 +352,7 @@ public class DichVuPhongJPanel extends javax.swing.JPanel {
         try {
             while (rs.next()) {
                 TongTien = rs.getFloat(1);
+                System.err.println(TongTien);
             }
         } catch (Exception e) {
             System.err.println(e);
