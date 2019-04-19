@@ -6,7 +6,9 @@
 package duan.UI;
 
 import duan.DAO.ThongTinKhachHangDAO;
+import duan.DAO.QuanLyXeDAO;
 import duan.JDBC.JDBC;
+import duan.model.QuanLyXe;
 import duan.model.ThongTinKhachHang;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -755,7 +757,7 @@ public class ThongTinCanHoJFrame extends javax.swing.JFrame {
     private javax.swing.JTextField txtmaKhachhang;
     private javax.swing.JTextField txtmaKhachhangTT;
     // End of variables declaration//GEN-END:variables
-
+QuanLyXeDAO quanLyXeDAO = new QuanLyXeDAO();
     ThongTinKhachHangDAO khachHangDAO = new ThongTinKhachHangDAO();
     int index = 0;
 
@@ -932,14 +934,26 @@ public class ThongTinCanHoJFrame extends javax.swing.JFrame {
 
     void loaibo() {
         try {
-            int Traloi = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn xóa thành viên này không ?", "Thông Báo", JOptionPane.YES_NO_OPTION);
-            if (Traloi == 0) {
-                khachHangDAO.updateLoaiBo(txtmaKhachhang.getText());
-                JOptionPane.showMessageDialog(this, "Đã loại bỏ thành viên ra khỏi căn hộ");
-                this.load_KhachHang();
-                newmodel();
+            if (cboCo.isSelected()) {
+                int Traloi = JOptionPane.showConfirmDialog(null, "<html>Thành viên này đang là chủ hộ!\nBạn chắc chắn muốn xóa thành viên này không ?\n\nChú Ý: Bạn nên chuyển giao chủ hộ trước khi xóa thành viên này!", "Thông Báo", JOptionPane.YES_NO_OPTION);
+                if (Traloi == 0) {
+                    khachHangDAO.updateLoaiBo(txtmaKhachhang.getText());
+                    JOptionPane.showMessageDialog(this, "Đã loại bỏ thành viên ra khỏi căn hộ");
+                    this.load_KhachHang();
+                    this.xoaSoluongXe();
+                    newmodel();
+                }
             } else {
-                newmodel();
+                int Traloi = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn xóa thành viên này không ?", "Thông Báo", JOptionPane.YES_NO_OPTION);
+                if (Traloi == 0) {
+                    khachHangDAO.updateLoaiBo(txtmaKhachhang.getText());
+                    JOptionPane.showMessageDialog(this, "Đã loại bỏ thành viên ra khỏi căn hộ");
+                    this.load_KhachHang();
+                    this.xoaSoluongXe();
+                    newmodel();
+                } else {
+                    newmodel();
+                }
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Loại bỏ thành viên thất bại");
@@ -982,6 +996,20 @@ public class ThongTinCanHoJFrame extends javax.swing.JFrame {
 
         } catch (SQLException ex) {
             ex.printStackTrace();
+        }
+    }
+
+    void xoaSoluongXe() {
+        ThongTinKhachHang model = getModel_KH();
+        ResultSet rs = JDBC.executeQuery("SELECT COUNT(KhachHangId) FROM dbo.ThongTinKhachHang WHERE CanHoId  = ?", canhoID);
+        try {
+            if (rs.next()) {
+                int SoNguoi = rs.getInt(1);
+                if (SoNguoi == 0) {
+                   quanLyXeDAO.updateXoaXe(model);             
+                }
+            }
+        } catch (Exception e) {
         }
     }
 }

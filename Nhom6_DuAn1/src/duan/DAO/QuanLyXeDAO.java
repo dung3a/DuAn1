@@ -7,6 +7,7 @@ package duan.DAO;
 
 import duan.JDBC.JDBC;
 import duan.model.QuanLyXe;
+import duan.model.ThongTinKhachHang;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -32,7 +33,6 @@ public class QuanLyXeDAO {
         return list.size() > 0 ? list.get(0) : null;
     }
 
-    
     public void updateXe(QuanLyXe model) {
         String sql = "  UPDATE dbo.GuiXe  SET SoLuongXeDap = ? , "
                 + "TienGuiXeDap = SoLuongXeDap * ? ,"
@@ -50,7 +50,18 @@ public class QuanLyXeDAO {
                 model.getTienGuiXeHoi(),
                 model.getTongTienGui(),
                 model.getCanHoID()
-                );
+        );
+    }
+
+    public void updateXoaXe(ThongTinKhachHang model) {
+       String sql = "  UPDATE dbo.GuiXe  SET SoLuongXeDap = 0 , "
+                + "TienGuiXeDap = 0 ,"
+                + "SoLuongXeMay = 0 ,"
+                + "TienGuiXeMay = 0 ,"
+                + "SoLuongXeHoi = 0 ,"
+                + "TienGuiXeHoi = 0,"
+                + "TongTienGui = 0 WHERE CanHoId = ?";
+        JDBC.executeUpdate(sql, model.getCanHoid());
     }
 
     private List<QuanLyXe> select(String sql, Object... args) {
@@ -82,4 +93,10 @@ public class QuanLyXeDAO {
         model.setTongTienGui(rs.getFloat(6));
         return model;
     }
+
+    
+
+   
+
+  
 }
