@@ -268,6 +268,7 @@ public class InternetJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_lbl_TruyVanMousePressed
 
     private void tbl_ChiTietInternetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_ChiTietInternetMouseClicked
+        TableClick = 1;
         index = tbl_ChiTietInternet.getSelectedRow();
         txt_MaCH.disable();
         if (check != 0) {
@@ -295,15 +296,20 @@ public class InternetJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_lbl_TaoHDThangMousePressed
 
     private void lbl_SuaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_SuaMousePressed
-        if (checkTrong()) {
-            if (check != 0) {
-                int Month = Integer.parseInt((String) cbo_Thang.getSelectedItem());
-                int Year = Integer.parseInt((String) cbo_Nam.getSelectedItem());
-                this.update_HD(Month, Year);
-            } else {
-                this.update_HD(month, year);
+        if (TableClick == 0) {
+            JOptionPane.showMessageDialog(this, "Bạn chưa chọn để cập nhật");
+        } else {
+            if (checkTrong()) {
+                if (check != 0) {
+                    int Month = Integer.parseInt((String) cbo_Thang.getSelectedItem());
+                    int Year = Integer.parseInt((String) cbo_Nam.getSelectedItem());
+                    this.update_HD(Month, Year);
+                } else {
+                    this.update_HD(month, year);
+                }
             }
         }
+        TableClick = 0;
         moi = 0;
     }//GEN-LAST:event_lbl_SuaMousePressed
 
@@ -328,7 +334,7 @@ public class InternetJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txt_TienInternet;
     // End of variables declaration//GEN-END:variables
     ResultSet rs = null;
-    int index = 0, check = 0, moi = 1;
+    int index = 0, check = 0, moi = 1, TableClick = 0;
     HoaDonInternetDAO hoaDonInternetDAO = new HoaDonInternetDAO();
 
     private void loadYear() {

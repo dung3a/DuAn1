@@ -24,7 +24,7 @@ public class DichVuPhongJPanel extends javax.swing.JPanel {
 
     LocalDate today = LocalDate.now();
     int month = today.getMonthValue(), year = today.getYear();
-    int index, check = 0, moi = 1, TienDV;
+    int index, check = 0, moi = 1, TableClick = 0, TienDV;
 
     public DichVuPhongJPanel() {
         initComponents();
@@ -240,8 +240,9 @@ public class DichVuPhongJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_lbl_TimMousePressed
 
     private void tbl_BangDichVuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_BangDichVuMouseClicked
-       index = tbl_BangDichVu.getSelectedRow();
-       txt_CanHo.disable();
+        TableClick = 1;
+        index = tbl_BangDichVu.getSelectedRow();        
+        txt_CanHo.disable();
         if (check != 0) {
             int Month = Integer.parseInt((String) cbo_Thang.getSelectedItem());
             int Year = Integer.parseInt((String) cbo_Year.getSelectedItem());
@@ -264,9 +265,12 @@ public class DichVuPhongJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_lbl_TaoHDThangMousePressed
 
     private void lbl_CapNhatMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_CapNhatMousePressed
-
-        this.update_HD(month, year);
-
+        if (TableClick ==0) {
+            JOptionPane.showMessageDialog(this, "Bạn chưa chọn để cập nhật");
+        } else {
+            this.update_HD(month, year);
+        }
+        TableClick = 0;
     }//GEN-LAST:event_lbl_CapNhatMousePressed
 
 

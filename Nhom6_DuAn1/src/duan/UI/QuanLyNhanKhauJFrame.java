@@ -325,6 +325,7 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCloseMouseClicked
 
     private void tblQuanLyNhanKhauMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblQuanLyNhanKhauMouseClicked
+        TableClick = 1;
         index = tblQuanLyNhanKhau.getSelectedRow();
         check = 2;
         this.edit_KH();
@@ -341,12 +342,17 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_lblXuatExcelMousePressed
 
     private void lblCapNhatMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCapNhatMousePressed
-        check = 1;
-        if (checkTT()) {
-            this.update_KH();
-            this.load_KhachHang();
-            this.newModel();
+        if (TableClick == 0) {
+            JOptionPane.showMessageDialog(this, "Bạn chưa chọn để cập nhật");
+        } else {
+            if (checkTT()) {
+                this.update_KH();
+                this.load_KhachHang();
+                this.newModel();
+            }
         }
+        TableClick = 0;
+        check = 1;
     }//GEN-LAST:event_lblCapNhatMousePressed
 
     private void lbl_NhapMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_NhapMousePressed
@@ -427,7 +433,7 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     ThongTinKhachHangDAO2 khachHangDAO = new ThongTinKhachHangDAO2();
-    int index = 0;
+    int index = 0, TableClick = 0;
 
     void loadcboTrangThai() {
         if (check == 1) {

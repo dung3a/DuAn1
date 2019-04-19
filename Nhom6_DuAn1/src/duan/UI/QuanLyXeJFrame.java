@@ -46,7 +46,8 @@ public class QuanLyXeJFrame extends javax.swing.JFrame {
         ImageIcon img = new ImageIcon("src\\duan\\Logo\\LOGO.png");
         this.setIconImage(img.getImage());
     }
-    int check = 1;
+    int check = 1, TableClick = 1;
+    ;
     int index = 0;
     int xMouse, yMouse;
 
@@ -250,6 +251,7 @@ public class QuanLyXeJFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblQuanLyXeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblQuanLyXeMouseClicked
+        TableClick = 1;
         index = tblQuanLyXe.getSelectedRow();
         this.edit_HD();
 
@@ -280,9 +282,15 @@ public class QuanLyXeJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_lbl_xuatexcelMousePressed
 
     private void lbl_CapNhatMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl_CapNhatMousePressed
-        if (check()) {
-            this.updateSoLuongXe();
+        if (TableClick == 0) {
+            JOptionPane.showMessageDialog(this, "Bạn chưa chọn để cập nhật");
+        } else {
+            if (check()) {
+                this.updateSoLuongXe();
+            }
         }
+        TableClick = 0;
+
     }//GEN-LAST:event_lbl_CapNhatMousePressed
 
     /**
@@ -355,15 +363,15 @@ public class QuanLyXeJFrame extends javax.swing.JFrame {
         try {
             if (rs1.next()) {
                 TienGuiXeDap = rs1.getFloat(1);
-                
+
             }
             if (rs2.next()) {
                 TienGuiXeMay = rs2.getFloat(1);
-                
+
             }
             if (rs3.next()) {
                 TienGuiXeHoi = rs3.getFloat(1);
-                
+
             }
         } catch (SQLException ex) {
             ex.printStackTrace();

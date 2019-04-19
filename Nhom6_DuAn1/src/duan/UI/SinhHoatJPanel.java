@@ -277,6 +277,7 @@ public class SinhHoatJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_pnlTimMousePressed
 
     private void tbl_ThongKeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_ThongKeMouseClicked
+        TableClick = 1;
         index = tbl_ThongKe.getSelectedRow();
         txt_CanHo.disable();
         moi = 1;
@@ -290,30 +291,39 @@ public class SinhHoatJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_tbl_ThongKeMouseClicked
 
     private void lblNhapHoaDonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNhapHoaDonMousePressed
-        if (moi == 1) {
-            this.newmodel();
-            moi = 0;
-            check = 0;
-        } else if (checkTonTaiCanHo() && checkNguoiO() && checkDaCo(month, year)) {
-            this.insert_HD();
-            this.newmodel();
-            check = 0;
+        if (txt_CanHo.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(this, "Bạn chưa nhập mã căn hộ");
+        } else {
+            if (moi == 1) {
+                this.newmodel();
+                moi = 0;
+                check = 0;
+            } else if (checkTonTaiCanHo() && checkNguoiO() && checkDaCo(month, year)) {
+                this.insert_HD();
+                this.newmodel();
+                check = 0;
+            }
         }
-
     }//GEN-LAST:event_lblNhapHoaDonMousePressed
 
     private void lblSuaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSuaMousePressed
-        if (check != 0) {
-            int Month = Integer.parseInt((String) cbo_Thang.getSelectedItem());
-            int Year = Integer.parseInt((String) cbo_Nam.getSelectedItem());
-            this.update_HD(Month, Year);
-            this.newmodel();
-            moi = 0;
+        if (TableClick == 0) {
+            JOptionPane.showMessageDialog(this, "Bạn chưa chọn để cập nhật");
         } else {
-            this.update_HD(month, year);
-            this.newmodel();
-            moi = 0;
+            if (check != 0) {
+                int Month = Integer.parseInt((String) cbo_Thang.getSelectedItem());
+                int Year = Integer.parseInt((String) cbo_Nam.getSelectedItem());
+                this.update_HD(Month, Year);
+                this.newmodel();
+                moi = 0;
+            } else {
+                this.update_HD(month, year);
+                this.newmodel();
+                moi = 0;
+            }
         }
+        TableClick = 0;
+
     }//GEN-LAST:event_lblSuaMousePressed
 
     private void txt_CanHoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_CanHoKeyReleased
@@ -363,7 +373,7 @@ public class SinhHoatJPanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     ResultSet rs = null;
-    int index = 0, check = 0, moi = 1;
+    int index = 0, check = 0, moi = 1, TableClick = 0;
     HoaDonSinhHoatDAO hoaDonSinhHoatDAO = new HoaDonSinhHoatDAO();
 
     private void loadYear() {

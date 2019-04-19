@@ -128,12 +128,27 @@ public class TienDichVuJPanel extends javax.swing.JPanel {
         add(lblPhiXeHoiHT, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 70, 160, -1));
 
         txtTienGuiXeDapMoi.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
+        txtTienGuiXeDapMoi.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtTienGuiXeDapMoiMouseClicked(evt);
+            }
+        });
         add(txtTienGuiXeDapMoi, new org.netbeans.lib.awtextra.AbsoluteConstraints(201, 168, 159, -1));
 
         txtTienGuiXeMayMoi.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
+        txtTienGuiXeMayMoi.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtTienGuiXeMayMoiMouseClicked(evt);
+            }
+        });
         add(txtTienGuiXeMayMoi, new org.netbeans.lib.awtextra.AbsoluteConstraints(482, 168, 159, -1));
 
         txtTienGuiXeHoiMoi.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
+        txtTienGuiXeHoiMoi.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtTienGuiXeHoiMoiMouseClicked(evt);
+            }
+        });
         add(txtTienGuiXeHoiMoi, new org.netbeans.lib.awtextra.AbsoluteConstraints(761, 172, 159, -1));
 
         lblTienDVHT.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
@@ -175,18 +190,37 @@ public class TienDichVuJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblCapNhaTienGuiXeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCapNhaTienGuiXeMousePressed
-
-        if (checkTienXD() || checkTienXH() || checkTienXM()) {
-            this.updateTienTrongCoi();
+        if (CapNhatGuiXe == 0) {
+            JOptionPane.showMessageDialog(this, "Bạn chưa nhập tiền gửi xe mới");
+        } else {
+            if (checkTienXD() || checkTienXH() || checkTienXM()) {
+                this.updateTienTrongCoi();
+            }
         }
-
+        CapNhatGuiXe = 0;
     }//GEN-LAST:event_lblCapNhaTienGuiXeMousePressed
 
     private void lblCapNhatTienDVMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCapNhatTienDVMousePressed
-        if (checkTienDV()) {
-            this.updateTienDV();
+        if (txtTienDichVuMoi.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(this, "Bạn chưa nhập tiền dịch vụ mới");
+        } else {
+            if (checkTienDV()) {
+                this.updateTienDV();
+            }
         }
     }//GEN-LAST:event_lblCapNhatTienDVMousePressed
+
+    private void txtTienGuiXeDapMoiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtTienGuiXeDapMoiMouseClicked
+        CapNhatGuiXe = 1;
+    }//GEN-LAST:event_txtTienGuiXeDapMoiMouseClicked
+
+    private void txtTienGuiXeMayMoiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtTienGuiXeMayMoiMouseClicked
+        CapNhatGuiXe = 1;
+    }//GEN-LAST:event_txtTienGuiXeMayMoiMouseClicked
+
+    private void txtTienGuiXeHoiMoiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtTienGuiXeHoiMoiMouseClicked
+        CapNhatGuiXe = 1;
+    }//GEN-LAST:event_txtTienGuiXeHoiMoiMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -213,8 +247,7 @@ public class TienDichVuJPanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     LoaiXeDAO loaiXeDAO = new LoaiXeDAO();
-
-    
+    int CapNhatGuiXe = 0;
 
     void loadTienTrongCoiHT() {
         ResultSet rs1 = JDBC.executeQuery("SELECT GiaTrongCoi FROM dbo.LoaiXe WHERE LoaixeId = 'XD'");
@@ -317,7 +350,5 @@ public class TienDichVuJPanel extends javax.swing.JPanel {
         }
         return true;
     }
-
-   
 
 }
