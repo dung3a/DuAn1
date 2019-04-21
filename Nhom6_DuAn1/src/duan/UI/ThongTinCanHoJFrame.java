@@ -42,7 +42,7 @@ public class ThongTinCanHoJFrame extends javax.swing.JFrame {
     int xMouse, yMouse, TableClick = 0;
 
     public void Logo() {
-        ImageIcon img = new ImageIcon("src\\duan\\Logo\\LOGO.png");
+        ImageIcon img = new ImageIcon(this.getClass().getResource("/duan/Logo/LOGO.png"));
         this.setIconImage(img.getImage());
     }
 

@@ -38,7 +38,7 @@ public class QuenMatKhauJFrame extends javax.swing.JFrame {
     }
     int xMouse, yMouse;
       public void Logo() {
-        ImageIcon img = new ImageIcon("src\\duan\\Logo\\LOGO.png");
+        ImageIcon img = new ImageIcon(this.getClass().getResource("/duan/Logo/LOGO.png"));
         this.setIconImage(img.getImage());
     }
 

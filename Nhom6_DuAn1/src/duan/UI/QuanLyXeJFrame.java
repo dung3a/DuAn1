@@ -42,8 +42,8 @@ public class QuanLyXeJFrame extends javax.swing.JFrame {
 
     }
 
-    public void Logo() {
-        ImageIcon img = new ImageIcon("src\\duan\\Logo\\LOGO.png");
+     public void Logo() {
+        ImageIcon img = new ImageIcon(this.getClass().getResource("/duan/Logo/LOGO.png"));
         this.setIconImage(img.getImage());
     }
     int check = 1, TableClick = 1;

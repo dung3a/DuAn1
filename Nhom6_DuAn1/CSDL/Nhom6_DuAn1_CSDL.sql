@@ -451,6 +451,88 @@ VALUES
    ( '304','',3,0)
 GO 
 
+--Căn hộ 1 tầng 4
+INSERT dbo.CanHo 
+   ( MaSoCanHo , KhachHangId, Tang,TinhTrang)
+VALUES 
+   ( '401','',4,0)
+GO 
+
+--Căn hộ 2 tầng 4
+INSERT dbo.CanHo 
+   ( MaSoCanHo , KhachHangId, Tang,TinhTrang)
+VALUES 
+   ( '402','',4,0)
+GO 
+
+--Căn hộ 3 tầng 4
+INSERT dbo.CanHo 
+   ( MaSoCanHo , KhachHangId, Tang,TinhTrang)
+VALUES 
+   ( '403','',4,0)
+GO 
+
+--Căn hộ 4 tầng 4
+INSERT dbo.CanHo 
+   ( MaSoCanHo , KhachHangId, Tang,TinhTrang)
+VALUES 
+   ( '404','',4,0)
+GO 
+
+--Căn hộ 1 tầng 5
+INSERT dbo.CanHo 
+   ( MaSoCanHo , KhachHangId, Tang,TinhTrang)
+VALUES 
+   ( '501','',5,0)
+GO 
+
+--Căn hộ 2 tầng 5
+INSERT dbo.CanHo 
+   ( MaSoCanHo , KhachHangId, Tang,TinhTrang)
+VALUES 
+   ( '502','',5,0)
+GO 
+
+--Căn hộ 3 tầng 5
+INSERT dbo.CanHo 
+   ( MaSoCanHo , KhachHangId, Tang,TinhTrang)
+VALUES 
+   ( '503','',5,0)
+GO 
+
+--Căn hộ 4 tầng 5
+INSERT dbo.CanHo 
+   ( MaSoCanHo , KhachHangId, Tang,TinhTrang)
+VALUES 
+   ( '504','',5,0)
+GO 
+
+--Căn hộ 1 tầng 6
+INSERT dbo.CanHo 
+   ( MaSoCanHo , KhachHangId, Tang,TinhTrang)
+VALUES 
+   ( '601','',6,0)
+GO 
+--Căn hộ 2 tầng 6
+INSERT dbo.CanHo 
+   ( MaSoCanHo , KhachHangId, Tang,TinhTrang)
+VALUES 
+   ( '602','',6,0)
+GO 
+
+--Căn hộ 3 tầng 6
+INSERT dbo.CanHo 
+   ( MaSoCanHo , KhachHangId, Tang,TinhTrang)
+VALUES 
+   ( '603','',6,0)
+GO 
+
+--Căn hộ 4 tầng 6
+INSERT dbo.CanHo 
+   ( MaSoCanHo , KhachHangId, Tang,TinhTrang)
+VALUES 
+   ( '604','',6,0)
+GO 
 
 -- Tạo Loại Xe 
 INSERT dbo.LoaiXe
@@ -549,6 +631,53 @@ INSERT dbo.GuiXe
 VALUES  ( 'CH012' ,0 , 0 , 0 , 0 , 0 , 0.0 , 0  )
 GO
 
+-- 304
+INSERT dbo.GuiXe
+        ( CanHoId , SoLuongXeDap ,TienGuiXeDap ,SoLuongXeMay ,TienGuiXeMay ,SoLuongXeHoi ,TienGuiXeHoi ,TongTienGui)
+VALUES  ( 'CH013' ,0 , 0 , 0 , 0 , 0 , 0.0 , 0  )
+GO
+
+--501
+INSERT dbo.GuiXe
+        ( CanHoId , SoLuongXeDap ,TienGuiXeDap ,SoLuongXeMay ,TienGuiXeMay ,SoLuongXeHoi ,TienGuiXeHoi ,TongTienGui)
+VALUES  ( 'CH017' ,0 , 0 , 0 , 0 , 0 , 0.0 , 0  )
+GO 
+
+--502
+INSERT dbo.GuiXe
+        ( CanHoId , SoLuongXeDap ,TienGuiXeDap ,SoLuongXeMay ,TienGuiXeMay ,SoLuongXeHoi ,TienGuiXeHoi ,TongTienGui)
+VALUES  ( 'CH018' ,0 , 0 , 0 , 0 , 0 , 0.0 , 0  )
+GO 
+--503
+INSERT dbo.GuiXe
+        ( CanHoId , SoLuongXeDap ,TienGuiXeDap ,SoLuongXeMay ,TienGuiXeMay ,SoLuongXeHoi ,TienGuiXeHoi ,TongTienGui)
+VALUES  ( 'CH019' ,0 , 0 , 0 , 0 , 0 , 0.0 , 0  )
+GO 
+--504
+INSERT dbo.GuiXe
+        ( CanHoId , SoLuongXeDap ,TienGuiXeDap ,SoLuongXeMay ,TienGuiXeMay ,SoLuongXeHoi ,TienGuiXeHoi ,TongTienGui)
+VALUES  ( 'CH020' ,0 , 0 , 0 , 0 , 0 , 0.0 , 0  )
+GO 
+--601
+INSERT dbo.GuiXe
+        ( CanHoId , SoLuongXeDap ,TienGuiXeDap ,SoLuongXeMay ,TienGuiXeMay ,SoLuongXeHoi ,TienGuiXeHoi ,TongTienGui)
+VALUES  ( 'CH021' ,0 , 0 , 0 , 0 , 0 , 0.0 , 0  )
+GO 
+--602
+INSERT dbo.GuiXe
+        ( CanHoId , SoLuongXeDap ,TienGuiXeDap ,SoLuongXeMay ,TienGuiXeMay ,SoLuongXeHoi ,TienGuiXeHoi ,TongTienGui)
+VALUES  ( 'CH022' ,0 , 0 , 0 , 0 , 0 , 0.0 , 0  )
+GO
+--603
+INSERT dbo.GuiXe
+        ( CanHoId , SoLuongXeDap ,TienGuiXeDap ,SoLuongXeMay ,TienGuiXeMay ,SoLuongXeHoi ,TienGuiXeHoi ,TongTienGui)
+VALUES  ( 'CH023' ,0 , 0 , 0 , 0 , 0 , 0.0 , 0  )
+GO 
+--604
+INSERT dbo.GuiXe
+        ( CanHoId , SoLuongXeDap ,TienGuiXeDap ,SoLuongXeMay ,TienGuiXeMay ,SoLuongXeHoi ,TienGuiXeHoi ,TongTienGui)
+VALUES  ( 'CH024' ,0 , 0 , 0 , 0 , 0 , 0.0 , 0  )
+GO
 
 
 -- Tạo HD DỊCH VỤ
@@ -856,3 +985,42 @@ VALUES
    ('CH011','03/01/2019',N'35154863',402,735,530250,N'0312546',70,77,48083)
 GO
 
+
+
+-- JSP --
+
+CREATE PROC SearchSDT(@SDT NCHAR(10))
+AS 
+BEGIN
+SELECT KH.KhachHangId,TenKhachHang,SoDT,CH.MaSoCanHo, MaHDDien,ChiSoDienBanDau,
+       ChiSoDienCuoi,TienDien,MaHDNuoc,  ChiSoNuocBanDau,ChiSoNuocCuoi,TienNuoc,NgayThang
+            FROM HoaDonSinhHoat SH JOIN CanHo CH
+                 ON CH.CanHoId = SH.CanHoId 
+                    JOIN ThongTinKhachHang KH  ON KH.CanHoId = CH.CanHoId WHERE Kh.SoDT = @SDT
+
+END 
+GO 
+
+
+CREATE PROC SearchSDTHDInt(@SDT NCHAR(10))
+AS 
+BEGIN
+SELECT KH.KhachHangId,TenKhachHang,SoDT,CH.MaSoCanHo,HoaDonInternetId, NgayThang,Tien
+       FROM HoaDonInternet HD JOIN CanHo  CH
+            ON CH.CanHoId = HD.CanHoId 
+               JOIN ThongTinKhachHang KH  ON KH.CanHoId = CH.CanHoId WHERE KH.SoDT = @SDT
+
+END 
+GO
+
+
+CREATE PROC SearchSDTHDDV(@SDT NCHAR(10))
+AS 
+BEGIN
+SELECT KH.KhachHangId,TenKhachHang,SoDT,CH.MaSoCanHo,HoaDonDichVuId,Thang, TienDichVuCoBan,TongTienGui,TongTien
+       FROM HoaDonDichVu HD JOIN CanHo CH
+            ON CH.CanHoId = HD.CanHoId 
+               JOIN ThongTinKhachHang KH ON KH.CanHoId = CH.CanHoId 
+               JOIN GuiXe ON GuiXe.GuiXeId = HD.GuiXeId WHERE KH.SoDT = @SDT
+END 
+GO 

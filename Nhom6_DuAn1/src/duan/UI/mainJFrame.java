@@ -42,8 +42,8 @@ public class mainJFrame extends javax.swing.JFrame {
     }
     int xMouse, yMouse;
     ThongTinTKJFrame thongTinAcc = new ThongTinTKJFrame();
-      public void Logo() {
-        ImageIcon img = new ImageIcon("src\\duan\\Logo\\LOGO.png");
+     public void Logo() {
+        ImageIcon img = new ImageIcon(this.getClass().getResource("/duan/Logo/LOGO.png"));
         this.setIconImage(img.getImage());
     }
     /**

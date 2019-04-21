@@ -46,11 +46,10 @@ public class QuanLyNhanKhauJFrame extends javax.swing.JFrame {
     int xMouse, yMouse;
     int check = 1;
 
-    public void Logo() {
-        ImageIcon img = new ImageIcon("src\\duan\\Logo\\LOGO.png");
+     public void Logo() {
+        ImageIcon img = new ImageIcon(this.getClass().getResource("/duan/Logo/LOGO.png"));
         this.setIconImage(img.getImage());
     }
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
